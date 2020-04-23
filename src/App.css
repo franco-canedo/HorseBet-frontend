@@ -36,3 +36,73 @@
     transform: rotate(360deg);
   }
 }
+
+.NavBar {
+  color: black;
+  background-color: white;
+  text-align: right;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 9999;
+
+}
+
+.NavLinks {
+  right: 0;
+  float: right;
+  padding: 20px;
+}
+
+.ButtonsNavBar {
+  background-color: rgb(97, 93, 93); /* Green */
+  border: none;
+  /* color: white; */
+  padding: 18px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin-top: 18px;
+  margin-right: 10px;
+}
+
+.Logo {
+  left:0;
+  float: left;
+  margin-right: 850px;
+  font-size: large;
+
+  margin-left: 10px;
+}
+.Logo:hover {
+-webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+}
+
+.Footer{
+  background-color: #2DAFE3;
+  /* background-color: #3366cc; */
+  /* background-color: black; */
+  color: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  /* padding-bottom: 20px; */
+}
+
+.Header {
+  background: linear-gradient(to right, #546880 39%, #7E9BBF 99%);
+  /* background-color: black; */
+  color: white;
+  
+ 
+  position: fixed;
+  width: 100%;
+  z-index: 8888;
+}
