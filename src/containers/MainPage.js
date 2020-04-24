@@ -1,31 +1,47 @@
-import React, { Component } from "react";
-import NavBar from '../components/NavBar.js';
-import Footer from '../components/NavBar.js';
+import React, { Component } from 'react';
 import Header from '../components/Header.js';
-
+import AllThreeMain from './AllThreeMain.js';
+import { Redirect } from "react-router-dom";
 
 class MainPage extends Component {
     constructor() {
-        super();
-
+        super()
         this.state = {
-            center: "demo"
+            form: "demo",
+            loggedIn: false
         }
     }
 
-    
-    
-  
-    render() {
-      return (
-        <div>
-           
-            <Header />
-          
-
-        </div>
-      );
+    handleSignUpClick = () => {
+        this.setState({
+            form: "signup"
+        })
     }
-  }
-  
-  export default MainPage;
+
+    handleLogInClick = () => {
+        this.setState({
+            form: "login"
+        })
+    }
+
+    redirectToProfile = () => {
+        this.setState({ loggedIn: true });
+    }
+
+    render() {
+        return this.state.loggedIn ? (
+            <Redirect to="/profile" things={this.state} />
+        ) : (
+                <div>
+                    <Header signup={this.handleSignUpClick} login={this.handleLogInClick} />
+                    <AllThreeMain
+                        form={this.state.form}
+                        signup={this.handleSignUpClick} />
+
+
+                </div>
+            );
+    }
+}
+
+export default MainPage;
