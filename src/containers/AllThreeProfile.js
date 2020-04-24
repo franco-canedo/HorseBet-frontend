@@ -8,7 +8,7 @@ class AllThreeProfile extends Component {
         return (
             <div className="AllThree">
                 <LeftComponentProfile />
-                <CenterComponentProfile />
+                <CenterComponentProfile user={this.props.user}/>
                 <RightComponentProfile />
             </div>
         );
