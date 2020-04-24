@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "../App.css";
 
 
@@ -20,11 +21,11 @@ class NavBar extends Component {
                         <button className="ButtonsNavBar">
                             <NavLink to="/main" exact activeStyle={{ color: "blue" }}>
                                 Sign Up
-          </NavLink></button>
+                            </NavLink></button>
                         <button className="ButtonsNavBar">
                             <NavLink to="/profile" exact activeStyle={{ color: "blue" }}>
                                 Log In
-          </NavLink></button>
+                        </NavLink></button>
 
                     </div>
                 </div>

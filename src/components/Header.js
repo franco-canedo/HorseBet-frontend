@@ -14,11 +14,11 @@ class Header extends Component {
                         <button className="ButtonsNavBar">
                             <NavLink to="/signup" exact activeStyle={{ color: "white" }}>
                                 Sign Up
-          </NavLink></button>
+                            </NavLink></button>
                         <button className="ButtonsNavBar">
                             <NavLink to="/login" exact activeStyle={{ color: "white" }}>
                                 Log In
-          </NavLink></button>
+                        </NavLink></button>
 
                     </div>
        

@@ -14,11 +14,11 @@ class ProfileHeader extends Component {
                         <button className="ButtonsNavBar">
                             <NavLink to="/game" exact activeStyle={{ color: "white" }}>
                                 Play a Game!
-          </NavLink></button>
+                        </NavLink></button>
                         <button className="ButtonsNavBar">
                             <NavLink to="/logout" exact activeStyle={{ color: "white" }}>
                                 Log Out
-          </NavLink></button>
+                        </NavLink></button>
 
                     </div>
        

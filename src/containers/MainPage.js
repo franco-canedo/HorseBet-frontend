@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import NavBar from '../components/NavBar.js';
-import Footer from '../components/NavBar.js';
+import React, { Component } from 'react';
 import Header from '../components/Header.js';
-
+import CenterComponent from '../components/CenterComponent.js';
+import LeftComponent from '../components/LeftComponent.js';
+import RightComponent from '../components/RightComponent.js';
 
 class MainPage extends Component {
     constructor() {
-        super();
-
+        super()
         this.state = {
-            center: "demo"
+            form: "demo"
         }
     }
 
-    
-    
-  
+
     render() {
       return (
         <div>
            
             <Header />
-          
+            <LeftComponent />
+            <CenterComponent />
+            
+            <RightComponent />
 
         </div>
       );
     }
   }
-  
-  export default MainPage;
+
+export default MainPage;

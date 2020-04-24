@@ -106,3 +106,38 @@
   width: 100%;
   z-index: 8888;
 }
+
+.LeftComponent {
+  background-color: green;
+  border: dotted;
+  text-align: center;
+  margin-top: 400px;
+  width: 20%;
+  float: left;
+  padding: 10px;
+ 
+}
+
+
+.CenterComponent {
+  background-color: blue;
+  border: dotted;
+  width: 40%;
+  float: left;
+  padding: 10px;
+  margin-top: 400px;
+  column-count: 3;
+  margin-left: 0px;
+}
+
+
+.RightComponent {
+  background-color: #FFFFFF;
+  border: dotted;
+  margin-top: 400px;
+  width: 20%;
+  float: left;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
