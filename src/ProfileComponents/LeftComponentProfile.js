@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-
-class RightComponent extends Component {
+class LeftComponentProfile extends Component {
     render() {
         return (
-            <div className="RightComponent">
+            <div className="LeftComponent">
                 
                 
             </div>
@@ -12,4 +11,4 @@ class RightComponent extends Component {
     }
 }
 
-export default RightComponent;
+export default LeftComponentProfile;

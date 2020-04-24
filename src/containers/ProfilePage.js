@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ProfileHeader from '../ProfileComponents/ProfileHeader.js';
+import AllThreeProfile from './AllThreeProfile';
 
 class ProfilePage extends Component {
 
@@ -9,6 +10,7 @@ class ProfilePage extends Component {
         <div>
            
             <ProfileHeader />
+            <AllThreeProfile />
         </div>
       );
     }

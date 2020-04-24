@@ -20,12 +20,10 @@ ReactDOM.render(
   <div>
 
     <Router>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      
       <React.StrictMode>
         {/* <Route exact path="/signin" component={Signin} /> */}
-      <Route exact path="/profile" component={ProfilePage} />
+        <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/" component={MainPage} />
         {/* <Route exact path="/signup" component={Signup} />
       <Route exact path="/" component={Signin} /> */}

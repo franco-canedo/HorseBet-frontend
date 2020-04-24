@@ -107,11 +107,18 @@
   z-index: 8888;
 }
 
+.AllThree {
+  width: 100%;
+  float: center;
+  
+  padding: 30px;
+}
+
 .LeftComponent {
   background-color: green;
   border: dotted;
   text-align: center;
-  margin-top: 400px;
+  margin-top: 200px;
   width: 20%;
   float: left;
   padding: 10px;
@@ -122,22 +129,53 @@
 .CenterComponent {
   background-color: blue;
   border: dotted;
-  width: 40%;
+  width: 50%;
   float: left;
   padding: 10px;
-  margin-top: 400px;
-  column-count: 3;
+  margin-top: 200px;
   margin-left: 0px;
+  text-align: center;
 }
 
 
 .RightComponent {
-  background-color: #FFFFFF;
+  background-color: red;
   border: dotted;
-  margin-top: 400px;
+  margin-top: 200px;
   width: 20%;
   float: left;
   padding: 10px;
-  margin: 10px;
+  
+  
+}
+
+.CenterComponentForm {
+  background-color: white;
+  width: 40%;
+  float: left;
+  padding: 30px;
+  margin-top: 10px;
   text-align: center;
+}
+
+.OutsideForm {
+  border: 10px solid;
+  margin: 10px; 
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #33cccc;
+  /* background-color: black; */
+  color: white;
+}
+
+.MeetupForm {
+  width: 60%;
+  padding: 5px 20px;
+  margin: 8px 5px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.MeetupForm:focus {
+  border: 2px solid black;
 }
