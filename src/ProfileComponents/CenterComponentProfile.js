@@ -50,9 +50,9 @@ class CenterComponentProfile extends Component {
                 <div className="UserInfoDivs">
                     <h2>Stats:</h2>
                     <p>Games Played:{gamesPlayed}</p>
-                    <p>Number of wins:{wins}</p>
+                    <p>Number of wins:{wins}</p> */}
                     <p>Total Winnings: $</p>
-                    <p>Average jackpot: $</p>
+                    <p>Average jackpot: $</p> 
                     {/* {this.props.user.games && this.props.user.games} */}
 
 
