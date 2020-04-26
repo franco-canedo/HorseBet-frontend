@@ -3,14 +3,27 @@ import ProfileHeader from '../ProfileComponents/ProfileHeader.js';
 import AllThreeProfile from './AllThreeProfile';
 
 class ProfilePage extends Component {
+    constructor() {
+        super()
+        this.state = {
+            user: []
+
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:3000/api/v1/users/1`)
+        .then(resp => resp.json())
+        .then(user => this.setState({ user }));
+    }
 
 
-    render() {
+    render() {        
       return (
         <div>
            
             <ProfileHeader />
-            <AllThreeProfile />
+            <AllThreeProfile user={this.state.user} />
         </div>
       );
     }

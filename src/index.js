@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createStore } from 'redux';
 import allReducers from './reducers';
 import { Provider } from 'react-redux';
+import Game from './containers/Game';
 
 
 const store = createStore(
@@ -22,9 +23,10 @@ ReactDOM.render(
     <Router>
       
       <React.StrictMode>
-        {/* <Route exact path="/signin" component={Signin} /> */}
+        
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/" component={MainPage} />
+        <Route exact path="/game" component={Game} />
         {/* <Route exact path="/signup" component={Signup} />
       <Route exact path="/" component={Signin} /> */}
       </React.StrictMode>

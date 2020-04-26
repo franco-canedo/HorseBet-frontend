@@ -5,7 +5,7 @@ class Footer extends Component {
     return (
       <div className="Footer">
       
-        HorseBet - Lose all your money!
+        <p>HorseBet - Lose all your money!</p>
       </div>
     );
   }
