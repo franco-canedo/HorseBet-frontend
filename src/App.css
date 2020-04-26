@@ -305,3 +305,18 @@
   margin-left: 80px;
   margin-bottom: 50px;
 }
+
+.game {
+  border: ridge;
+  padding: 10px;
+  height: 280px;
+}
+
+.canvas {
+  border: groove;
+  background-color: #EDE6DF;
+}
+
+.hidden {
+  display: none;
+}

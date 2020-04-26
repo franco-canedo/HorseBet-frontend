@@ -8,8 +8,10 @@ import ProfilePage from './containers/ProfilePage.js'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createStore } from 'redux';
 import allReducers from './reducers';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import Game from './containers/Game';
+import { ActionCableProvider } from 'react-actioncable-provider';
+import { API_WS_ROOT } from './constants';
 
 
 const store = createStore(
@@ -19,16 +21,12 @@ const store = createStore(
 
 ReactDOM.render(
   <div>
-
+    
     <Router>
-      
       <React.StrictMode>
-        
         <Route exact path="/profile" component={ProfilePage} />
         <Route exact path="/" component={MainPage} />
-        <Route exact path="/game" component={Game} />
-        {/* <Route exact path="/signup" component={Signup} />
-      <Route exact path="/" component={Signin} /> */}
+        <Route exact path="/game" component={App} />
       </React.StrictMode>
     </Router></div>
   ,

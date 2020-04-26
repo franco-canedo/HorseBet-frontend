@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Canvas from './Canvas';
 
 class CenterComponentGame extends Component {
 
@@ -6,7 +7,9 @@ class CenterComponentGame extends Component {
 
         return (
             <div className="CenterComponentGame">
-                <div className="game"></div>
+                
+                    <Canvas />
+                
                 <div className="gameButtonsDiv">
                     <button className="gameButtons">Boo!</button>
                     <button className="gameButtons">Boo!</button>
