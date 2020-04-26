@@ -18,12 +18,17 @@ class Animation extends Component {
     }
 
     updateAnimationState() {
+        //GET speed
+        // setState = speed
+        // speed += 1
+        //POST speed 
         this.setState(prevState => ({ 
             horseSpeed1: prevState.horseSpeed1 + .5,
             horseSpeed2: prevState.horseSpeed2 + .5,
             horseSpeed3: prevState.horseSpeed3 + .5,
             horseSpeed4: prevState.horseSpeed4 + .5,
         }));
+        
         this.rAF = requestAnimationFrame(this.updateAnimationState);
     }
 

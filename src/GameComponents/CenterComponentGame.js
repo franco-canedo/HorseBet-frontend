@@ -10,7 +10,7 @@ class CenterComponentGame extends Component {
             <div className="CenterComponentGame">
 
                 <Animation />
-
+                
                 <div className="gameButtonsDiv">
                     <button className="gameButtons">Boo!</button>
                     <button className="gameButtons">Boo!</button>

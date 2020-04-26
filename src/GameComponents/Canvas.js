@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import horse from '../Images/horseface.png'
+import PureCanvas from './PureCanvas.js'
 import Horse1 from './Horse1.js';
 
 class Canvas extends Component {
@@ -38,10 +39,6 @@ class Canvas extends Component {
         ctx.stroke();
 
         ctx.fillRect(620, 15, 50, 270);
-
-        this.setState({
-            canvas: canvas
-        })
     }
 
     componentDidUpdate() {
@@ -56,10 +53,11 @@ class Canvas extends Component {
 
         ctx.save();
         ctx.beginPath();
-        ctx.drawImage(img, speed, 13, 50, 50)
-        ctx.drawImage(img, speed2, 88, 50, 50)
-        ctx.drawImage(img, speed3, 163, 50, 50)
-        ctx.drawImage(img, speed4, 238, 50, 50)
+        ctx.drawImage(img, speed < 600 ? speed : 600, 13, 50, 50)
+        ctx.drawImage(img, speed2 < 600 ? speed : 600, 88, 50, 50)
+        ctx.drawImage(img, speed3 < 600 ? speed : 600, 163, 50, 50)
+        ctx.drawImage(img, speed4 < 600 ? speed : 600, 238, 50, 50)
+        ctx.restore();
       }
 
 
