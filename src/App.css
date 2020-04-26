@@ -146,10 +146,9 @@
   border: double;
   margin-top: 150px;
   width: 20%;
+  height: 420px;
   float: left;
   padding: 10px;
-  
-  
 }
 
 .CenterComponentForm {
@@ -203,4 +202,94 @@
   
   border: ridge;
   margin-bottom: 10px;
+}
+
+/* ///////////////////////////// Game  */
+
+.GameInfoDivs {
+  height: 124px;
+  border: ridge;
+  margin-bottom: 10px;
+}
+
+.CenterComponentGame {
+  background-color: #E3F4FF;
+  border: double;
+  width: 50%;
+  height: 420px;
+  float: left;
+  padding: 10px;
+  
+  margin-top: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.game {
+  border: groove;
+  height: 300px;
+}
+
+.gameButtonsDiv {
+  border: groove;
+  height: 95px;
+  margin-top: 10px;
+  text-align: center;
+  
+}
+
+.gameButtons {
+  background-color: #E8FFF5;
+  border: outset;
+  /* color: white; */
+  padding: 18px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin-top: 18px;
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+.RightComponentGame {
+  background-color: #E3F4FF;
+  border: none;
+  margin-top: 150px;
+  width: 20%;
+  height: 420px;
+  float: left;
+  padding: 10px;
+}
+
+.lightsContainer {
+  border: groove;
+  padding: 10px;
+}
+
+.rightCompBottomDiv {
+  border: none;
+  height: 95px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.lights {
+  border: groove;
+  height: 55px;
+ 
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.spanLights {
+  width: 25%;
+  height: 50%;
+  border: solid;
+  margin-left: 90px;
+  margin-top: 9px;
+  
+  background: #ef8913;
+
 }
