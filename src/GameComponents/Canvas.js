@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import horse from '../Images/horseface.png'
+import Horse1 from './Horse1.js';
 
 class Canvas extends Component {
     constructor() {
         super()
-        this.state = {
-            horse1: 10,
-            horse2: 10,
-            horse3: 10,
-            horse4: 10,
-        }
+        this.canvasRef = React.createRef();
+        
     }
 
     componentDidMount() {
-        const canvas = this.refs.canvas
+        const canvas = this.canvasRef.current
         const ctx = canvas.getContext("2d")
         const img = this.refs.image
 
@@ -22,8 +19,8 @@ class Canvas extends Component {
             ctx.drawImage(img, 10, 88, 50, 50)
             ctx.drawImage(img, 10, 163, 50, 50)
             ctx.drawImage(img, 10, 238, 50, 50)
-            
-          }
+
+        }
 
         ctx.beginPath();
         ctx.moveTo(0, 75);
@@ -41,19 +38,41 @@ class Canvas extends Component {
         ctx.stroke();
 
         ctx.fillRect(620, 15, 50, 270);
+
+        this.setState({
+            canvas: canvas
+        })
     }
 
-    startGame = () => {
+    componentDidUpdate() {
+        const speed = this.props.horseSpeed1;
+        const speed2 = this.props.horseSpeed2;
+        const speed3 = this.props.horseSpeed3;
+        const speed4 = this.props.horseSpeed4;
+        // console.log(speed2)
+        const canvas = this.canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const img = this.refs.image;
 
-    }
+        ctx.save();
+        ctx.beginPath();
+        ctx.drawImage(img, speed, 13, 50, 50)
+        ctx.drawImage(img, speed2, 88, 50, 50)
+        ctx.drawImage(img, speed3, 163, 50, 50)
+        ctx.drawImage(img, speed4, 238, 50, 50)
+      }
+
 
     render() {
         return (
             <div>
                 <img alt="text" ref="image" src={horse} className="hidden" />
-                <canvas className="canvas" ref="canvas" width={700} height={300} />
-                <button>start</button>
+                <canvas className="canvas" ref={this.canvasRef} width={700} height={300} />
+                <button onClick={() => this.props.boo()}>boo</button>
+              
                 
+                
+
             </div>
         );
     }
