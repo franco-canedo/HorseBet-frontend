@@ -1,20 +1,22 @@
 
 import './App.css';
 import React from 'react';
-import MainPage from './containers/MainPage.js';
 import store from './index.js';
 import { Provider } from 'react-redux';
+import Game from './containers/Game';
+import { ActionCableProvider } from 'react-actioncable-provider';
+import { API_WS_ROOT } from './constants';
 
-const APP_URL = "http://localhost:3000/";
-
-const App = () =>  {
+const App = () => {
   return (
     <div className="App">
-      
-      <MainPage />
+      <ActionCableProvider url={API_WS_ROOT}>
+        <Game />
+      </ActionCableProvider>
+
     </div>
   );
-  
+
 }
 
 export default App;

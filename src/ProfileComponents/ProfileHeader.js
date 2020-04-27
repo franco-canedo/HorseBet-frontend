@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { API_ROOT } from '../constants';
 
 class ProfileHeader extends Component {
+  
   render() {
     return (
       <div className="Header" style={{fontStyle: "italic", textAlign: "center"}}>
@@ -11,7 +13,7 @@ class ProfileHeader extends Component {
                         <h1>HorseBet</h1>
                     </div>
                   
-                        <button className="ButtonsNavBar" >
+                        <button className="ButtonsNavBar">
                             <NavLink to="/game" exact activeStyle={{ color: "white" }}>
                                 Play!
                         </NavLink></button>
