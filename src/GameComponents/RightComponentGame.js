@@ -17,21 +17,34 @@ class RightComponentProfile extends Component {
     }
 
     handleGameFetch = (event) => {
-        const body = {
-            minimum_bet: event.target.value,
-            jackpot: event.target.value * 4
-        }
+        if (this.props.joinableGames.length < 0) { //change later ===========
+            const body = {
+                user_id: 1,
+                // game_id: this.props.joinableGames['0'].id
+            }
 
-        const configObj = {
-            method: 'POST',
-            headers: HEADERS,
-            body: JSON.stringify(body)
-        }
-        alert('Joining a game... Please wait')
-        fetch(`${API_ROOT}/newGame`, configObj)
+            const configObj = {
+                method: 'POST',
+                headers: HEADERS,
+                body: JSON.stringify(body)
+            }
+            fetch(`${API_ROOT}/joinGame`)
+        } else {
+            const body = {
+                minimum_bet: event.target.value,
+                jackpot: event.target.value * 4
+            }
+
+            const configObj = {
+                method: 'POST',
+                headers: HEADERS,
+                body: JSON.stringify(body)
+            }
+            alert('Joining a game... Please wait')
+            fetch(`${API_ROOT}/newGame`, configObj)
             // .then(resp => resp.json())
             // .then(game => console.log(game))
-        
+        }
     }
 
 

@@ -27,7 +27,7 @@ class AllThreeGame extends Component {
     componentDidMount = () => {
         fetch(`${API_ROOT}/joinableGames`)
             .then(res => res.json())
-            .then(games => this.setState({ games }));
+            .then(games => this.setState({ joinableGames: games }));
     };
 
     handleClick = id => {
@@ -45,15 +45,15 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedBoo = response => {
-        console.log('BOOOOO')
+        console.log('BOOOOO', response)
         const { boo } = response;
-        const games = [...this.state.games];
-        const game = games.find(
-            g => g.id === boo.game_id
-        );
-        const horse = game.horses.find(
-            h => h.id === boo.horse_id
-        )
+        // const games = [...this.state.games];
+        // const game = games.find(
+        //     g => g.id === boo.game_id
+        // );
+        // const horse = game.horses.find(
+        //     h => h.id === boo.horse_id
+        // )
 
 
         this.setState(prevState => {
@@ -61,7 +61,7 @@ class AllThreeGame extends Component {
                 horseSpeed1: prevState.horseSpeed1 - 5
             }
         })
-        this.setState({ games });
+        // this.setState({ games });
     };
 
     animation = () => {
@@ -74,7 +74,7 @@ class AllThreeGame extends Component {
     }
 
     render() {
-        const { games, activeGameId } = this.state;
+        const { joinableGames, activeGameId } = this.state;
         return (
             <div className="AllThree">
                 <ActionCable
@@ -83,8 +83,8 @@ class AllThreeGame extends Component {
                 />
                 {this.state.joinableGames.length ? (
                     <Cable
-                        games={games}
-                        handleReceivedMessage={this.handleReceivedBoo}
+                        joinableGames={joinableGames}
+                        handleReceivedBoo={this.handleReceivedBoo}
                     />
                 ) : null}
                 
@@ -96,7 +96,7 @@ class AllThreeGame extends Component {
                     horseSpeed4={this.state.horseSpeed4}
                     animation={this.state.activeGameId === null ? null : this.animation} />
 
-                <RightComponentGame />
+                <RightComponentGame joinableGames={this.state.joinableGames}/>
                 <Footer />
             </div>
         );

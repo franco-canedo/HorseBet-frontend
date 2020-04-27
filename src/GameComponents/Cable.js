@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 
-const Cable = ({ games, handleReceivedBoo }) => {
+const Cable = ({ joinableGames, handleReceivedBoo }) => {
   return (
     <Fragment>
-      {games.map(game => {
+      {joinableGames && joinableGames.map(game => {
         return (
           <ActionCable
             key={game.id}  
