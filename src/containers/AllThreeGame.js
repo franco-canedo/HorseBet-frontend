@@ -12,6 +12,7 @@ class AllThreeGame extends Component {
         super()
         this.state = {
             joinableGames: [],
+            activeGame: [],
             activeGameId: null,
             horseSpeed1: 10,
             horseSpeed2: 10,
@@ -30,9 +31,9 @@ class AllThreeGame extends Component {
             .then(games => this.setState({ joinableGames: games }));
     };
 
-    handleClick = id => {
-        this.setState({ activeGame: id });
-    };
+    // handleClick = id => {
+    //     this.setState({ activeGame: id });
+    // };
 
     handleReceivedGame = response => {
         console.log("Cable game!", response);
