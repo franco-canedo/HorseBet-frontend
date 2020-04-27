@@ -17,10 +17,10 @@ class RightComponentProfile extends Component {
     }
 
     handleGameFetch = (event) => {
-        if (this.props.joinableGames.length < 0) { //change later ===========
+        if (this.props.joinableGames.length > 0) { 
             const body = {
                 user_id: 1,
-                // game_id: this.props.joinableGames['0'].id
+                game_id: this.props.joinableGames[0]['id']
             }
 
             const configObj = {
@@ -28,7 +28,12 @@ class RightComponentProfile extends Component {
                 headers: HEADERS,
                 body: JSON.stringify(body)
             }
-            fetch(`${API_ROOT}/joinGame`)
+            fetch(`${API_ROOT}/joinGame`, configObj)
+            .then(r => r.json())
+            .then(json => {
+                console.log(json);
+                this.props.handleActiveGame(json)
+            });
         } else {
             const body = {
                 minimum_bet: event.target.value,

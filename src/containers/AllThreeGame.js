@@ -23,7 +23,21 @@ class AllThreeGame extends Component {
         }
     }
 
-    
+    handleActiveGame = (join) => {
+        fetch(`${API_ROOT}/games/${join.game_id}`)
+        .then(resp => resp.json())
+        .then(game => {
+            console.log(game);
+            this.setState(prevState => {
+                return {
+                    activeGame: [game],
+                    activeGameId: game.id
+                }
+                
+            })
+        })
+        
+    }
 
     componentDidMount = () => {
         fetch(`${API_ROOT}/joinableGames`)
@@ -88,8 +102,8 @@ class AllThreeGame extends Component {
                         handleReceivedBoo={this.handleReceivedBoo}
                     />
                 ) : null}
-                
-                <LeftComponentGame />
+
+                <LeftComponentGame activeGame={this.state.activeGame} />
                 <CenterComponentGame
                     horseSpeed1={this.state.horseSpeed1}
                     horseSpeed2={this.state.horseSpeed2}
@@ -97,7 +111,9 @@ class AllThreeGame extends Component {
                     horseSpeed4={this.state.horseSpeed4}
                     animation={this.state.activeGameId === null ? null : this.animation} />
 
-                <RightComponentGame joinableGames={this.state.joinableGames}/>
+                <RightComponentGame
+                    handleActiveGame={this.handleActiveGame}
+                    joinableGames={this.state.joinableGames} />
                 <Footer />
             </div>
         );
