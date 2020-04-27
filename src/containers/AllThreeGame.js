@@ -11,18 +11,21 @@ class AllThreeGame extends Component {
     constructor() {
         super()
         this.state = {
-            games: [],
-            activeGameId: 5,
+            joinableGames: [],
+            activeGameId: null,
             horseSpeed1: 10,
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
 
+
         }
     }
 
+    
+
     componentDidMount = () => {
-        fetch(`${API_ROOT}/activeGames`)
+        fetch(`${API_ROOT}/joinableGames`)
             .then(res => res.json())
             .then(games => this.setState({ games }));
     };
@@ -32,9 +35,12 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedGame = response => {
+        console.log("Cable game!", response);
         const { game } = response;
-        this.setState({
-            games: [...this.state.games, game]
+        this.setState(prevState => {
+            return {
+                joinableGames: [...prevState.joinableGames, game]
+            }
         });
     };
 
@@ -75,19 +81,20 @@ class AllThreeGame extends Component {
                     channel={{ channel: 'GamesChannel' }}
                     onReceived={this.handleReceivedGame}
                 />
-                {this.state.games.length ? (
+                {this.state.joinableGames.length ? (
                     <Cable
                         games={games}
                         handleReceivedMessage={this.handleReceivedBoo}
                     />
                 ) : null}
+                
                 <LeftComponentGame />
                 <CenterComponentGame
                     horseSpeed1={this.state.horseSpeed1}
                     horseSpeed2={this.state.horseSpeed2}
                     horseSpeed3={this.state.horseSpeed3}
                     horseSpeed4={this.state.horseSpeed4}
-                    animation={this.animation} />
+                    animation={this.state.activeGameId === null ? null : this.animation} />
 
                 <RightComponentGame />
                 <Footer />

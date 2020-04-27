@@ -30,7 +30,9 @@ class Animation extends Component {
         //     horseSpeed3: prevState.horseSpeed3 + .5,
         //     horseSpeed4: prevState.horseSpeed4 + .5,
         // }));
-        this.props.animation();
+        if(this.props.animation !== null) {
+            this.props.animation();
+        }
         this.rAF = requestAnimationFrame(this.updateAnimationState);
     }
 

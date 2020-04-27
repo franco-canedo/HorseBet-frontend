@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { API_ROOT } from '../constants';
 
 class ProfileHeader extends Component {
+  handlePlayClick = () => {
+    fetch(`${API_ROOT}/newGame`)
+    .then(resp => resp.json())
+    .then(game => console.log(game))
+  }
   render() {
     return (
       <div className="Header" style={{fontStyle: "italic", textAlign: "center"}}>
@@ -11,7 +17,7 @@ class ProfileHeader extends Component {
                         <h1>HorseBet</h1>
                     </div>
                   
-                        <button className="ButtonsNavBar" >
+                        <button className="ButtonsNavBar" onClick={this.handlePlayClick}>
                             <NavLink to="/game" exact activeStyle={{ color: "white" }}>
                                 Play!
                         </NavLink></button>
