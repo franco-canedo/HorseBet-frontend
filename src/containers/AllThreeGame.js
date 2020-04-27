@@ -12,7 +12,12 @@ class AllThreeGame extends Component {
         super()
         this.state = {
             games: [],
-            activeGameId: 5
+            activeGameId: 5,
+            horseSpeed1: 10,
+            horseSpeed2: 10,
+            horseSpeed3: 10,
+            horseSpeed4: 10,
+
         }
     }
 
@@ -38,20 +43,32 @@ class AllThreeGame extends Component {
         const { boo } = response;
         const games = [...this.state.games];
         const game = games.find(
-          g => g.id === boo.game_id
+            g => g.id === boo.game_id
         );
         const horse = game.horses.find(
             h => h.id === boo.horse_id
         )
 
 
-        game.horses = [...game.horses, horse];
+        this.setState(prevState => {
+            return {
+                horseSpeed1: prevState.horseSpeed1 - 5
+            }
+        })
         this.setState({ games });
-      };
+    };
+
+    animation = () => {
+        this.setState(prevState => ({
+            horseSpeed1: prevState.horseSpeed1 + .5,
+            horseSpeed2: prevState.horseSpeed2 + .5,
+            horseSpeed3: prevState.horseSpeed3 + .5,
+            horseSpeed4: prevState.horseSpeed4 + .5,
+        }));
+    }
 
     render() {
         const { games, activeGameId } = this.state;
-        console.log(games);
         return (
             <div className="AllThree">
                 <ActionCable
@@ -59,13 +76,19 @@ class AllThreeGame extends Component {
                     onReceived={this.handleReceivedGame}
                 />
                 {this.state.games.length ? (
-          <Cable
-            games={games}
-            handleReceivedMessage={this.handleReceivedBoo}
-          />
-        ) : null}
+                    <Cable
+                        games={games}
+                        handleReceivedMessage={this.handleReceivedBoo}
+                    />
+                ) : null}
                 <LeftComponentGame />
-                <CenterComponentGame />
+                <CenterComponentGame
+                    horseSpeed1={this.state.horseSpeed1}
+                    horseSpeed2={this.state.horseSpeed2}
+                    horseSpeed3={this.state.horseSpeed3}
+                    horseSpeed4={this.state.horseSpeed4}
+                    animation={this.animation} />
+
                 <RightComponentGame />
                 <Footer />
             </div>
