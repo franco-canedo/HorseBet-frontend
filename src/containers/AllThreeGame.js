@@ -23,7 +23,7 @@ class AllThreeGame extends Component {
             horseSpeed2: -5,
             horseSpeed3: -5,
             horseSpeed4: -5,
-            user_id: 7
+            user_id: 1
 
 
         }
@@ -126,7 +126,7 @@ class AllThreeGame extends Component {
         const horse = this.state.horses.find(h => h.id === boo.horse_id);
 
         const index = this.state.horses.indexOf(horse)
-        horse.speed = horse.speed + 1;
+        horse.speed = horse.speed + 5;
         const array = [...this.state.horses]
         array[index] = horse;
         this.setState(prevState => {
@@ -138,6 +138,25 @@ class AllThreeGame extends Component {
         })
 
     };
+
+    handleReceivedHype = (response) => {
+        console.log('HYPE', response)
+        const { hype } = response;
+        console.log(hype.game_id);
+        const horse = this.state.horses.find(h => h.id === hype.horse_id);
+
+        const index = this.state.horses.indexOf(horse)
+        horse.speed = horse.speed - 5;
+        const array = [...this.state.horses]
+        array[index] = horse;
+        this.setState(prevState => {
+            return {
+                speedTest: prevState.speedTest - 5,
+                horses: array
+            }
+           
+        })
+    }
 
     // animation = () => {
     //     this.setState(prevState => ({
@@ -160,6 +179,7 @@ class AllThreeGame extends Component {
                     <Cable
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
+                        handleReceivedHype={this.handleReceivedHype}
                     />
                 ) : null}
 
