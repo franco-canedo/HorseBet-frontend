@@ -33,6 +33,7 @@ class Animation extends Component {
         if(this.props.animation !== null) {
             this.props.animation();
         }
+        
         this.rAF = requestAnimationFrame(this.updateAnimationState);
     }
 

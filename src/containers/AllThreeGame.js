@@ -19,7 +19,7 @@ class AllThreeGame extends Component {
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
-            user_id: 10
+            user_id: 7
 
 
         }
@@ -119,14 +119,17 @@ class AllThreeGame extends Component {
                 <CenterComponentGame
                     userId={this.state.user_id}
                     updateActiveGame={this.updateActiveGame}
-                    active={this.state.active}
                     activeGameHorses={this.state.activeGame.horses}
                     activeGame={this.state.activeGame}
                     horseSpeed1={this.state.horseSpeed1}
                     horseSpeed2={this.state.horseSpeed2}
                     horseSpeed3={this.state.horseSpeed3}
                     horseSpeed4={this.state.horseSpeed4}
-                    animation={this.state.activeGameId === null ? null : this.animation} />
+                    animation={
+                        this.state.activeGame.length === 0 ? 
+                        null :
+                        this.state.activeGame[0].active ? this.animation : null
+                        } />
 
                 <RightComponentGame
                     userId={this.state.user_id}

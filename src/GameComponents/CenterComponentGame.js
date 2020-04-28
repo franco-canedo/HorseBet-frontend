@@ -15,7 +15,8 @@ class CenterComponentGame extends Component {
         console.log(this.props.userId);
         const body = {
             user_id: this.props.userId,
-            horse_id: id
+            horse_id: id,
+            game_id: this.props.activeGame[0].id
         }
 
         const configObj = {
@@ -32,6 +33,7 @@ class CenterComponentGame extends Component {
             this.setState({
                 horseChosen: true
             })
+            this.activateGame();
         });
     }
 
@@ -51,7 +53,7 @@ class CenterComponentGame extends Component {
     }
 
     activateGame = () => {
-        if (this.props.activeGame.length > 0) {
+        if (this.props.activeGame[0].active) {
             const boolean = this.props.activeGame[0].active;
             this.setState({
                 active: boolean
