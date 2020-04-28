@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Animation from './Animation.js';
 import horseImage from '../Images/horseface.png';
 import { API_ROOT, HEADERS } from '../constants';
@@ -8,11 +8,11 @@ class CenterComponentGame extends Component {
         super()
         this.state = {
             horseChosen: false,
-            active: false
+            active: false,
         }
     }
     handleHorseClick = (id) => {
-        console.log(this.props.userId);
+        // console.log(id);
         const body = {
             user_id: this.props.userId,
             horse_id: id,
@@ -27,12 +27,13 @@ class CenterComponentGame extends Component {
         fetch(`${API_ROOT}/userHorse`, configObj)
         .then(r => r.json())
         .then(json => {
-            console.log(json);
+            // console.log(json);
             const currentGameId = this.props.activeGame[0].id
             this.props.updateActiveGame(currentGameId);
             this.setState({
                 horseChosen: true
             })
+            this.props.handleHorseChosen(id);
             this.activateGame();
         });
     }
@@ -66,13 +67,16 @@ class CenterComponentGame extends Component {
             <div className="CenterComponentGame">
                 {
                     this.state.active ? 
+                    <Fragment>
                         <Animation
                             activeGame={this.props.activeGame}
                             horseSpeed1={this.props.horseSpeed1}
                             horseSpeed2={this.props.horseSpeed2}
                             horseSpeed3={this.props.horseSpeed3}
                             horseSpeed4={this.props.horseSpeed4}
-                            animation={this.props.animation} /> : this.state.horseChosen ?
+                            animation={this.props.animation} />
+
+                            </Fragment> : this.state.horseChosen ?
                             <h2>Waiting for others to bet...</h2> : 
                         <div className="game">
                             {this.renderHorses()}

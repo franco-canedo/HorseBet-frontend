@@ -12,7 +12,7 @@ class ProfilePage extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3000/api/v1/users/1`)
+        fetch(`http://localhost:3000/api/v1/users/7`)
         .then(resp => resp.json())
         .then(user => this.setState({ user }));
     }

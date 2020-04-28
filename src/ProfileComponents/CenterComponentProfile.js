@@ -2,14 +2,14 @@ import React, { Component } from "react";
 
 class CenterComponentProfile extends Component {
 
-    
+
 
     renderRecentGames = () => {
         const winners = (gameWinners) => {
             console.log(gameWinners)
             // let obj = threeGames[game].game_winners;
             for (const winner in gameWinners) {
-             return <p>winner:{gameWinners[winner].user.username}</p>
+                return <p>winner:{gameWinners[winner].user.username}</p>
             }
         }
         let threeGames = this.props.user.games
@@ -25,11 +25,15 @@ class CenterComponentProfile extends Component {
     }
 
     render() {
-        let array = this.props.user.games;
-        let gamesPlayed = 0
-        for (const game in array) {
-            gamesPlayed = gamesPlayed + 1;
+        
+        
+            let array = this.props.user.games;
+            let gamesPlayed = 0;
+            for (const game in array) {
+                gamesPlayed = gamesPlayed + 1;
+            
         }
+
 
         let array2 = this.props.user.game_winners;
         let wins = 0
@@ -37,7 +41,7 @@ class CenterComponentProfile extends Component {
             wins = wins + 1;
         }
 
-        
+
         return (
             <div className="CenterComponentProfile">
                 <div className="UserInfoDivs">
@@ -52,7 +56,7 @@ class CenterComponentProfile extends Component {
                     <p>Games Played:{gamesPlayed}</p>
                     <p>Number of wins:{wins}</p> */}
                     <p>Total Winnings: $</p>
-                    <p>Average jackpot: $</p> 
+                    <p>Average jackpot: $</p>
                     {/* {this.props.user.games && this.props.user.games} */}
 
 

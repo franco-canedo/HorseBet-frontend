@@ -2,22 +2,22 @@ import React, { Component, Fragment } from 'react';
 import { API_ROOT, HEADERS } from '../constants';
 
 
-class RightComponentProfile extends Component {
+class RightComponentGame extends Component {
     constructor() {
         super()
         this.state = {
-            choose: false
+            chooseGame: false
         }
     }
 
     handlePlayClick = () => {
         this.setState({
-            choose: true
+            chooseGame: true
         })
     }
 
     handleGameFetch = (event) => {
-        if (this.props.joinableGames.length > 0) { 
+        if (this.props.joinableGames.length > 0) {
             const body = {
                 user_id: this.props.userId,
                 game_id: this.props.joinableGames[0]['id']
@@ -29,10 +29,10 @@ class RightComponentProfile extends Component {
                 body: JSON.stringify(body)
             }
             fetch(`${API_ROOT}/joinGame`, configObj)
-            .then(r => r.json())
-            .then(json => {
-                this.props.handleActiveGame(json)
-            });
+                .then(r => r.json())
+                .then(json => {
+                    this.props.handleActiveGame(json)
+                });
         } else {
             const body = {
                 minimum_bet: event.target.value,
@@ -51,46 +51,100 @@ class RightComponentProfile extends Component {
         }
     }
 
+    handleBooClick = (horseId) => {
+        console.log("boo?");
+        const body = {
+            game_id: this.props.activeGame[0].id,
+            horse_id: horseId
+        }
+        fetch(`${API_ROOT}/boo`, {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+        });
+    }
+
+
+
+    renderSpeedButtons = () => {
+        if (this.props.activeGame.length > 0) {
+
+            return this.props.horses.map(horse => {
+                // console.log('map?')
+                if (horse.chosen) {
+                    // console.log("if?", horse);
+                    return <div className="lights">
+
+                        <div className="spanLights">
+                            <div className="speed">
+                                <button className="speedButtonsRightComp">Hype!</button>
+                            </div>
+                        </div>
+                    </div>
+                } else {
+                    return <div className="lights">
+
+                        <div className="spanLights">
+                            <div className="speed">
+                                <button
+                                    onClick={() => this.handleBooClick(horse.id)}
+                                    className="speedButtonsRightComp">Boo!</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            })
+        }
+    }
+
 
     render() {
         return (
             <div className="RightComponentGame">
                 <div className="lightsContainer">
-                    <div className="lights">
+                    {
+                        this.props.horseChosen ?
+                            this.renderSpeedButtons() : <Fragment>
+                                <div className="lights">
 
-                        <div className="spanLights">
-                            <div className="speed">
-                                <h4>Speed:</h4>
-                            </div>
-                        </div>
+                                    <div className="spanLights">
+                                        <div className="speed">
+
+                                        </div>
+                                    </div>
 
 
-                    </div>
-                    <div className="lights">
-                        <div className="spanLights">
-                            <div className="speed">
-                                <h4>Speed:</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lights">
-                        <div className="spanLights">
-                            <div className="speed">
-                                <h4>Speed:</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="lights">
-                        <div className="spanLights">
-                            <div className="speed">
-                                <h4>Speed:</h4>
-                            </div>
-                        </div>
-                    </div>
+                                </div>
+                                <div className="lights">
+                                    <div className="spanLights">
+                                        <div className="speed">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="lights">
+                                    <div className="spanLights">
+                                        <div className="speed">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="lights">
+                                    <div className="spanLights">
+                                        <div className="speed">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </Fragment>
+
+                    }
+
+
                 </div>
                 <div className="rightCompBottomDiv">
                     {
-                        this.state.choose ?
+                        this.state.chooseGame ?
                             <Fragment>
                                 <h4>Select Minimum Bet:</h4>
                                 <button value="1" onClick={this.handleGameFetch}>$1</button>
@@ -107,4 +161,4 @@ class RightComponentProfile extends Component {
     }
 }
 
-export default RightComponentProfile;
+export default RightComponentGame;

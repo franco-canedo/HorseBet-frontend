@@ -66,7 +66,6 @@ class Canvas extends Component {
             <div>
                 <img alt="text" ref="image" src={horse} className="hidden" />
                 <canvas className="canvas" ref={this.canvasRef} width={700} height={300} />
-                <button onClick={() => this.props.boo()}>boo</button>
             </div>
         );
     }
