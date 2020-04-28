@@ -69,15 +69,17 @@ class Animation extends Component {
 
 
     render() {
-        const minus = this.state.horseSpeed1 - this.props.speedTest;
-        console.log(this.props.speedTest)
-        console.log(minus);
+        const minus1 = this.state.horseSpeed1 - this.props.horses[0].speed;
+        const minus2 = this.state.horseSpeed2 - this.props.horses[1].speed;
+        const minus3 = this.state.horseSpeed3 - this.props.horses[2].speed;
+        const minus4 = this.state.horseSpeed4 - this.props.horses[3].speed;
+        console.log(minus1);
         return (
             <div>
-                <Canvas horseSpeed1={minus}
-                    horseSpeed2={this.state.horseSpeed2}
-                    horseSpeed3={this.state.horseSpeed3}
-                    horseSpeed4={this.state.horseSpeed4}
+                <Canvas horseSpeed1={minus1}
+                    horseSpeed2={minus2}
+                    horseSpeed3={minus3}
+                    horseSpeed4={minus4}
                     boo={this.boo} />
                 <div className="gameButtonsDiv">
                     <button className="gameButtons" onClick={this.boo}>Boo!</button>

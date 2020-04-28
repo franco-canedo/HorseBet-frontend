@@ -67,6 +67,19 @@ class RightComponentGame extends Component {
         });
     }
 
+    handleHypeClick = (horseId) => {
+        console.log('hype?');
+        const body = {
+            game_id: this.props.activeGame[0].id,
+            horse_id: horseId
+        }
+        fetch(`${API_ROOT}/hype`, {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+        });
+    }
+
 
 
     renderSpeedButtons = () => {
@@ -80,7 +93,9 @@ class RightComponentGame extends Component {
 
                         <div className="spanLights">
                             <div className="speed">
-                                <button className="speedButtonsRightComp">Hype!</button>
+                                <button 
+                                onClick={() => this.handleHypeClick(horse.id)}
+                                className="speedButtonsRightComp">Hype!</button>
                             </div>
                         </div>
                     </div>

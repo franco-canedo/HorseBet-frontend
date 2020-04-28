@@ -70,6 +70,7 @@ class CenterComponentGame extends Component {
                         <Fragment>
                             <Animation
                                 speedTest={this.props.speedTest}
+                                horses={this.props.horses}
                                 activeGame={this.props.activeGame}
                                 horseSpeed1={this.props.horseSpeed1}
                                 horseSpeed2={this.props.horseSpeed2}

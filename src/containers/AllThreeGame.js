@@ -19,10 +19,10 @@ class AllThreeGame extends Component {
             horses: [],
             horseBooId: 0,
             speedTest: 3,
-            horseSpeed1: 10,
-            horseSpeed2: 10,
-            horseSpeed3: 10,
-            horseSpeed4: 10,
+            horseSpeed1: -5,
+            horseSpeed2: -5,
+            horseSpeed3: -5,
+            horseSpeed4: -5,
             user_id: 7
 
 
@@ -131,7 +131,7 @@ class AllThreeGame extends Component {
         array[index] = horse;
         this.setState(prevState => {
             return {
-                speedTest: prevState.speedTest + 1,
+                speedTest: prevState.speedTest + 5,
                 horses: array
             }
            
