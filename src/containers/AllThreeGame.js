@@ -21,7 +21,7 @@ class AllThreeGame extends Component {
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
-            user_id: 10
+            user_id: 7
 
 
         }
@@ -122,31 +122,17 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         const { boo } = response;
-        // const games = [...this.state.games];
-        // const game = games.find(
-        //     g => g.id === boo.game_id
-        // );
-        // const horse = game.horses.find(
-        //     h => h.id === boo.horse_id
-        // )
 
-
-        this.setState(prevState => {
-            return {
-                horseSpeed1: prevState.horseSpeed1 - 5
-            }
-        })
-        // this.setState({ games });
     };
 
-    animation = () => {
-        this.setState(prevState => ({
-            horseSpeed1: prevState.horseSpeed1 + .5,
-            horseSpeed2: prevState.horseSpeed2 + .5,
-            horseSpeed3: prevState.horseSpeed3 + .5,
-            horseSpeed4: prevState.horseSpeed4 + .5,
-        }));
-    }
+    // animation = () => {
+    //     this.setState(prevState => ({
+    //         horseSpeed1: prevState.horseSpeed1 + .5,
+    //         horseSpeed2: prevState.horseSpeed2 + .5,
+    //         horseSpeed3: prevState.horseSpeed3 + .5,
+    //         horseSpeed4: prevState.horseSpeed4 + .5,
+    //     }));
+    // }
 
     render() {
         const { joinableGames, activeGameId } = this.state;
@@ -158,12 +144,14 @@ class AllThreeGame extends Component {
                 />
                 {this.state.joinableGames.length ? (
                     <Cable
-                        activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null }
+                        activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
                     />
                 ) : null}
 
-                <LeftComponentGame activeGame={this.state.activeGame} />
+                <LeftComponentGame
+                    userId={this.state.user_id}
+                    activeGame={this.state.activeGame} />
                 <CenterComponentGame
                     userId={this.state.user_id}
                     updateActiveGame={this.updateActiveGame}
@@ -176,10 +164,10 @@ class AllThreeGame extends Component {
                     horseSpeed3={this.state.horseSpeed3}
                     horseSpeed4={this.state.horseSpeed4}
                     animation={
-                        this.state.activeGame.length === 0 ? 
-                        null :
-                        this.state.activeGame[0].active ? this.animation : null
-                        } />
+                        this.state.activeGame.length === 0 ?
+                            null :
+                            this.state.activeGame[0].active ? this.animation : null
+                    } />
 
                 <RightComponentGame
                     userId={this.state.user_id}

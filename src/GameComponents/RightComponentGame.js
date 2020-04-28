@@ -20,7 +20,9 @@ class RightComponentGame extends Component {
         if (this.props.joinableGames.length > 0) {
             const body = {
                 user_id: this.props.userId,
-                game_id: this.props.joinableGames[0]['id']
+                game_id: this.props.joinableGames[0]['id'],
+                total_bet: this.props.joinableGames[0]['minimum_bet'],
+                extra_bet: this.props.joinableGames[0]['minimum_bet']
             }
 
             const configObj = {
@@ -31,6 +33,7 @@ class RightComponentGame extends Component {
             fetch(`${API_ROOT}/joinGame`, configObj)
                 .then(r => r.json())
                 .then(json => {
+                    console.log(json);
                     this.props.handleActiveGame(json)
                 });
         } else {

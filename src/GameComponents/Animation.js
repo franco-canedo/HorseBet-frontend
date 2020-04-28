@@ -24,15 +24,15 @@ class Animation extends Component {
         // setState = speed
         // speed += 1
         //POST speed 
-        // this.setState(prevState => ({
-        //     horseSpeed1: prevState.horseSpeed1 + .5,
-        //     horseSpeed2: prevState.horseSpeed2 + .5,
-        //     horseSpeed3: prevState.horseSpeed3 + .5,
-        //     horseSpeed4: prevState.horseSpeed4 + .5,
-        // }));
-        if(this.props.animation !== null) {
-            this.props.animation();
-        }
+        this.setState(prevState => ({
+            horseSpeed1: prevState.horseSpeed1 + .5,
+            horseSpeed2: prevState.horseSpeed2 + .5,
+            horseSpeed3: prevState.horseSpeed3 + .5,
+            horseSpeed4: prevState.horseSpeed4 + .5,
+        }));
+        // if(this.props.animation !== null) {
+        //     this.props.animation();
+        // }
         
         this.rAF = requestAnimationFrame(this.updateAnimationState);
     }
@@ -63,10 +63,10 @@ class Animation extends Component {
     render() {
         return (
             <div>
-                <Canvas horseSpeed1={this.props.horseSpeed1}
-                    horseSpeed2={this.props.horseSpeed2}
-                    horseSpeed3={this.props.horseSpeed3}
-                    horseSpeed4={this.props.horseSpeed4}
+                <Canvas horseSpeed1={this.state.horseSpeed1}
+                    horseSpeed2={this.state.horseSpeed2}
+                    horseSpeed3={this.state.horseSpeed3}
+                    horseSpeed4={this.state.horseSpeed4}
                     boo={this.boo} />
                 <div className="gameButtonsDiv">
                     <button className="gameButtons" onClick={this.boo}>Boo!</button>
