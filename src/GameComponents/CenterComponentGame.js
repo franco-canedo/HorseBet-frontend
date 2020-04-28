@@ -54,11 +54,13 @@ class CenterComponentGame extends Component {
     }
 
     activateGame = () => {
-        if (this.props.activeGame[0].active) {
-            const boolean = this.props.activeGame[0].active;
-            this.setState({
-                active: boolean
-            })
+        if (this.props.activeGame.length > 0) {
+            if (this.props.activeGame[0].active) {
+                const boolean = this.props.activeGame[0].active;
+                this.setState({
+                    active: boolean
+                })
+            }
         }
     }
 
@@ -66,7 +68,7 @@ class CenterComponentGame extends Component {
         return (
             <div className="CenterComponentGame">
                 {
-                    this.state.active ?
+                    this.props.activeGame.length === 0 ? null : this.props.activeGame[0].active ?
                         <Fragment>
                             <Animation
                                 speedTest={this.props.speedTest}

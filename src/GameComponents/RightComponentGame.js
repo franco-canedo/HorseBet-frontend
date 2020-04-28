@@ -48,9 +48,31 @@ class RightComponentGame extends Component {
                 body: JSON.stringify(body)
             }
             alert('Joining a game... Please wait')
-            fetch(`${API_ROOT}/newGame`, configObj)
+            fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
             // .then(resp => resp.json())
             // .then(game => console.log(game))
+            setTimeout(() => {
+                if (this.props.joinableGames.length > 0) {
+                    const body2 = {
+                        user_id: this.props.userId,
+                        game_id: this.props.joinableGames[0]['id'],
+                        total_bet: this.props.joinableGames[0]['minimum_bet'],
+                        extra_bet: this.props.joinableGames[0]['minimum_bet']
+                    }
+
+                    const configObj2 = {
+                        method: 'POST',
+                        headers: HEADERS,
+                        body: JSON.stringify(body2)
+                    }
+                    fetch(`${API_ROOT}/joinGame`, configObj2)
+                        .then(r => r.json())
+                        .then(json => {
+                            console.log(json);
+                            this.props.handleActiveGame(json)
+                        });
+                }
+            }, 10000);
         }
     }
 
@@ -93,9 +115,9 @@ class RightComponentGame extends Component {
 
                         <div className="spanLights">
                             <div className="speed">
-                                <button 
-                                onClick={() => this.handleHypeClick(horse.id)}
-                                className="speedButtonsRightComp">Hype!</button>
+                                <button
+                                    onClick={() => this.handleHypeClick(horse.id)}
+                                    className="speedButtonsRightComp">Hype!</button>
                             </div>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ class AllThreeGame extends Component {
             horseSpeed2: -5,
             horseSpeed3: -5,
             horseSpeed4: -5,
-            user_id: 1
+            user_id: 10
 
 
         }
