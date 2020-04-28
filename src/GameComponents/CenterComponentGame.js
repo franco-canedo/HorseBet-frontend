@@ -1,17 +1,82 @@
 import React, { Component } from "react";
 import Animation from './Animation.js';
+import horseImage from '../Images/horseface.png';
+import { API_ROOT, HEADERS } from '../constants';
 
 class CenterComponentGame extends Component {
+    constructor() {
+        super()
+        this.state = {
+            horseChosen: false,
+            active: false
+        }
+    }
+    handleHorseClick = (id) => {
+        console.log(this.props.userId);
+        const body = {
+            user_id: this.props.userId,
+            horse_id: id
+        }
+
+        const configObj = {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+        }
+        fetch(`${API_ROOT}/userHorse`, configObj)
+        .then(r => r.json())
+        .then(json => {
+            console.log(json);
+            const currentGameId = this.props.activeGame[0].id
+            this.props.updateActiveGame(currentGameId);
+            this.setState({
+                horseChosen: true
+            })
+        });
+    }
+
+    renderHorses = () => {
+        if (this.props.activeGame.length > 0) {
+            return <div className="horseListDiv">
+                <h4>Choose a horse to bet on!</h4>
+                {this.props.activeGame[0].horses && this.props.activeGame[0].horses.map(horse => {
+                    return <button onClick={() => this.handleHorseClick(horse.id)} key={horse.id} className="chooseHorse">
+                        <p>horse {horse.id}</p>
+                        <img alt="Horse face" src={horseImage}  height="35" width=""></img>
+                    </button>
+                })}
+
+            </div>
+        } 
+    }
+
+    activateGame = () => {
+        if (this.props.activeGame.length > 0) {
+            const boolean = this.props.activeGame[0].active;
+            this.setState({
+                active: boolean
+            })
+        }
+    }
 
     render() {
-
         return (
             <div className="CenterComponentGame">
-                <Animation horseSpeed1={this.props.horseSpeed1}
-                    horseSpeed2={this.props.horseSpeed2}
-                    horseSpeed3={this.props.horseSpeed3}
-                    horseSpeed4={this.props.horseSpeed4} 
-                    animation={this.props.animation}/>
+                {
+                    this.state.active ? 
+                        <Animation
+                            activeGame={this.props.activeGame}
+                            horseSpeed1={this.props.horseSpeed1}
+                            horseSpeed2={this.props.horseSpeed2}
+                            horseSpeed3={this.props.horseSpeed3}
+                            horseSpeed4={this.props.horseSpeed4}
+                            animation={this.props.animation} /> : this.state.horseChosen ?
+                            <h2>Waiting for others to bet...</h2> : 
+                        <div className="game">
+                            {this.renderHorses()}
+                        </div>
+                }
+
             </div>
         );
     }

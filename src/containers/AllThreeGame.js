@@ -14,10 +14,12 @@ class AllThreeGame extends Component {
             joinableGames: [],
             activeGame: [],
             activeGameId: null,
+            active: false,
             horseSpeed1: 10,
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
+            user_id: 10
 
 
         }
@@ -25,18 +27,32 @@ class AllThreeGame extends Component {
 
     handleActiveGame = (join) => {
         fetch(`${API_ROOT}/games/${join.game_id}`)
-        .then(resp => resp.json())
-        .then(game => {
-            console.log(game);
-            this.setState(prevState => {
-                return {
-                    activeGame: [game],
-                    activeGameId: game.id
-                }
-                
+            .then(resp => resp.json())
+            .then(game => {
+                // console.log(game);
+                this.setState(prevState => {
+                    return {
+                        activeGame: [game],
+                        // activeGameId: game.id
+                    }
+
+                })
             })
-        })
-        
+    }
+
+    updateActiveGame = (id) => {
+        fetch(`${API_ROOT}/games/${id}`)
+            .then(resp => resp.json())
+            .then(game => {
+                console.log(game);
+                this.setState(prevState => {
+                    return {
+                        activeGame: [game],
+                        // activeGameId: game.id
+                    }
+
+                })
+            })
     }
 
     componentDidMount = () => {
@@ -45,12 +61,8 @@ class AllThreeGame extends Component {
             .then(games => this.setState({ joinableGames: games }));
     };
 
-    // handleClick = id => {
-    //     this.setState({ activeGame: id });
-    // };
 
     handleReceivedGame = response => {
-        console.log("Cable game!", response);
         const { game } = response;
         this.setState(prevState => {
             return {
@@ -105,6 +117,11 @@ class AllThreeGame extends Component {
 
                 <LeftComponentGame activeGame={this.state.activeGame} />
                 <CenterComponentGame
+                    userId={this.state.user_id}
+                    updateActiveGame={this.updateActiveGame}
+                    active={this.state.active}
+                    activeGameHorses={this.state.activeGame.horses}
+                    activeGame={this.state.activeGame}
                     horseSpeed1={this.state.horseSpeed1}
                     horseSpeed2={this.state.horseSpeed2}
                     horseSpeed3={this.state.horseSpeed3}
@@ -112,6 +129,7 @@ class AllThreeGame extends Component {
                     animation={this.state.activeGameId === null ? null : this.animation} />
 
                 <RightComponentGame
+                    userId={this.state.user_id}
                     handleActiveGame={this.handleActiveGame}
                     joinableGames={this.state.joinableGames} />
                 <Footer />

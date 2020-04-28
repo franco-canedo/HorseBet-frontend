@@ -320,3 +320,21 @@
 .hidden {
   display: none;
 }
+
+.horseListDiv {
+  border: ridge;
+  padding: 10px;
+  height: 250px;
+}
+
+.chooseHorse {
+  border: solid;
+  height: 35%;
+  width: 25%;
+  margin-bottom: 10px;
+  padding: 2px;
+  margin-right: 50px;
+  margin-left: 50px;
+
+
+}
