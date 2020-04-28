@@ -1,19 +1,19 @@
 import React, { Fragment } from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 
-const Cable = ({ joinableGames, handleReceivedBoo }) => {
+const Cable = ({ activeGameId, handleReceivedBoo }) => {
   return (
     <Fragment>
-      {joinableGames && joinableGames.map(game => {
-        return (
+     
           <ActionCable
-            key={game.id}  
-            channel={{ channel: 'BoosChannel', game: game.id }}
+            key={activeGameId}  
+            channel={{ channel: 'BoosChannel', game: activeGameId }}
             onReceived={handleReceivedBoo}
           />
-        );
-      })}
-    </Fragment>
+          </Fragment>
+        
+     
+    
   );
 };
 

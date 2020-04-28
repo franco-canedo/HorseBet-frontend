@@ -21,16 +21,16 @@ class AllThreeGame extends Component {
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
-            user_id: 7
+            user_id: 10
 
 
         }
     }
 
     handleHorseChosen = (id) => {
-        console.log(id)
+        // console.log(id)
         const horse = this.state.horses.find(h => h.id === id);
-        console.log(horse)
+        // console.log(horse)
 
         const index = this.state.horses.indexOf(horse)
         horse.chosen = true;
@@ -158,7 +158,7 @@ class AllThreeGame extends Component {
                 />
                 {this.state.joinableGames.length ? (
                     <Cable
-                        joinableGames={joinableGames}
+                        activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null }
                         handleReceivedBoo={this.handleReceivedBoo}
                     />
                 ) : null}
