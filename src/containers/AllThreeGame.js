@@ -17,6 +17,8 @@ class AllThreeGame extends Component {
             active: false,
             horseChosen: false,
             horses: [],
+            horseBooId: 0,
+            speedTest: 3,
             horseSpeed1: 10,
             horseSpeed2: 10,
             horseSpeed3: 10,
@@ -28,9 +30,7 @@ class AllThreeGame extends Component {
     }
 
     handleHorseChosen = (id) => {
-        // console.log(id)
         const horse = this.state.horses.find(h => h.id === id);
-        // console.log(horse)
 
         const index = this.state.horses.indexOf(horse)
         horse.chosen = true;
@@ -122,6 +122,20 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         const { boo } = response;
+        console.log(boo.game_id);
+        const horse = this.state.horses.find(h => h.id === boo.horse_id);
+
+        const index = this.state.horses.indexOf(horse)
+        horse.speed = horse.speed + 1;
+        const array = [...this.state.horses]
+        array[index] = horse;
+        this.setState(prevState => {
+            return {
+                speedTest: prevState.speedTest + 1,
+                horses: array
+            }
+           
+        })
 
     };
 
@@ -154,6 +168,8 @@ class AllThreeGame extends Component {
                     activeGame={this.state.activeGame} />
                 <CenterComponentGame
                     userId={this.state.user_id}
+                    speedTest={this.state.speedTest}
+                    booId={this.state.horseBooId}
                     updateActiveGame={this.updateActiveGame}
                     activeGameHorses={this.state.activeGame.horses}
                     activeGame={this.state.activeGame}

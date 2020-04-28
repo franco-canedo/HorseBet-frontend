@@ -20,10 +20,7 @@ class Animation extends Component {
     }
 
     updateAnimationState() {
-        //GET speed
-        // setState = speed
-        // speed += 1
-        //POST speed 
+        
         this.setState(prevState => ({
             horseSpeed1: prevState.horseSpeed1 + .5,
             horseSpeed2: prevState.horseSpeed2 + .5,
@@ -60,10 +57,24 @@ class Animation extends Component {
         // })
     }
 
+    // handleBooFromParent = () => {
+
+    //     console.log('booParent?', this.props.booId);
+    //     this.setState(prevState => {
+    //         return {
+    //             horseSpeed1: prevState.horseSpeed1 - 5
+    //         }          
+    //     })
+    // }
+
+
     render() {
+        const minus = this.state.horseSpeed1 - this.props.speedTest;
+        console.log(this.props.speedTest)
+        console.log(minus);
         return (
             <div>
-                <Canvas horseSpeed1={this.state.horseSpeed1}
+                <Canvas horseSpeed1={minus}
                     horseSpeed2={this.state.horseSpeed2}
                     horseSpeed3={this.state.horseSpeed3}
                     horseSpeed4={this.state.horseSpeed4}

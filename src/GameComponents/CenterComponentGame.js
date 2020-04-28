@@ -25,17 +25,17 @@ class CenterComponentGame extends Component {
             body: JSON.stringify(body)
         }
         fetch(`${API_ROOT}/userHorse`, configObj)
-        .then(r => r.json())
-        .then(json => {
-            // console.log(json);
-            const currentGameId = this.props.activeGame[0].id
-            this.props.updateActiveGame(currentGameId);
-            this.setState({
-                horseChosen: true
-            })
-            this.props.handleHorseChosen(id);
-            this.activateGame();
-        });
+            .then(r => r.json())
+            .then(json => {
+                // console.log(json);
+                const currentGameId = this.props.activeGame[0].id
+                this.props.updateActiveGame(currentGameId);
+                this.setState({
+                    horseChosen: true
+                })
+                this.props.handleHorseChosen(id);
+                this.activateGame();
+            });
     }
 
     renderHorses = () => {
@@ -45,12 +45,12 @@ class CenterComponentGame extends Component {
                 {this.props.activeGame[0].horses && this.props.activeGame[0].horses.map(horse => {
                     return <button onClick={() => this.handleHorseClick(horse.id)} key={horse.id} className="chooseHorse">
                         <p>horse {horse.id}</p>
-                        <img alt="Horse face" src={horseImage}  height="35" width=""></img>
+                        <img alt="Horse face" src={horseImage} height="35" width=""></img>
                     </button>
                 })}
 
             </div>
-        } 
+        }
     }
 
     activateGame = () => {
@@ -66,21 +66,22 @@ class CenterComponentGame extends Component {
         return (
             <div className="CenterComponentGame">
                 {
-                    this.state.active ? 
-                    <Fragment>
-                        <Animation
-                            activeGame={this.props.activeGame}
-                            horseSpeed1={this.props.horseSpeed1}
-                            horseSpeed2={this.props.horseSpeed2}
-                            horseSpeed3={this.props.horseSpeed3}
-                            horseSpeed4={this.props.horseSpeed4}
-                            animation={this.props.animation} />
+                    this.state.active ?
+                        <Fragment>
+                            <Animation
+                                speedTest={this.props.speedTest}
+                                activeGame={this.props.activeGame}
+                                horseSpeed1={this.props.horseSpeed1}
+                                horseSpeed2={this.props.horseSpeed2}
+                                horseSpeed3={this.props.horseSpeed3}
+                                horseSpeed4={this.props.horseSpeed4}
+                                animation={this.props.animation} />
 
-                            </Fragment> : this.state.horseChosen ?
-                            <h2>Waiting for others to bet...</h2> : 
-                        <div className="game">
-                            {this.renderHorses()}
-                        </div>
+                        </Fragment> : this.state.horseChosen ?
+                            <h2>Waiting for others to bet...</h2> :
+                            <div className="game">
+                                {this.renderHorses()}
+                            </div>
                 }
 
             </div>
