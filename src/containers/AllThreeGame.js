@@ -145,6 +145,7 @@ class AllThreeGame extends Component {
             }
            
         })
+        this.updateActiveGame(this.state.activeGame[0].id)
 
     };
 
@@ -170,10 +171,9 @@ class AllThreeGame extends Component {
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
         // console.log(response[0].active);
-        console.log(response.user_horse);
-        console.log(response.user_horse.id);
+    
         if(response.user_horse.active === true) {
-            console.log('true?');
+            
             if(response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;

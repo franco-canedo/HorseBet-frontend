@@ -72,7 +72,7 @@ class RightComponentGame extends Component {
                             this.props.handleActiveGame(json)
                         });
                 }
-            }, 4000);
+            }, 3000);
         }
     }
 
