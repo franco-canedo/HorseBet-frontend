@@ -71,6 +71,7 @@ class CenterComponentGame extends Component {
                     this.props.activeGame.length === 0 ? null : this.props.activeGame[0].active ?
                         <Fragment>
                             <Animation
+                                user={this.props.user}
                                 speedTest={this.props.speedTest}
                                 horses={this.props.horses}
                                 activeGame={this.props.activeGame}

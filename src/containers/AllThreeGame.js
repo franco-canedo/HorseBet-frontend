@@ -220,10 +220,12 @@ class AllThreeGame extends Component {
                 ) : null}
 
                 <LeftComponentGame
-                    userId={this.state.user_id}
+                    user={this.props.currentUser}
+                    userId={this.props.currentUser}
                     activeGame={this.state.activeGame} />
                 <CenterComponentGame
-                    userId={this.state.user_id}
+                    userId={this.props.currentUser.id}
+                    user={this.props.currentUser}
                     speedTest={this.state.speedTest}
                     booId={this.state.horseBooId}
                     updateActiveGame={this.updateActiveGame}
@@ -242,7 +244,7 @@ class AllThreeGame extends Component {
                     } />
 
                 <RightComponentGame
-                    userId={this.state.user_id}
+                    userId={this.props.currentUser}
                     handleActiveGame={this.handleActiveGame}
                     activeGame={this.state.activeGame}
                     horses={this.state.horses}

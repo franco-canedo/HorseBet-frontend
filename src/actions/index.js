@@ -22,7 +22,7 @@ export const userPostFetch = user => {
                     // This assumes your Rails API will return a JSON object with a key of
                     // 'message' if there is an error with creating the user, i.e. invalid username
                 } else {
-                    localStorage.setItem("token", data.token)
+                    localStorage.setItem("token", data.jwt)
                     dispatch(loginUser(data.user))
                 }
             })

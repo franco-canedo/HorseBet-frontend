@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 class LeftComponentGame extends Component {
     totalBet = () => {
+        console.log(this.props.activeGame);
         if(this.props.activeGame.length > 0) {
             const gameUsers = this.props.activeGame[0].game_users;
-            //const gameUser = gameUsers.find(user => user.user_id === this.props.userId)
+            //const gameUser = gameUsers.find(user => user.user_id === this.props.user.currentUser.id)
             const gameUser = gameUsers[gameUsers.length - 1]
             return gameUser.total_bet.toFixed(2)
             }
@@ -13,7 +14,7 @@ class LeftComponentGame extends Component {
     extraBet = () => {
         if(this.props.activeGame.length > 0) {
             const gameUsers = this.props.activeGame[0].game_users;
-            //const gameUser = gameUsers.find(user => user.user_id === this.props.userId)
+            //const gameUser = gameUsers.find(user => user.user_id === this.props.user.currentUser.id)
             const gameUser = gameUsers[gameUsers.length - 1]
             return gameUser.extra_bet.toFixed(2)
             }
@@ -28,7 +29,7 @@ class LeftComponentGame extends Component {
                     this.props.activeGame[0].jackpot.toFixed(2) : null}</p>
                 </div>
                 <div className="GameInfoDivs ">
-                    <h2>Your Bet:</h2>
+                    <h2>{this.props.user.currentUser.username}, Your Bet:</h2>
                     <p>${this.totalBet()}</p>
                 </div>
                 <div className="GameInfoDivs ">
