@@ -20,7 +20,7 @@ class Animation extends Component {
     }
 
     updateAnimationState() {
-        
+
         this.setState(prevState => ({
             horseSpeed1: prevState.horseSpeed1 + .5,
             horseSpeed2: prevState.horseSpeed2 + .5,
@@ -30,7 +30,7 @@ class Animation extends Component {
         // if(this.props.animation !== null) {
         //     this.props.animation();
         // }
-        
+
         this.rAF = requestAnimationFrame(this.updateAnimationState);
     }
 
@@ -39,16 +39,16 @@ class Animation extends Component {
     }
 
     boo = (event) => {
-       console.log("boo?");
-       const body = {
-           game_id: 1,
-           horse_id: 2
-       }
-       fetch(`${API_ROOT}/boo`, {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify(body)
-      });
+        console.log("boo?");
+        const body = {
+            game_id: 1,
+            horse_id: 2
+        }
+        fetch(`${API_ROOT}/boo`, {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+        });
 
         // this.setState(prevState => {
         //     return {
@@ -82,10 +82,11 @@ class Animation extends Component {
                     horseSpeed4={minus4}
                     boo={this.boo} />
                 <div className="gameButtonsDiv">
-                    <button className="gameButtons" onClick={this.boo}>Boo!</button>
+                    <h3>{this.props.user.currentUser.username}</h3>
+                    {/* <button className="gameButtons" onClick={this.boo}>Boo!</button>
                     <button className="gameButtons" onClick={this.boo}>Boo!</button>
                     <button className="gameButtons" onClick={this.boo}>Hype!</button>
-                    <button className="gameButtons" onClick={this.boo}>Boo!</button>
+                    <button className="gameButtons" onClick={this.boo}>Boo!</button> */}
                 </div>
             </div>
         );

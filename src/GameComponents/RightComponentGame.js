@@ -19,7 +19,7 @@ class RightComponentGame extends Component {
     handleGameFetch = (event) => {
         if (this.props.joinableGames.length > 0) {
             const body = {
-                user_id: this.props.userId,
+                user_id: this.props.userId.currentUser.id,
                 game_id: this.props.joinableGames[0]['id'],
                 total_bet: this.props.joinableGames[0]['minimum_bet'],
                 extra_bet: this.props.joinableGames[0]['minimum_bet']
@@ -54,7 +54,7 @@ class RightComponentGame extends Component {
             setTimeout(() => {
                 if (this.props.joinableGames.length > 0) {
                     const body2 = {
-                        user_id: this.props.userId,
+                        user_id: this.props.userId.currentUser.id,
                         game_id: this.props.joinableGames[0]['id'],
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
@@ -72,7 +72,7 @@ class RightComponentGame extends Component {
                             this.props.handleActiveGame(json)
                         });
                 }
-            }, 4000);
+            }, 3000);
         }
     }
 

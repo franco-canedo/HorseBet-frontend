@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { userLoginFetch } from '../actions';
 
 class LogInForm extends Component {
     constructor(props) {
@@ -13,31 +15,40 @@ class LogInForm extends Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const body = this.state;
+    // handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const body = this.state;
 
-        const configObj = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify(body),
-        };
+    //     const configObj = {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             Accept: "application/json",
+    //         },
+    //         body: JSON.stringify(body),
+    //     };
 
-        fetch('http://localhost:3000/api/v1/login', configObj)
-            .then(r => r.json())
-            .then(console.log)
+    //     fetch('http://localhost:3000/api/v1/login', configObj)
+    //         .then(r => r.json())
+    //         .then(console.log)
 
-        // fetch('http://localhost:3000/api/v1/profile', {
-        //     method: 'GET',
-        //     headers: {
-        //         Authorization: `Bearer <token>`
-        //     }
-        // })
+    //     // fetch('http://localhost:3000/api/v1/profile', {
+    //     //     method: 'GET',
+    //     //     headers: {
+    //     //         Authorization: `Bearer <token>`
+    //     //     }
+    //     // })
 
-    };
+    // };
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.props.userLoginFetch(this.state)
+        this.setState({
+            username: "",
+            password: "",
+        })
+    }
 
     render() {
         return (
@@ -76,4 +87,8 @@ class LogInForm extends Component {
     }
 }
 
-export default LogInForm;
+const mapDispatchToProps = dispatch => ({
+    userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo))
+})
+
+export default connect(null, mapDispatchToProps)(LogInForm);

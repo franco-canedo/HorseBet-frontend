@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import {userPostFetch} from '../actions';
+
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -13,24 +16,33 @@ class SignUpForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
   
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const body = this.state;
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const body = this.state;
 
-    const configObj = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    };
+  //   const configObj = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     body: JSON.stringify(body),
+  //   };
 
-    fetch('http://localhost:3000/api/v1/users', configObj)
-    .then(r => r.json())
-    .then(console.log)
+  //   fetch('http://localhost:3000/api/v1/users', configObj)
+  //   .then(r => r.json())
+  //   .then(console.log)
     
-  };
+  // };
+
+  handleSubmit = event => {
+    event.preventDefault()
+    this.props.userPostFetch(this.state)
+    this.setState({
+      username: "",
+      password: "",
+    })
+  }
 
   render() {
     return (
@@ -68,4 +80,8 @@ class SignUpForm extends Component {
   }
 }
 
-export default SignUpForm;
+const mapDispatchToProps = dispatch => ({
+  userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
+})
+
+export default connect(null, mapDispatchToProps)(SignUpForm);

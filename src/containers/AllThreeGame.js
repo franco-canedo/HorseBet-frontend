@@ -7,6 +7,10 @@ import { API_ROOT } from '../constants';
 import { ActionCable } from 'react-actioncable-provider';
 import Cable from '../GameComponents/Cable';
 
+import { connect } from 'react-redux';
+import { getProfileFetch } from '../actions';
+
+
 class AllThreeGame extends Component {
     constructor() {
         super()
@@ -24,11 +28,19 @@ class AllThreeGame extends Component {
             horseSpeed2: -5,
             horseSpeed3: -5,
             horseSpeed4: -5,
-            user_id: 4
+            user_id: 10
 
 
         }
     }
+
+    componentDidMount = () => {
+        fetch(`${API_ROOT}/joinableGames`)
+            .then(res => res.json())
+            .then(games => this.setState({ joinableGames: games }));
+
+        this.props.getProfileFetch()
+    };
 
     handleHorseChosen = (id) => {
         const horse = this.state.horses.find(h => h.id === id);
@@ -104,11 +116,7 @@ class AllThreeGame extends Component {
             })
     }
 
-    componentDidMount = () => {
-        fetch(`${API_ROOT}/joinableGames`)
-            .then(res => res.json())
-            .then(games => this.setState({ joinableGames: games }));
-    };
+
 
     // componentDidUpdate = () => {
     //     fetch(`${API_ROOT}/activeGames`)
@@ -129,7 +137,7 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         const { boo } = response;
-        
+
         const horse = this.state.horses.find(h => h.id === boo.horse_id);
 
         const index = this.state.horses.indexOf(horse)
@@ -143,8 +151,9 @@ class AllThreeGame extends Component {
                 speedTest: prevState.speedTest + 5,
                 horses: array
             }
-           
+
         })
+        this.updateActiveGame(this.state.activeGame[0].id)
 
     };
 
@@ -163,18 +172,17 @@ class AllThreeGame extends Component {
                 speedTest: prevState.speedTest - 5,
                 horses: array
             }
-           
+
         })
     }
 
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
         // console.log(response[0].active);
-        console.log(response.user_horse);
-        console.log(response.user_horse.id);
-        if(response.user_horse.active === true) {
-            console.log('true?');
-            if(response.user_horse.game_id === this.state.activeGame[0].id) {
+
+        if (response.user_horse.active === true) {
+
+            if (response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;
                 console.log(game)
@@ -212,10 +220,12 @@ class AllThreeGame extends Component {
                 ) : null}
 
                 <LeftComponentGame
-                    userId={this.state.user_id}
+                    user={this.props.currentUser}
+                    userId={this.props.currentUser}
                     activeGame={this.state.activeGame} />
                 <CenterComponentGame
-                    userId={this.state.user_id}
+                    userId={this.props.currentUser.id}
+                    user={this.props.currentUser}
                     speedTest={this.state.speedTest}
                     booId={this.state.horseBooId}
                     updateActiveGame={this.updateActiveGame}
@@ -234,7 +244,7 @@ class AllThreeGame extends Component {
                     } />
 
                 <RightComponentGame
-                    userId={this.state.user_id}
+                    userId={this.props.currentUser}
                     handleActiveGame={this.handleActiveGame}
                     activeGame={this.state.activeGame}
                     horses={this.state.horses}
@@ -246,8 +256,15 @@ class AllThreeGame extends Component {
     }
 }
 
-export default AllThreeGame;
+const mapDispatchToProps = dispatch => ({
+    getProfileFetch: () => dispatch(getProfileFetch())
+})
 
-// const findActiveGame = (games, activeGameId) => {
-//     return games.find(game => game.id === activeGameId);
-//   };
+const mapStateToProps = state => {
+    return {
+      currentUser: state.currentUser
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllThreeGame);
+
