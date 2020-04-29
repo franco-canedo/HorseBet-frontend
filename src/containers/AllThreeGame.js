@@ -12,6 +12,7 @@ class AllThreeGame extends Component {
         super()
         this.state = {
             joinableGames: [],
+            activeGames: [],
             activeGame: [],
             activeGameId: null,
             active: false,
@@ -23,7 +24,7 @@ class AllThreeGame extends Component {
             horseSpeed2: -5,
             horseSpeed3: -5,
             horseSpeed4: -5,
-            user_id: 10
+            user_id: 4
 
 
         }
@@ -109,6 +110,12 @@ class AllThreeGame extends Component {
             .then(games => this.setState({ joinableGames: games }));
     };
 
+    // componentDidUpdate = () => {
+    //     fetch(`${API_ROOT}/activeGames`)
+    //         .then(res => res.json())
+    //         .then(games => this.setState({ activeGames: games }));
+    // }
+
 
     handleReceivedGame = response => {
         const { game } = response;
@@ -122,11 +129,13 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         const { boo } = response;
-        console.log(boo.game_id);
+        
         const horse = this.state.horses.find(h => h.id === boo.horse_id);
 
         const index = this.state.horses.indexOf(horse)
+        console.log(horse.speed);
         horse.speed = horse.speed + 5;
+        console.log(horse.speed);
         const array = [...this.state.horses]
         array[index] = horse;
         this.setState(prevState => {
@@ -158,6 +167,24 @@ class AllThreeGame extends Component {
         })
     }
 
+    handleReceivedUserHorse = (response) => {
+        const { userHorse } = response;
+        // console.log(response[0].active);
+        console.log(response.user_horse);
+        console.log(response.user_horse.id);
+        if(response.user_horse.active === true) {
+            console.log('true?');
+            if(response.user_horse.game_id === this.state.activeGame[0].id) {
+                let game = this.state.activeGame[0];
+                game.active = true;
+                console.log(game)
+                this.setState({
+                    activeGame: [game]
+                })
+            }
+        }
+    }
+
     // animation = () => {
     //     this.setState(prevState => ({
     //         horseSpeed1: prevState.horseSpeed1 + .5,
@@ -180,6 +207,7 @@ class AllThreeGame extends Component {
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
                         handleReceivedHype={this.handleReceivedHype}
+                        handleReceivedUserHorse={this.handleReceivedUserHorse}
                     />
                 ) : null}
 

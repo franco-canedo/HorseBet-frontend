@@ -73,7 +73,7 @@ class Animation extends Component {
         const minus2 = this.state.horseSpeed2 - this.props.horses[1].speed;
         const minus3 = this.state.horseSpeed3 - this.props.horses[2].speed;
         const minus4 = this.state.horseSpeed4 - this.props.horses[3].speed;
-        console.log(minus1);
+        // console.log(minus1);
         return (
             <div>
                 <Canvas horseSpeed1={minus1}

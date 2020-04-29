@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { API_ROOT, HEADERS } from '../constants';
+import { API_ROOT, HEADERS, API_WS_ROOT } from '../constants';
 
 
 class RightComponentGame extends Component {
@@ -72,7 +72,7 @@ class RightComponentGame extends Component {
                             this.props.handleActiveGame(json)
                         });
                 }
-            }, 10000);
+            }, 4000);
         }
     }
 
@@ -80,7 +80,8 @@ class RightComponentGame extends Component {
         console.log("boo?");
         const body = {
             game_id: this.props.activeGame[0].id,
-            horse_id: horseId
+            horse_id: horseId,
+            user_id: this.props.user_id
         }
         fetch(`${API_ROOT}/boo`, {
             method: 'POST',
@@ -93,7 +94,8 @@ class RightComponentGame extends Component {
         console.log('hype?');
         const body = {
             game_id: this.props.activeGame[0].id,
-            horse_id: horseId
+            horse_id: horseId,
+            user_id: this.props.user_id
         }
         fetch(`${API_ROOT}/hype`, {
             method: 'POST',
