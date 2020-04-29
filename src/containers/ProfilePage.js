@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import ProfileHeader from '../ProfileComponents/ProfileHeader.js';
 import AllThreeProfile from './AllThreeProfile';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import allReducers from '../reducers';
 
+
+const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 class ProfilePage extends Component {
     constructor() {
         super()
@@ -23,7 +31,9 @@ class ProfilePage extends Component {
         <div>
            
             <ProfileHeader />
+            
             <AllThreeProfile user={this.state.user} />
+         
         </div>
       );
     }

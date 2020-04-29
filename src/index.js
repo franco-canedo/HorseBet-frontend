@@ -6,29 +6,40 @@ import * as serviceWorker from './serviceWorker';
 import MainPage from './containers/MainPage.js';
 import ProfilePage from './containers/ProfilePage.js'
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import allReducers from './reducers';
-// import { Provider } from 'react-redux';
-import Game from './containers/Game';
+import { Provider } from 'react-redux';
+
 import { ActionCableProvider } from 'react-actioncable-provider';
 import { API_WS_ROOT } from './constants';
+
+const storeEnhancers = () => {
+  return (
+    allReducers,
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+}
 
 
 const store = createStore(
   allReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  applyMiddleware(thunk)
 );
 
 ReactDOM.render(
   <div>
-    
-    <Router>
-      <React.StrictMode>
-        <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/game" component={App} />
-      </React.StrictMode>
-    </Router></div>
+    <Provider store={store}>
+      <Router>
+        <React.StrictMode>
+          <Route exact path="/profile" component={ProfilePage} />
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/game" component={App} />
+        </React.StrictMode>
+      </Router>
+    </Provider>
+  </div>
   ,
   document.getElementById('root')
 );
