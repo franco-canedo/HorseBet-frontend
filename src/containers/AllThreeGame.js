@@ -12,18 +12,97 @@ class AllThreeGame extends Component {
         super()
         this.state = {
             joinableGames: [],
+            activeGames: [],
             activeGame: [],
             activeGameId: null,
-            horseSpeed1: 10,
-            horseSpeed2: 10,
-            horseSpeed3: 10,
-            horseSpeed4: 10,
+            active: false,
+            horseChosen: false,
+            horses: [],
+            horseBooId: 0,
+            speedTest: 3,
+            horseSpeed1: -5,
+            horseSpeed2: -5,
+            horseSpeed3: -5,
+            horseSpeed4: -5,
+            user_id: 4
 
 
         }
     }
 
-    
+    handleHorseChosen = (id) => {
+        const horse = this.state.horses.find(h => h.id === id);
+
+        const index = this.state.horses.indexOf(horse)
+        horse.chosen = true;
+        const array = [...this.state.horses]
+        array[index] = horse;
+
+        this.setState({
+            horseChosen: true,
+            horses: array
+        })
+    }
+
+
+    handleActiveGame = (join) => {
+        fetch(`${API_ROOT}/games/${join.game_id}`)
+            .then(resp => resp.json())
+            .then(game => {
+                // console.log(game);
+                this.setState(prevState => {
+                    return {
+                        activeGame: [game],
+                        // activeGameId: game.id
+                    }
+
+                })
+                this.setGameHorses(game);
+            })
+    }
+
+    setGameHorses = (game) => {
+        const h1 = game.horses[0];
+        const h2 = game.horses[1];
+        const h3 = game.horses[2];
+        const h4 = game.horses[3];
+
+        this.setState({
+            horses: [
+                {
+                    id: h1.id,
+                    speed: 10
+                },
+                {
+                    id: h2.id,
+                    speed: 10
+                },
+                {
+                    id: h3.id,
+                    speed: 10
+                },
+                {
+                    id: h4.id,
+                    speed: 10
+                },
+            ]
+        })
+    }
+
+    updateActiveGame = (id) => {
+        fetch(`${API_ROOT}/games/${id}`)
+            .then(resp => resp.json())
+            .then(game => {
+                console.log(game);
+                this.setState(prevState => {
+                    return {
+                        activeGame: [game],
+                        // activeGameId: game.id
+                    }
+
+                })
+            })
+    }
 
     componentDidMount = () => {
         fetch(`${API_ROOT}/joinableGames`)
@@ -31,12 +110,14 @@ class AllThreeGame extends Component {
             .then(games => this.setState({ joinableGames: games }));
     };
 
-    // handleClick = id => {
-    //     this.setState({ activeGame: id });
-    // };
+    // componentDidUpdate = () => {
+    //     fetch(`${API_ROOT}/activeGames`)
+    //         .then(res => res.json())
+    //         .then(games => this.setState({ activeGames: games }));
+    // }
+
 
     handleReceivedGame = response => {
-        console.log("Cable game!", response);
         const { game } = response;
         this.setState(prevState => {
             return {
@@ -48,31 +129,70 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         const { boo } = response;
-        // const games = [...this.state.games];
-        // const game = games.find(
-        //     g => g.id === boo.game_id
-        // );
-        // const horse = game.horses.find(
-        //     h => h.id === boo.horse_id
-        // )
+        
+        const horse = this.state.horses.find(h => h.id === boo.horse_id);
 
-
+        const index = this.state.horses.indexOf(horse)
+        console.log(horse.speed);
+        horse.speed = horse.speed + 5;
+        console.log(horse.speed);
+        const array = [...this.state.horses]
+        array[index] = horse;
         this.setState(prevState => {
             return {
-                horseSpeed1: prevState.horseSpeed1 - 5
+                speedTest: prevState.speedTest + 5,
+                horses: array
             }
+           
         })
-        // this.setState({ games });
+
     };
 
-    animation = () => {
-        this.setState(prevState => ({
-            horseSpeed1: prevState.horseSpeed1 + .5,
-            horseSpeed2: prevState.horseSpeed2 + .5,
-            horseSpeed3: prevState.horseSpeed3 + .5,
-            horseSpeed4: prevState.horseSpeed4 + .5,
-        }));
+    handleReceivedHype = (response) => {
+        console.log('HYPE', response)
+        const { hype } = response;
+        console.log(hype.game_id);
+        const horse = this.state.horses.find(h => h.id === hype.horse_id);
+
+        const index = this.state.horses.indexOf(horse)
+        horse.speed = horse.speed - 5;
+        const array = [...this.state.horses]
+        array[index] = horse;
+        this.setState(prevState => {
+            return {
+                speedTest: prevState.speedTest - 5,
+                horses: array
+            }
+           
+        })
     }
+
+    handleReceivedUserHorse = (response) => {
+        const { userHorse } = response;
+        // console.log(response[0].active);
+        console.log(response.user_horse);
+        console.log(response.user_horse.id);
+        if(response.user_horse.active === true) {
+            console.log('true?');
+            if(response.user_horse.game_id === this.state.activeGame[0].id) {
+                let game = this.state.activeGame[0];
+                game.active = true;
+                console.log(game)
+                this.setState({
+                    activeGame: [game]
+                })
+            }
+        }
+    }
+
+    // animation = () => {
+    //     this.setState(prevState => ({
+    //         horseSpeed1: prevState.horseSpeed1 + .5,
+    //         horseSpeed2: prevState.horseSpeed2 + .5,
+    //         horseSpeed3: prevState.horseSpeed3 + .5,
+    //         horseSpeed4: prevState.horseSpeed4 + .5,
+    //     }));
+    // }
 
     render() {
         const { joinableGames, activeGameId } = this.state;
@@ -84,20 +204,42 @@ class AllThreeGame extends Component {
                 />
                 {this.state.joinableGames.length ? (
                     <Cable
-                        joinableGames={joinableGames}
+                        activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
+                        handleReceivedHype={this.handleReceivedHype}
+                        handleReceivedUserHorse={this.handleReceivedUserHorse}
                     />
                 ) : null}
-                
-                <LeftComponentGame />
+
+                <LeftComponentGame
+                    userId={this.state.user_id}
+                    activeGame={this.state.activeGame} />
                 <CenterComponentGame
+                    userId={this.state.user_id}
+                    speedTest={this.state.speedTest}
+                    booId={this.state.horseBooId}
+                    updateActiveGame={this.updateActiveGame}
+                    activeGameHorses={this.state.activeGame.horses}
+                    activeGame={this.state.activeGame}
+                    handleHorseChosen={this.handleHorseChosen}
+                    horses={this.state.horses}
                     horseSpeed1={this.state.horseSpeed1}
                     horseSpeed2={this.state.horseSpeed2}
                     horseSpeed3={this.state.horseSpeed3}
                     horseSpeed4={this.state.horseSpeed4}
-                    animation={this.state.activeGameId === null ? null : this.animation} />
+                    animation={
+                        this.state.activeGame.length === 0 ?
+                            null :
+                            this.state.activeGame[0].active ? this.animation : null
+                    } />
 
-                <RightComponentGame joinableGames={this.state.joinableGames}/>
+                <RightComponentGame
+                    userId={this.state.user_id}
+                    handleActiveGame={this.handleActiveGame}
+                    activeGame={this.state.activeGame}
+                    horses={this.state.horses}
+                    horseChosen={this.state.horseChosen}
+                    joinableGames={this.state.joinableGames} />
                 <Footer />
             </div>
         );

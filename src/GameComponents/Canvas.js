@@ -54,9 +54,9 @@ class Canvas extends Component {
         ctx.save();
         ctx.beginPath();
         ctx.drawImage(img, speed < 600 ? speed : 600, 13, 50, 50)
-        ctx.drawImage(img, speed2 < 600 ? speed : 600, 88, 50, 50)
-        ctx.drawImage(img, speed3 < 600 ? speed : 600, 163, 50, 50)
-        ctx.drawImage(img, speed4 < 600 ? speed : 600, 238, 50, 50)
+        ctx.drawImage(img, speed2 < 600 ? speed2 : 600, 88, 50, 50)
+        ctx.drawImage(img, speed3 < 600 ? speed3 : 600, 163, 50, 50)
+        ctx.drawImage(img, speed4 < 600 ? speed4 : 600, 238, 50, 50)
         ctx.restore();
       }
 
@@ -66,7 +66,6 @@ class Canvas extends Component {
             <div>
                 <img alt="text" ref="image" src={horse} className="hidden" />
                 <canvas className="canvas" ref={this.canvasRef} width={700} height={300} />
-                <button onClick={() => this.props.boo()}>boo</button>
             </div>
         );
     }
