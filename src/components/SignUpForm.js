@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
 import {userPostFetch} from '../actions';
-import ReduxThunk from 'redux-thunk'
+
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -38,6 +38,10 @@ class SignUpForm extends Component {
   handleSubmit = event => {
     event.preventDefault()
     this.props.userPostFetch(this.state)
+    this.setState({
+      username: "",
+      password: "",
+    })
   }
 
   render() {
