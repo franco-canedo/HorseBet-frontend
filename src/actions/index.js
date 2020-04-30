@@ -123,6 +123,7 @@ export const userLoginFetch = user => {
 }
 
 export const getProfileFetch = () => {
+    console.log('profile fetch')
     return dispatch => {
         const token = localStorage.token;
         if (token) {
@@ -141,7 +142,6 @@ export const getProfileFetch = () => {
                         // If this happens, you may want to remove the invalid token.
                         localStorage.removeItem("token")
                     } else {
-                        console.log(data)
                         dispatch(loginUser(data.user))
                     }
                 })

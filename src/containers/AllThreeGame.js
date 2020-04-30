@@ -9,10 +9,10 @@ import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
-import {setGameHorses} from '../actions'
-import {increment} from '../actions'
-import {decrement} from '../actions'
-import {updateActiveGame} from '../actions'
+import { setGameHorses } from '../actions'
+import { increment } from '../actions'
+import { decrement } from '../actions'
+import { updateActiveGame } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -73,12 +73,12 @@ class AllThreeGame extends Component {
                             activeGame: [game],
                             // activeGameId: game.id
                         }
-    
+
                     })
                 }, 1000)
-                
+
                 console.log(game)
-                
+
                 this.setGameHorses(game);
                 this.props.setGameHorses(game);
             })
@@ -152,7 +152,7 @@ class AllThreeGame extends Component {
         // const horse = this.state.horses.find(h => h.id === boo.horse_id);
         // const index = this.state.horses.indexOf(horse)       
         // horse.speed = horse.speed + 5;
-        
+
         // const array = [...this.state.horses]
         // array[index] = horse;
         // this.setState(prevState => {
@@ -171,9 +171,9 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedHype = (response) => {
-       
+
         // const { hype } = response;
-       
+
         // const horse = this.state.horses.find(h => h.id === hype.horse_id);
 
         // const index = this.state.horses.indexOf(horse)
@@ -238,7 +238,7 @@ class AllThreeGame extends Component {
                     user={this.props.currentUser}
                     userId={this.props.currentUser}
                     activeGameLame={this.state.activeGame}
-                 />
+                />
                 <CenterComponentGame
                     userId={this.props.currentUser.id}
                     user={this.props.currentUser}
@@ -282,9 +282,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-      currentUser: state.currentUser
+        currentUser: state.currentUser
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllThreeGame);
 

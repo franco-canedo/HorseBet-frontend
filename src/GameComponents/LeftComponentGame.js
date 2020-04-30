@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 class LeftComponentGame extends Component {
     totalBet = () => {
-        console.log(this.props.activeGame.activeGame);
         if(this.props.activeGameLame.length > 0) {
             console.log('hello??')
             const gameUsers = this.props.activeGame.activeGame.game_users;

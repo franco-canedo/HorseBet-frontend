@@ -17,9 +17,9 @@ class ProfilePage extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/users/10`)
-      .then(resp => resp.json())
-      .then(user => this.setState({ user }));
+    // fetch(`http://localhost:3000/api/v1/users/10`)
+    //   .then(resp => resp.json())
+    //   .then(user => this.setState({ user }));
     this.props.getProfileFetch();
   }
 

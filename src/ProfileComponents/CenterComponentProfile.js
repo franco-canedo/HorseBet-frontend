@@ -1,12 +1,110 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { API_ROOT, HEADERS } from '../constants';
+
+import { connect } from 'react-redux';
+import { getProfileFetch } from '../actions';
+import CenterComponentGame from "../GameComponents/CenterComponentGame";
 
 class CenterComponentProfile extends Component {
+    constructor() {
+        super()
+        this.state = {
+            depositBoolean: false,
+            withdrawBoolean: false,
+            amount: 0
 
+        }
+    }
+
+    handleDepositClick = () => {
+        this.setState(prevState => {
+            return {
+                depositBoolean: !prevState.depositBoolean
+            }
+        })
+    }
+
+    handleWithdrawClick = () => {
+        this.setState(prevState => {
+            return {
+                withdrawBoolean: !prevState.withdrawBoolean
+            }
+        })
+    }
+
+    handleBackClick = () => {
+        this.setState(prevState => {
+            return {
+                depositBoolean: false,
+                withdrawBoolean: false
+            }
+        })
+    }
+
+    handleChange = (event) => {
+        this.setState({
+            amount: event.target.value
+        })
+    }
+
+    handleDepositSubmit = (event) => {
+        this.setState({
+            amount: ""
+        })
+        event.preventDefault()
+        alert('deposit submitted');
+        const body = {
+            id: this.props.currentUser.currentUser.id,
+            amount: parseInt(this.state.amount, 10)
+        }
+
+        const configObj = {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+
+        }
+        fetch(`${API_ROOT}/api/v1/users/deposit`, configObj)
+            .then(r => r.json())
+            .then(json => {
+                console.log(json)
+                
+                this.props.getProfileFetch();
+            })
+    }
+
+    handleWithdrawSubmit = (event) => {
+        this.setState({
+            amount: ""
+        })
+        event.preventDefault()
+        alert('withdraw submitted');
+
+        const body = {
+            id: this.props.currentUser.currentUser.id,
+            amount: parseInt(this.state.amount, 10)
+        }
+        
+
+        const configObj = {
+            method: 'POST',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+
+        }
+        fetch(`${API_ROOT}/api/v1/users/withdraw`, configObj)
+            .then(r => r.json())
+            .then(json => {
+                console.log(json)
+    
+                this.props.getProfileFetch();
+            })
+    }
 
 
     renderRecentGames = () => {
         const winners = (gameWinners) => {
-            console.log(gameWinners)
+            // console.log(gameWinners)
             // let obj = threeGames[game].game_winners;
             for (const winner in gameWinners) {
                 return <p>winner:{gameWinners[winner].user.currentUser.username}</p>
@@ -14,7 +112,7 @@ class CenterComponentProfile extends Component {
         }
         let threeGames = this.props.user.currentUser.games
         for (const game in threeGames) {
-            console.log(threeGames[game].game_winners)
+
             return <div>
                 <p>id: {threeGames[game].id}</p>
                 {winners(threeGames[game].game_winners)}
@@ -25,15 +123,11 @@ class CenterComponentProfile extends Component {
     }
 
     render() {
-
-
         let array = this.props.user.currentUser.games;
         let gamesPlayed = 0;
         for (const game in array) {
             gamesPlayed = gamesPlayed + 1;
-
         }
-
 
         let array2 = this.props.user.currentUser.game_winners;
         let wins = 0
@@ -41,14 +135,47 @@ class CenterComponentProfile extends Component {
             wins = wins + 1;
         }
 
-
         return (
             <div className="CenterComponentProfile">
                 <div className="UserInfoDivs">
                     <h2>Manage Funds:</h2>
                     <h3>You have: ${this.props.user.currentUser.deposit}</h3>
-                    <button>Deposit</button>
-                    <button>Withdraw</button>
+                    {
+                        this.state.depositBoolean ?
+                            <Fragment>
+                                <form onSubmit={this.handleDepositSubmit}>
+                                    <label>Enter deposit $</label>
+                                    <input className="MeetupForm"
+                                        type="text"
+                                        name="deposit"
+                                        value={this.state.amount}
+                                        onChange={this.handleChange}
+                                    ></input>
+                                    <input type="submit"></input>
+                                </form>
+                                <button onClick={this.handleBackClick}>Back</button>
+                            </Fragment>
+                            : this.state.withdrawBoolean ?
+                                <Fragment>
+                                    <form onSubmit={this.handleWithdrawSubmit}>
+                                        <label>Enter withdraw $</label>
+                                        <input className="MeetupForm"
+                                            type="text"
+                                            name="deposit"
+                                            value={this.state.amount}
+                                            onChange={this.handleChange}
+                                        ></input>
+                                        <input type="submit"></input>
+                                    </form>
+                                    <button onClick={this.handleBackClick}>Back</button>
+                                </Fragment>
+                                :
+                                <Fragment>
+                                    <button onClick={this.handleDepositClick}>Deposit</button>
+                                    <button onClick={this.handleWithdrawClick}>Withdraw</button>
+                                </Fragment>
+                    }
+
                 </div>
 
                 <div className="UserInfoDivs">
@@ -79,4 +206,14 @@ class CenterComponentProfile extends Component {
     }
 }
 
-export default CenterComponentProfile;
+const mapDispatchToProps = dispatch => ({
+    getProfileFetch: () => dispatch(getProfileFetch())
+})
+
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CenterComponentProfile);
