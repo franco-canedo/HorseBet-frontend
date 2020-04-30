@@ -19,7 +19,7 @@ export const updateActiveGame = id => {
             .then(resp => resp.json())
             .then(game => {
                 dispatch(updateActive(game))
-                
+
             })
     }
 }
@@ -74,7 +74,7 @@ export const userPostFetch = user => {
             .then(resp => resp.json())
             .then(data => {
                 console.log(data)
-                if(data.user) {
+                if (data.user) {
                     alert('Account created! Please log in.')
                 } else {
                     if (data.error.username) {
@@ -82,7 +82,7 @@ export const userPostFetch = user => {
                         // Here you should have logic to handle invalid creation of a user.
                         // This assumes your Rails API will return a JSON object with a key of
                         // 'message' if there is an error with creating the user, i.e. invalid username
-                    } else if(data.error.password) {
+                    } else if (data.error.password) {
                         alert('Password has to be at least 5 characters')
                     } else {
                         alert('Account created! Please log in.')
@@ -92,7 +92,7 @@ export const userPostFetch = user => {
                     }
                 }
 
-                
+
             })
     }
 }
@@ -156,6 +156,14 @@ const loginUser = userObj => ({
 
 const loggedIn = () => ({
     type: 'SIGN_IN',
+})
+
+export const logoutUser = () => ({
+    type: 'LOGOUT_USER'
+})
+
+export const loggedOut = () => ({
+    type: 'SIGN_OUT',
 })
 
 

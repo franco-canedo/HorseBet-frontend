@@ -4,6 +4,7 @@ import AllThreeProfile from './AllThreeProfile';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
+import { Redirect } from "react-router-dom";
 
 
 class ProfilePage extends Component {
@@ -24,15 +25,15 @@ class ProfilePage extends Component {
 
 
   render() {
-    return (
+    return this.props.isLogged ? (
       <div>
-
         <ProfileHeader />
-
         <AllThreeProfile user={this.props.currentUser} />
-
       </div>
-    );
+    ) :
+      (
+        <Redirect to="/" things={this.state} />
+      );
   }
 }
 
@@ -42,7 +43,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    isLogged: state.isLogged
   }
 }
 
