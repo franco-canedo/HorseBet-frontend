@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Canvas from './Canvas';
 import { ActionCable } from 'react-actioncable-provider';
 import { API_ROOT, HEADERS } from '../constants';
+import { connect } from 'react-redux';
 
 class Animation extends Component {
     constructor(props) {
@@ -57,16 +58,6 @@ class Animation extends Component {
         // })
     }
 
-    // handleBooFromParent = () => {
-
-    //     console.log('booParent?', this.props.booId);
-    //     this.setState(prevState => {
-    //         return {
-    //             horseSpeed1: prevState.horseSpeed1 - 5
-    //         }          
-    //     })
-    // }
-
 
     render() {
         const minus1 = this.state.horseSpeed1 - this.props.horses[0].speed;
@@ -92,5 +83,10 @@ class Animation extends Component {
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+      horses: state.horses
+    }
+  }
 
-export default Animation;
+export default connect(mapStateToProps, null)(Animation);

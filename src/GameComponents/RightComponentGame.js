@@ -81,7 +81,7 @@ class RightComponentGame extends Component {
         const body = {
             game_id: this.props.activeGame[0].id,
             horse_id: horseId,
-            user_id: this.props.user_id
+            user_id: this.props.userId.currentUser.id
         }
         fetch(`${API_ROOT}/boo`, {
             method: 'POST',
@@ -95,7 +95,7 @@ class RightComponentGame extends Component {
         const body = {
             game_id: this.props.activeGame[0].id,
             horse_id: horseId,
-            user_id: this.props.user_id
+            user_id: this.props.userId.currentUser.id
         }
         fetch(`${API_ROOT}/hype`, {
             method: 'POST',

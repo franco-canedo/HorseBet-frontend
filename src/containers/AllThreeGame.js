@@ -9,6 +9,10 @@ import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
+import {setGameHorses} from '../actions'
+import {increment} from '../actions'
+import {decrement} from '../actions'
+import {updateActiveGame} from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -61,15 +65,22 @@ class AllThreeGame extends Component {
         fetch(`${API_ROOT}/games/${join.game_id}`)
             .then(resp => resp.json())
             .then(game => {
-                // console.log(game);
-                this.setState(prevState => {
-                    return {
-                        activeGame: [game],
-                        // activeGameId: game.id
-                    }
-
-                })
+                console.log(game);
+                this.props.updateActiveGame(game.id);
+                setTimeout(() => {
+                    this.setState(prevState => {
+                        return {
+                            activeGame: [game],
+                            // activeGameId: game.id
+                        }
+    
+                    })
+                }, 1000)
+                
+                console.log(game)
+                
                 this.setGameHorses(game);
+                this.props.setGameHorses(game);
             })
     }
 
@@ -99,9 +110,10 @@ class AllThreeGame extends Component {
                 },
             ]
         })
+
     }
 
-    updateActiveGame = (id) => {
+    updateActiveGameLame = (id) => {
         fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
             .then(game => {
@@ -136,44 +148,47 @@ class AllThreeGame extends Component {
 
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
-        const { boo } = response;
+        // const { boo } = response;
+        // const horse = this.state.horses.find(h => h.id === boo.horse_id);
+        // const index = this.state.horses.indexOf(horse)       
+        // horse.speed = horse.speed + 5;
+        
+        // const array = [...this.state.horses]
+        // array[index] = horse;
+        // this.setState(prevState => {
+        //     return {
+        //         speedTest: prevState.speedTest + 5,
+        //         horses: array
+        //     }
 
-        const horse = this.state.horses.find(h => h.id === boo.horse_id);
+        // })
 
-        const index = this.state.horses.indexOf(horse)
-        console.log(horse.speed);
-        horse.speed = horse.speed + 5;
-        console.log(horse.speed);
-        const array = [...this.state.horses]
-        array[index] = horse;
-        this.setState(prevState => {
-            return {
-                speedTest: prevState.speedTest + 5,
-                horses: array
-            }
 
-        })
-        this.updateActiveGame(this.state.activeGame[0].id)
+        this.props.increment(response);
+        this.props.updateActiveGame(this.state.activeGame[0].id);
+        // this.updateActiveGame(this.state.activeGame[0].id)
 
     };
 
     handleReceivedHype = (response) => {
-        console.log('HYPE', response)
-        const { hype } = response;
-        console.log(hype.game_id);
-        const horse = this.state.horses.find(h => h.id === hype.horse_id);
+       
+        // const { hype } = response;
+       
+        // const horse = this.state.horses.find(h => h.id === hype.horse_id);
 
-        const index = this.state.horses.indexOf(horse)
-        horse.speed = horse.speed - 5;
-        const array = [...this.state.horses]
-        array[index] = horse;
-        this.setState(prevState => {
-            return {
-                speedTest: prevState.speedTest - 5,
-                horses: array
-            }
+        // const index = this.state.horses.indexOf(horse)
+        // horse.speed = horse.speed - 5;
+        // const array = [...this.state.horses]
+        // array[index] = horse;
+        // this.setState(prevState => {
+        //     return {
+        //         speedTest: prevState.speedTest - 5,
+        //         horses: array
+        //     }
 
-        })
+        // })
+        this.props.updateActiveGame(this.state.activeGame[0].id);
+        this.props.decrement(response);
     }
 
     handleReceivedUserHorse = (response) => {
@@ -222,13 +237,14 @@ class AllThreeGame extends Component {
                 <LeftComponentGame
                     user={this.props.currentUser}
                     userId={this.props.currentUser}
-                    activeGame={this.state.activeGame} />
+                    activeGameLame={this.state.activeGame}
+                 />
                 <CenterComponentGame
                     userId={this.props.currentUser.id}
                     user={this.props.currentUser}
                     speedTest={this.state.speedTest}
                     booId={this.state.horseBooId}
-                    updateActiveGame={this.updateActiveGame}
+                    updateActiveGame={this.updateActiveGameLame}
                     activeGameHorses={this.state.activeGame.horses}
                     activeGame={this.state.activeGame}
                     handleHorseChosen={this.handleHorseChosen}
@@ -257,7 +273,11 @@ class AllThreeGame extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getProfileFetch: () => dispatch(getProfileFetch())
+    getProfileFetch: () => dispatch(getProfileFetch()),
+    setGameHorses: (game) => dispatch(setGameHorses(game)),
+    increment: (boo) => dispatch(increment(boo)),
+    decrement: (hype) => dispatch(decrement(hype)),
+    updateActiveGame: (id) => dispatch(updateActiveGame(id))
 })
 
 const mapStateToProps = state => {

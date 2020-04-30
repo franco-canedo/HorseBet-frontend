@@ -1,11 +1,68 @@
 import { API_ROOT, HEADERS } from '../constants';
 import ReduxThunk from 'redux-thunk'
 
-export const increment = () => {
-    return {
-        type: 'INCREMENT'
+
+
+export const increment = boo => ({
+    type: 'INCREMENT',
+    payload: boo
+})
+
+export const decrement = hype => ({
+    type: 'DECREMENT',
+    payload: hype
+})
+
+export const updateActiveGame = id => {
+    return dispatch => {
+        fetch(`${API_ROOT}/games/${id}`)
+            .then(resp => resp.json())
+            .then(game => {
+                dispatch(updateActive(game))
+
+            })
     }
 }
+const updateActive = game => ({
+    type: 'UPDATE_ACTIVE_GAME',
+    payload: game
+})
+
+
+
+export const setGameHorses = game => {
+    console.log(game)
+    const h1 = game.horses[0];
+    const h2 = game.horses[1];
+    const h3 = game.horses[2];
+    const h4 = game.horses[3];
+    const horses = [
+        {
+            id: h1.id,
+            speed: 10
+        },
+        {
+            id: h2.id,
+            speed: 10
+        },
+        {
+            id: h3.id,
+            speed: 10
+        },
+        {
+            id: h4.id,
+            speed: 10
+        },
+    ]
+    return dispatch => (
+        dispatch(setHorses(horses))
+    )
+}
+
+const setHorses = horses => ({
+    type: 'SET_HORSES',
+    payload: horses
+})
 
 export const userPostFetch = user => {
     return dispatch => {
@@ -17,14 +74,25 @@ export const userPostFetch = user => {
             .then(resp => resp.json())
             .then(data => {
                 console.log(data)
-                if (data.message) {
-                    // Here you should have logic to handle invalid creation of a user.
-                    // This assumes your Rails API will return a JSON object with a key of
-                    // 'message' if there is an error with creating the user, i.e. invalid username
+                if (data.user) {
+                    alert('Account created! Please log in.')
                 } else {
-                    localStorage.setItem("token", data.jwt)
-                    dispatch(loginUser(data.user))
+                    if (data.error.username) {
+                        alert('Username already taken')
+                        // Here you should have logic to handle invalid creation of a user.
+                        // This assumes your Rails API will return a JSON object with a key of
+                        // 'message' if there is an error with creating the user, i.e. invalid username
+                    } else if (data.error.password) {
+                        alert('Password has to be at least 5 characters')
+                    } else {
+                        alert('Account created! Please log in.')
+                        //localStorage.setItem("token", data.jwt)
+                        // dispatch(loginUser(data.user))
+                        // dispatch(loggedIn())
+                    }
                 }
+
+
             })
     }
 }
@@ -42,6 +110,7 @@ export const userLoginFetch = user => {
                     // Here you should have logic to handle invalid login credentials.
                     // This assumes your Rails API will return a JSON object with a key of
                     // 'message' if there is an error
+                    alert(data.message)
                     console.log(data.message)
                 } else {
                     localStorage.setItem("token", data.jwt)
@@ -88,5 +157,13 @@ const loginUser = userObj => ({
 const loggedIn = () => ({
     type: 'SIGN_IN',
 })
-    
+
+export const logoutUser = () => ({
+    type: 'LOGOUT_USER'
+})
+
+export const loggedOut = () => ({
+    type: 'SIGN_OUT',
+})
+
 
