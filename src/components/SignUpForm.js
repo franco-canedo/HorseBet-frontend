@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux';
-import {userPostFetch} from '../actions';
+import { connect } from 'react-redux';
+import { userPostFetch } from '../actions';
+import { Redirect } from "react-router-dom";
 
 
 class SignUpForm extends Component {
@@ -15,25 +16,6 @@ class SignUpForm extends Component {
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const body = this.state;
-
-  //   const configObj = {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //     body: JSON.stringify(body),
-  //   };
-
-  //   fetch('http://localhost:3000/api/v1/users', configObj)
-  //   .then(r => r.json())
-  //   .then(console.log)
-    
-  // };
 
   handleSubmit = event => {
     event.preventDefault()
@@ -45,14 +27,15 @@ class SignUpForm extends Component {
   }
 
   render() {
-    return (
+    return  this.props.isLogged ? (
+      <Redirect to="/profile" things={this.state} />) : (
       <div >
         <div className="SpacingDiv">
           <div className="UserProfile">
             <form className="OutsideForm" onSubmit={this.handleSubmit}>
               <h1>Sign Up</h1>
               <label>Username</label>
-              <input className="MeetupForm" 
+              <input className="MeetupForm"
                 type="text"
                 name="username"
                 value={this.state.username}
@@ -60,13 +43,13 @@ class SignUpForm extends Component {
               ></input>
               <br />
               <label>Password</label>
-              <input  className="MeetupForm"
+              <input className="MeetupForm"
                 type="text"
                 name="password"
                 value={this.state.password}
                 onChange={this.handleChange}
               ></input>
-              
+
 
               <br />
               <br />
@@ -84,4 +67,10 @@ const mapDispatchToProps = dispatch => ({
   userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
 })
 
-export default connect(null, mapDispatchToProps)(SignUpForm);
+const mapStateToProps = state => {
+  return {
+      isLogged: state.isLogged
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);

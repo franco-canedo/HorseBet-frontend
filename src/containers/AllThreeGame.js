@@ -141,9 +141,9 @@ class AllThreeGame extends Component {
         const horse = this.state.horses.find(h => h.id === boo.horse_id);
 
         const index = this.state.horses.indexOf(horse)
-        console.log(horse.speed);
+       
         horse.speed = horse.speed + 5;
-        console.log(horse.speed);
+        
         const array = [...this.state.horses]
         array[index] = horse;
         this.setState(prevState => {
@@ -158,9 +158,9 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedHype = (response) => {
-        console.log('HYPE', response)
+       
         const { hype } = response;
-        console.log(hype.game_id);
+       
         const horse = this.state.horses.find(h => h.id === hype.horse_id);
 
         const index = this.state.horses.indexOf(horse)
