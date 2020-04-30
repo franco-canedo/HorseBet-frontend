@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Animation from './Animation.js';
 import horseImage from '../Images/horseface.png';
 import { API_ROOT, HEADERS } from '../constants';
+import Spinner from 'react-bootstrap/Spinner';
 
 class CenterComponentGame extends Component {
     constructor() {
@@ -82,7 +83,12 @@ class CenterComponentGame extends Component {
                                 animation={this.props.animation} />
 
                         </Fragment> : this.state.horseChosen ?
-                            <h2>Waiting for others to bet...</h2> :
+                            <Fragment>
+                                <h2>Waiting for others to bet...</h2>
+                                <Spinner animation="border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>
+                            </Fragment> :
                             <div className="game">
                                 {this.renderHorses()}
                             </div>

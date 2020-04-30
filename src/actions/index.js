@@ -1,4 +1,5 @@
 import { API_ROOT, HEADERS } from '../constants';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ReduxThunk from 'redux-thunk'
 
 

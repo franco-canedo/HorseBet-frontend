@@ -10,7 +10,7 @@ class AllThree extends Component {
             <div className="AllThree">
                 <LeftComponent />
                 <CenterComponent form={this.props.form} signup={this.props.signup}/>
-                <RightComponent />
+                {/* <RightComponent /> */}
                 <Footer />
             </div>
         );

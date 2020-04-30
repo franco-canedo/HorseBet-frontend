@@ -12,13 +12,16 @@ class MainPage extends Component {
         }
     }
 
-    handleSignUpClick = () => {
+    handleSignUpClick = (e) => {
+        
+        e.preventDefault();
         this.setState({
             form: "signup"
         })
     }
 
-    handleLogInClick = () => {
+    handleLogInClick = (e) => {
+        e.preventDefault();
         this.setState({
             form: "login"
         })

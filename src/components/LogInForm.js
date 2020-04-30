@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { userLoginFetch } from '../actions';
 import { Redirect } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 class LogInForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
+            email: "",
             password: "",
         };
     }
@@ -32,31 +35,29 @@ class LogInForm extends Component {
                 <div >
                     <div className="SpacingDiv">
                         <div className="UserProfile">
-                            <form className="OutsideForm" onSubmit={this.handleSubmit}>
-                                <h1>Log In</h1>
-                                <label>Username</label>
-                                <input className="MeetupForm"
-                                    type="text"
-                                    name="username"
-                                    value={this.state.username}
-                                    onChange={this.handleChange}
-                                ></input>
-                                <br />
-                                <label>Password</label>
-                                <input className="MeetupForm"
-                                    type="password"
-                                    name="password"
-                                    value={this.state.password}
-                                    onChange={this.handleChange}
-                                ></input>
+                           <Form>
+                            <Form.Group controlId="formBasicEmail">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control onChange={this.handleChange} name="username"
+                                    value={this.state.username} type="username" placeholder="Enter username" />
+    
+                                </Form.Group>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label>Email Address</Form.Label>
+                                    <Form.Control onChange={this.handleChange} name="email"
+                                    value={this.state.email} type="email" placeholder="Enter email" />
+                                </Form.Group>
 
+                                <Form.Group controlId="formBasicPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control onChange={this.handleChange} name="password"
+                                    value={this.state.password} type="password" placeholder="Password" />
+                                </Form.Group>
 
-                                <br />
-                                <br />
-                                <br />
-
-                                <input type="submit" className="ButtonsNavBar"></input>
-                            </form>
+                                <Button onClick={this.handleSubmit} variant="dark" type="submit">
+                                    Submit
+                                </Button>
+                            </Form>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { userPostFetch } from '../actions';
 import { Redirect } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 
 class SignUpForm extends Component {
@@ -9,6 +11,7 @@ class SignUpForm extends Component {
     super(props);
     this.state = {
       username: "",
+      email: "",
       password: "",
     };
   }
@@ -22,43 +25,50 @@ class SignUpForm extends Component {
     this.props.userPostFetch(this.state)
     this.setState({
       username: "",
+      email: "",
       password: "",
     })
   }
 
   render() {
-    return  this.props.isLogged ? (
+    return this.props.isLogged ? (
       <Redirect to="/profile" things={this.state} />) : (
-      <div >
-        <div className="SpacingDiv">
-          <div className="UserProfile">
-            <form className="OutsideForm" onSubmit={this.handleSubmit}>
-              <h1>Sign Up</h1>
-              <label>Username</label>
-              <input className="MeetupForm"
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              ></input>
-              <br />
-              <label>Password</label>
-              <input className="MeetupForm"
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              ></input>
+        <div >
+          <div className="SpacingDiv">
+            <div className="UserProfile">
+              <Form>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control onChange={this.handleChange} name="username"
+                    value={this.state.username} type="username" placeholder="Enter username" />
 
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control onChange={this.handleChange} name="email"
+                    value={this.state.email} type="email" placeholder="Enter email" />
+                  <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                                    </Form.Text>
+                </Form.Group>
 
-              <br />
-              <br />
-              <br />
-              <input type="submit" className="ButtonsNavBar"></input>
-            </form>
+                <Form.Group controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control onChange={this.handleChange} name="password"
+                    value={this.state.password} type="password" placeholder="Password" />
+                  <Form.Text className="text-muted">
+                    Minimum of 5 characters.
+                                    </Form.Text>
+                </Form.Group>
+
+                <Button onClick={this.handleSubmit} variant="dark" type="submit">
+                  Submit
+                                </Button>
+              </Form>
+           
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
@@ -69,7 +79,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
   return {
-      isLogged: state.isLogged
+    isLogged: state.isLogged
   }
 }
 

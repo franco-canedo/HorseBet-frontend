@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class HeaderGame extends Component {
   render() {
@@ -10,11 +11,15 @@ class HeaderGame extends Component {
         <div className="Logo">
                         <h1>HorseBet</h1>
                     </div>
-                  
-                        <button className="ButtonsNavBar" >
+                    <Button variant="dark" size="lg">
+                    <NavLink to="/profile" exact activeStyle={{ color: "white" }}>
+                                Profile
+                        </NavLink>
+                      </Button>{' '}
+                        {/* <button className="ButtonsNavBar" >
                             <NavLink to="/profile" exact activeStyle={{ color: "white" }}>
                                 Profile
-                        </NavLink></button>
+                        </NavLink></button> */}
                         
 
                     </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 class Header extends Component {
     render() {
@@ -10,9 +11,10 @@ class Header extends Component {
                     <div className="Logo">
                         <h1>HorseBet</h1>
                     </div>
-
-                    <button className="ButtonsNavBar" onClick={this.props.signup}>Sign Up</button>
-                    <button className="ButtonsNavBar" onClick={this.props.login}>Log In</button>
+                    <Button variant="dark" onClick={this.props.signup}>Sign Up</Button>{' '}
+                    <Button variant="dark" onClick={this.props.login}>Log In</Button>{' '}
+                    {/* <button className="ButtonsNavBar" onClick={this.props.signup}>Sign Up</button>
+                    <button className="ButtonsNavBar" onClick={this.props.login}>Log In</button> */}
 
                 </div>
 

@@ -137,9 +137,19 @@ class CenterComponentProfile extends Component {
 
         return (
             <div className="CenterComponentProfile">
+                 <div className="UserInfoDivs">
+                    <h3>Profile Info:</h3>
+                    <p>{this.props.user.currentUser.username}</p>
+                    <p>{this.props.user.bio}</p>
+
+                    <button>Edit</button>
+                    <h4>Recent Games:</h4>
+                    {this.renderRecentGames()}
+
+                </div>
                 <div className="UserInfoDivs">
-                    <h2>Manage Funds:</h2>
-                    <h3>You have: ${this.props.user.currentUser.deposit}</h3>
+                    <h3>Manage Funds:</h3>
+                    <h5>You have: ${this.props.user.currentUser.deposit}</h5>
                     {
                         this.state.depositBoolean ?
                             <Fragment>
@@ -179,7 +189,7 @@ class CenterComponentProfile extends Component {
                 </div>
 
                 <div className="UserInfoDivs">
-                    <h2>Stats:</h2>
+                    <h3>Stats:</h3>
                     <p>Games Played:{gamesPlayed}</p>
                     <p>Number of wins:{wins}</p>
                     <p>Total Winnings: ${this.props.user.currentUser.winnings}</p>
@@ -189,16 +199,7 @@ class CenterComponentProfile extends Component {
 
                 </div>
 
-                <div className="UserInfoDivs">
-                    <h2>Profile Info:</h2>
-                    <p>{this.props.user.currentUser.username}</p>
-                    <p>{this.props.user.bio}</p>
-
-                    <button>Edit</button>
-                    <h4>Recent Games:</h4>
-                    {this.renderRecentGames()}
-
-                </div>
+               
 
 
             </div>
