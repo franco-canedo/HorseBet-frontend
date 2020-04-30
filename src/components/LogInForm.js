@@ -44,7 +44,7 @@ class LogInForm extends Component {
                                 <br />
                                 <label>Password</label>
                                 <input className="MeetupForm"
-                                    type="text"
+                                    type="password"
                                     name="password"
                                     value={this.state.password}
                                     onChange={this.handleChange}

@@ -74,15 +74,25 @@ export const userPostFetch = user => {
             .then(resp => resp.json())
             .then(data => {
                 console.log(data)
-                if (data.message) {
-                    // Here you should have logic to handle invalid creation of a user.
-                    // This assumes your Rails API will return a JSON object with a key of
-                    // 'message' if there is an error with creating the user, i.e. invalid username
+                if(data.user) {
+                    alert('Account created! Please log in.')
                 } else {
-                    localStorage.setItem("token", data.jwt)
-                    dispatch(loginUser(data.user))
-                    dispatch(loggedIn())
+                    if (data.error.username) {
+                        alert('Username already taken')
+                        // Here you should have logic to handle invalid creation of a user.
+                        // This assumes your Rails API will return a JSON object with a key of
+                        // 'message' if there is an error with creating the user, i.e. invalid username
+                    } else if(data.error.password) {
+                        alert('Password has to be at least 5 characters')
+                    } else {
+                        alert('Account created! Please log in.')
+                        //localStorage.setItem("token", data.jwt)
+                        // dispatch(loginUser(data.user))
+                        // dispatch(loggedIn())
+                    }
                 }
+
+                
             })
     }
 }
@@ -100,6 +110,7 @@ export const userLoginFetch = user => {
                     // Here you should have logic to handle invalid login credentials.
                     // This assumes your Rails API will return a JSON object with a key of
                     // 'message' if there is an error
+                    alert(data.message)
                     console.log(data.message)
                 } else {
                     localStorage.setItem("token", data.jwt)
