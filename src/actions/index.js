@@ -2,6 +2,15 @@ import { API_ROOT, HEADERS } from '../constants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReduxThunk from 'redux-thunk'
 
+export const jackpotColorYellow = () => ({
+    type: 'YELLOW'
+
+})
+
+export const jackpotColorNormal = () => ({
+    type: 'NORMAL'
+})
+
 export const setGamesNewsFeed = games => {
     return dispatch => {
         fetch(`${API_ROOT}/games`)
@@ -11,7 +20,7 @@ export const setGamesNewsFeed = games => {
             })
     }
 }
-    
+
 const newsFeed = games => ({
     type: 'SET_NEWS_FEED',
     payload: games

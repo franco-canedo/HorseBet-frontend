@@ -13,6 +13,8 @@ import { setGameHorses } from '../actions'
 import { increment } from '../actions'
 import { decrement } from '../actions'
 import { updateActiveGame } from '../actions'
+import { jackpotColorYellow } from '../actions'
+import { jackpotColorNormal } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -77,8 +79,6 @@ class AllThreeGame extends Component {
 
                 }, 1000
                 )
-
-                console.log(game)
                 this.setGameHorses(game);
                 this.props.setGameHorses(game);
 
@@ -142,12 +142,20 @@ class AllThreeGame extends Component {
         console.log('BOOOOO', response)
         this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
+        this.props.jackpotColorYellow();
+        setTimeout(() => {
+            this.props.jackpotColorNormal();
+        }, 200)
 
     };
 
     handleReceivedHype = (response) => {
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
+        this.props.jackpotColorYellow();
+        setTimeout(() => {
+            this.props.jackpotColorNormal();
+        }, 200)
     }
 
     handleReceivedUserHorse = (response) => {
@@ -167,7 +175,7 @@ class AllThreeGame extends Component {
     }
 
     handleReceivedGameUser = (response) => {
-        console.log(response.game_user.game_id);
+        console.log('joined', response.game_user.game_id);
         if(this.state.activeGame.length === 0) {
             this.handleActiveGame(response.game_user.game_id)
         } else {
@@ -253,7 +261,9 @@ const mapDispatchToProps = dispatch => ({
     setGameHorses: (game) => dispatch(setGameHorses(game)),
     increment: (boo) => dispatch(increment(boo)),
     decrement: (hype) => dispatch(decrement(hype)),
-    updateActiveGame: (id) => dispatch(updateActiveGame(id))
+    updateActiveGame: (id) => dispatch(updateActiveGame(id)),
+    jackpotColorYellow: () => dispatch(jackpotColorYellow()),
+    jackpotColorNormal: () => dispatch(jackpotColorNormal())
 })
 
 const mapStateToProps = state => {

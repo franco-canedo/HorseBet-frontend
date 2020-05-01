@@ -230,6 +230,14 @@
 
 }
 
+.GameInfoDivsJackpot {
+  height: 124px;
+  border: ridge;
+  margin-bottom: 10px;
+  background-color: yellow;
+  color: whitesmoke
+}
+
 .CenterComponentGame {
   background-color: rgb(3, 55, 90);
   border: double;
@@ -319,7 +327,7 @@
   text-align: center;
 }
 
-.spanLights {
+.spanLightsRed {
   width: 12%;
   height: 50%;
   border: solid;
@@ -328,6 +336,21 @@
 
   
   background: red;
+  /* -moz-border-radius: 50px;
+    -webkit-border-radius: 50px; */
+    border-radius: 50px;
+
+}
+
+.spanLightsGreen {
+  width: 12%;
+  height: 50%;
+  border: solid;
+  margin-left: 15px;
+  margin-top: 9px;
+
+  
+  background: green;
   /* -moz-border-radius: 50px;
     -webkit-border-radius: 50px; */
     border-radius: 50px;

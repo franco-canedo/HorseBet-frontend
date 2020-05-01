@@ -5,6 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Overlay from 'react-bootstrap/Overlay';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { connect } from 'react-redux';
 
 
 
@@ -77,7 +78,7 @@ class RightComponentGame extends Component {
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
                     }
-                    console.log(body2);
+                   
                     const configObj2 = {
                         method: 'POST',
                         headers: HEADERS,
@@ -126,14 +127,12 @@ class RightComponentGame extends Component {
 
     renderSpeedButtons = () => {
         if (this.props.activeGame.length > 0) {
-
             return this.props.horses.map(horse => {
-                // console.log('map?')
                 if (horse.chosen) {
                     // console.log("if?", horse);
                     return <div className="lights">
 
-                        <div className="spanLights">
+                        <div className="spanLightsRed">
                             <div className="speed">
                                 {/* <Button ref={'hype'} variant="outline-success" onClick={() => this.handleHypeClick(horse.id)}>Hype!</Button>{' '} */}
                                 <OverlayTrigger
@@ -149,7 +148,7 @@ class RightComponentGame extends Component {
                 } else {
                     return <div className="lights">
 
-                        <div className="spanLights">
+                        <div className="spanLightsRed">
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}
                                 <OverlayTrigger
@@ -177,7 +176,7 @@ class RightComponentGame extends Component {
                             this.renderSpeedButtons() : <Fragment>
                                 <div className="lights">
 
-                                    <div className="spanLights">
+                                    <div className="spanLightsRed">
                                         <div className="speed">
 
                                         </div>
@@ -186,21 +185,21 @@ class RightComponentGame extends Component {
 
                                 </div>
                                 <div className="lights">
-                                    <div className="spanLights">
+                                    <div className="spanLightsRed">
                                         <div className="speed">
 
                                         </div>
                                     </div>
                                 </div>
                                 <div className="lights">
-                                    <div className="spanLights">
+                                    <div className="spanLightsRed">
                                         <div className="speed">
 
                                         </div>
                                     </div>
                                 </div>
                                 <div className="lights">
-                                    <div className="spanLights">
+                                    <div className="spanLightsRed">
                                         <div className="speed">
 
                                         </div>
@@ -248,7 +247,13 @@ class RightComponentGame extends Component {
     }
 }
 
-export default RightComponentGame;
+const mapStateToProps = state => {
+    return {
+        jackpotColor: state.jackpotColor
+    }
+}
+
+export default connect(mapStateToProps, null)(RightComponentGame);
 
 function renderTooltip(props) {
     return (
