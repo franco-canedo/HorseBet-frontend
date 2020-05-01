@@ -4,6 +4,7 @@ import { userPostFetch } from '../actions';
 import { Redirect } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 
 
 class SignUpForm extends Component {
@@ -36,6 +37,7 @@ class SignUpForm extends Component {
         <div >
           <div className="SpacingDiv">
             <div className="UserProfile">
+            
               <Form>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Username</Form.Label>
@@ -47,7 +49,7 @@ class SignUpForm extends Component {
                   <Form.Label>Email Address</Form.Label>
                   <Form.Control onChange={this.handleChange} name="email"
                     value={this.state.email} type="email" placeholder="Enter email" />
-                  <Form.Text className="text-muted">
+                  <Form.Text className="formText">
                     We'll never share your email with anyone else.
                                     </Form.Text>
                 </Form.Group>
@@ -56,7 +58,7 @@ class SignUpForm extends Component {
                   <Form.Label>Password</Form.Label>
                   <Form.Control onChange={this.handleChange} name="password"
                     value={this.state.password} type="password" placeholder="Password" />
-                  <Form.Text className="text-muted">
+                  <Form.Text className="formText">
                     Minimum of 5 characters.
                                     </Form.Text>
                 </Form.Group>
@@ -65,11 +67,11 @@ class SignUpForm extends Component {
                   Submit
                                 </Button>
               </Form>
-           
+
+            </div>
           </div>
-        </div>
-      </div >
-    );
+        </div >
+      );
   }
 }
 

@@ -4,22 +4,8 @@ import Card from 'react-bootstrap/Card';
 import horseFace from '../Images/horseface.png'
 
 class LeftComponent extends Component {
-    constructor() {
-        super()
-        this.state = {
-            games: []
-        }
-    }
-    componentDidMount = () => {
-        fetch(`${API_ROOT}/games`)
-            .then(r => r.json())
-            .then(games => {
-                this.setState({ games })
-            })
-    }
-
     render() {
-        let limitedGames = this.state.games
+        let limitedGames = this.props.games
         limitedGames = limitedGames.splice(0, 2);
         return (
             <div className="LeftComponent">

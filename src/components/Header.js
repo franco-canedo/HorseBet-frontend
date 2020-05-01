@@ -11,8 +11,8 @@ class Header extends Component {
                     <div className="Logo">
                         <h1>HorseBet</h1>
                     </div>
-                    <Button variant="dark" onClick={this.props.signup}>Sign Up</Button>{' '}
-                    <Button variant="dark" onClick={this.props.login}>Log In</Button>{' '}
+                    <Button variant="dark" size="lg" onClick={this.props.signup}>Sign Up</Button>{' '}
+                    <Button variant="dark" size="lg" onClick={this.props.login}>Log In</Button>{' '}
                     {/* <button className="ButtonsNavBar" onClick={this.props.signup}>Sign Up</button>
                     <button className="ButtonsNavBar" onClick={this.props.login}>Log In</button> */}
 

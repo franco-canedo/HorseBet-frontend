@@ -83,7 +83,7 @@
 }
 
 .Footer{
-  background-color: gray;
+  background-color: rgb(68, 26, 26);
   /* background-color: #3366cc; */
   /* background-color: black; */
   color: white;
@@ -100,7 +100,7 @@
   background: linear-gradient(to right, #546880 39%, #7E9BBF 99%);
   /* background-color: black; */
   color: white;
-  
+  border-bottom: ridge;
  
   position: fixed;
   width: 100%;
@@ -149,6 +149,11 @@
 
 .UserProfile {
   text-align: left;
+  color: whitesmoke;
+}
+
+.formText {
+  color: whitesmoke;
 }
 
 
@@ -241,17 +246,17 @@
 }
 
 .LeftComponentGame {
-  background-color:rgb(119, 119, 119);
+  background-color:rgb(56, 53, 53);
   text-align: center;
   margin-top: 70px;
   width: 20%;
   float: left;
-  padding: 30px;
+  padding: 10px;
   height: 800px;
 }
 
 .innerLeft {
-  padding-top: 60px;
+  padding-top: 100px;
 }
 
 .game {
@@ -264,6 +269,7 @@
   height: 95px;
   margin-top: 10px;
   text-align: center;
+  color: whitesmoke
   
 }
 
