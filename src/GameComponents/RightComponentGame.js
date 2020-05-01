@@ -40,11 +40,12 @@ class RightComponentGame extends Component {
                 body: JSON.stringify(body)
             }
             fetch(`${API_ROOT}/joinGame`, configObj)
-                .then(r => r.json())
-                .then(json => {
-                    console.log(json);
-                    this.props.handleActiveGame(json)
-                });
+                // .then(r => r.json())
+                // .then(json => {
+                //     console.log(json);
+
+                //     this.props.handleActiveGame(json)
+                // });
         } else {
             const body = {
                 minimum_bet: bet,
@@ -76,18 +77,18 @@ class RightComponentGame extends Component {
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
                     }
-                    console.log(body);
+                    console.log(body2);
                     const configObj2 = {
                         method: 'POST',
                         headers: HEADERS,
                         body: JSON.stringify(body2)
                     }
                     fetch(`${API_ROOT}/joinGame`, configObj2)
-                        .then(r => r.json())
-                        .then(json => {
-                            console.log(json);
-                            this.props.handleActiveGame(json)
-                        });
+                        // .then(r => r.json())
+                        // .then(json => {
+                        //     console.log(json);
+                        //     this.props.handleActiveGame(json)
+                        // });
                 }
             }, 3000);
         }

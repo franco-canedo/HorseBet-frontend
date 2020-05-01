@@ -9,10 +9,10 @@ import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
-import {setGameHorses} from '../actions'
-import {increment} from '../actions'
-import {decrement} from '../actions'
-import {updateActiveGame} from '../actions'
+import { setGameHorses } from '../actions'
+import { increment } from '../actions'
+import { decrement } from '../actions'
+import { updateActiveGame } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -60,8 +60,8 @@ class AllThreeGame extends Component {
         })
     }
 
-    handleActiveGame = (join) => {
-        fetch(`${API_ROOT}/games/${join.game_id}`)
+    handleActiveGame = (id) => {
+        fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
             .then(game => {
                 console.log(game);
@@ -72,15 +72,16 @@ class AllThreeGame extends Component {
                             activeGame: [game],
                             // activeGameId: game.id
                         }
-    
+
                     })
+
                 }, 1000
-)
-                
+                )
+
                 console.log(game)
-                
                 this.setGameHorses(game);
                 this.props.setGameHorses(game);
+
             })
     }
 
@@ -144,7 +145,7 @@ class AllThreeGame extends Component {
 
     };
 
-    handleReceivedHype = (response) => {       
+    handleReceivedHype = (response) => {
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
     }
@@ -165,6 +166,18 @@ class AllThreeGame extends Component {
         }
     }
 
+    handleReceivedGameUser = (response) => {
+        console.log(response.game_user.game_id);
+        if(this.state.activeGame.length === 0) {
+            this.handleActiveGame(response.game_user.game_id)
+        } else {
+            if (response.game_user.game_id === this.state.activeGame[0].id) {
+                this.handleActiveGame(response.game_user.game_id)
+            }
+        }
+
+    }
+
     // animation = () => {
     //     this.setState(prevState => ({
     //         horseSpeed1: prevState.horseSpeed1 + .5,
@@ -182,12 +195,18 @@ class AllThreeGame extends Component {
                     channel={{ channel: 'GamesChannel' }}
                     onReceived={this.handleReceivedGame}
                 />
+                <ActionCable
+                    // key={activeGameId}  
+                    channel={{ channel: 'GameUsersChannel' }}
+                    onReceived={this.handleReceivedGameUser}
+                />
                 {this.state.joinableGames.length ? (
                     <Cable
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
                         handleReceivedHype={this.handleReceivedHype}
                         handleReceivedUserHorse={this.handleReceivedUserHorse}
+                        handleReceivedGameUser={this.handleReceivedGameUser}
                     />
                 ) : null}
 
@@ -195,7 +214,7 @@ class AllThreeGame extends Component {
                     user={this.props.currentUser}
                     userId={this.props.currentUser}
                     activeGameLame={this.state.activeGame}
-                 />
+                />
                 <CenterComponentGame
                     userId={this.props.currentUser.id}
                     user={this.props.currentUser}
@@ -239,9 +258,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-      currentUser: state.currentUser
+        currentUser: state.currentUser
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllThreeGame);
 
