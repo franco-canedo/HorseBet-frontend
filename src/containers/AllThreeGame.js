@@ -63,6 +63,7 @@ class AllThreeGame extends Component {
     }
 
     handleActiveGame = (id) => {
+        console.log('handle active?', id)
         fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
             .then(game => {
@@ -160,9 +161,10 @@ class AllThreeGame extends Component {
 
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
-
+        console.log('userhorse',response)
+        console.log(response.user_horse.active)
         if (response.user_horse.active === true) {
-
+            console.log('true?')
             if (response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;
@@ -176,11 +178,20 @@ class AllThreeGame extends Component {
 
     handleReceivedGameUser = (response) => {
         console.log('joined', response.game_user.game_id);
+        let id = response.game_user.game_id;
         if(this.state.activeGame.length === 0) {
-            this.handleActiveGame(response.game_user.game_id)
+            console.log('update active game', id, this.props.currentUser.currentUser.id)
+
+            if(this.props.currentUser.currentUser.id === response.game_user.user_id) {
+                console.log('update active game2')
+                this.handleActiveGame(id);
+                this.props.updateActiveGame(id);
+            }
+           
         } else {
-            if (response.game_user.game_id === this.state.activeGame[0].id) {
-                this.handleActiveGame(response.game_user.game_id)
+            if (id === this.state.activeGame[0].id) {
+                this.handleActiveGame(id);
+                this.props.updateActiveGame(id);
             }
         }
 
@@ -224,7 +235,7 @@ class AllThreeGame extends Component {
                     activeGameLame={this.state.activeGame}
                 />
                 <CenterComponentGame
-                    userId={this.props.currentUser.id}
+                    userId={this.props.currentUser.currentUser.id}
                     user={this.props.currentUser}
                     speedTest={this.state.speedTest}
                     booId={this.state.horseBooId}

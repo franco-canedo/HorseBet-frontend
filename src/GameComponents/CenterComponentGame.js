@@ -13,13 +13,13 @@ class CenterComponentGame extends Component {
         }
     }
     handleHorseClick = (id) => {
-        // console.log(id);
+        console.log(this.props.userId);
         const body = {
             user_id: this.props.userId,
             horse_id: id,
             game_id: this.props.activeGame[0].id
         }
-
+        console.log(body)
         const configObj = {
             method: 'POST',
             headers: HEADERS,
@@ -28,7 +28,7 @@ class CenterComponentGame extends Component {
         fetch(`${API_ROOT}/userHorse`, configObj)
             .then(r => r.json())
             .then(json => {
-                // console.log(json);
+                console.log(json);
                 const currentGameId = this.props.activeGame[0].id
                 this.props.updateActiveGame(currentGameId);
                 this.setState({
