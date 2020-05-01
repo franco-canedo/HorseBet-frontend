@@ -8,9 +8,9 @@ class AllThree extends Component {
     render() {
         return (
             <div className="AllThree">
-                <LeftComponent />
+                <LeftComponent games={this.props.games}/>
                 <CenterComponent form={this.props.form} signup={this.props.signup}/>
-                <RightComponent />
+                {/* <RightComponent /> */}
                 <Footer />
             </div>
         );

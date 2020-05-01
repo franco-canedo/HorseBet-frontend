@@ -1,7 +1,30 @@
 import { API_ROOT, HEADERS } from '../constants';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import ReduxThunk from 'redux-thunk'
 
+export const jackpotColorYellow = () => ({
+    type: 'YELLOW'
 
+})
+
+export const jackpotColorNormal = () => ({
+    type: 'NORMAL'
+})
+
+export const setGamesNewsFeed = games => {
+    return dispatch => {
+        fetch(`${API_ROOT}/games`)
+            .then(r => r.json())
+            .then(games => {
+                dispatch(newsFeed(games))
+            })
+    }
+}
+
+const newsFeed = games => ({
+    type: 'SET_NEWS_FEED',
+    payload: games
+})
 
 export const increment = boo => ({
     type: 'INCREMENT',
@@ -123,6 +146,7 @@ export const userLoginFetch = user => {
 }
 
 export const getProfileFetch = () => {
+    console.log('profile fetch')
     return dispatch => {
         const token = localStorage.token;
         if (token) {
@@ -141,7 +165,6 @@ export const getProfileFetch = () => {
                         // If this happens, you may want to remove the invalid token.
                         localStorage.removeItem("token")
                     } else {
-                        console.log(data)
                         dispatch(loginUser(data.user))
                     }
                 })

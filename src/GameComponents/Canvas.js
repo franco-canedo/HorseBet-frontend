@@ -65,7 +65,7 @@ class Canvas extends Component {
         return (
             <div>
                 <img alt="text" ref="image" src={horse} className="hidden" />
-                <canvas className="canvas" ref={this.canvasRef} width={700} height={300} />
+                <canvas className="canvas" ref={this.canvasRef} width={700} height={320} />
             </div>
         );
     }

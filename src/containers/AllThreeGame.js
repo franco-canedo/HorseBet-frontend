@@ -9,10 +9,12 @@ import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
-import {setGameHorses} from '../actions'
-import {increment} from '../actions'
-import {decrement} from '../actions'
-import {updateActiveGame} from '../actions'
+import { setGameHorses } from '../actions'
+import { increment } from '../actions'
+import { decrement } from '../actions'
+import { updateActiveGame } from '../actions'
+import { jackpotColorYellow } from '../actions'
+import { jackpotColorNormal } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -60,9 +62,8 @@ class AllThreeGame extends Component {
         })
     }
 
-
-    handleActiveGame = (join) => {
-        fetch(`${API_ROOT}/games/${join.game_id}`)
+    handleActiveGame = (id) => {
+        fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
             .then(game => {
                 console.log(game);
@@ -73,14 +74,14 @@ class AllThreeGame extends Component {
                             activeGame: [game],
                             // activeGameId: game.id
                         }
-    
+
                     })
-                }, 1000)
-                
-                console.log(game)
-                
+
+                }, 1000
+                )
                 this.setGameHorses(game);
                 this.props.setGameHorses(game);
+
             })
     }
 
@@ -128,15 +129,6 @@ class AllThreeGame extends Component {
             })
     }
 
-
-
-    // componentDidUpdate = () => {
-    //     fetch(`${API_ROOT}/activeGames`)
-    //         .then(res => res.json())
-    //         .then(games => this.setState({ activeGames: games }));
-    // }
-
-
     handleReceivedGame = response => {
         const { game } = response;
         this.setState(prevState => {
@@ -148,52 +140,26 @@ class AllThreeGame extends Component {
 
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
-        // const { boo } = response;
-        // const horse = this.state.horses.find(h => h.id === boo.horse_id);
-        // const index = this.state.horses.indexOf(horse)       
-        // horse.speed = horse.speed + 5;
-        
-        // const array = [...this.state.horses]
-        // array[index] = horse;
-        // this.setState(prevState => {
-        //     return {
-        //         speedTest: prevState.speedTest + 5,
-        //         horses: array
-        //     }
-
-        // })
-
-
         this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
-        // this.updateActiveGame(this.state.activeGame[0].id)
+        this.props.jackpotColorYellow();
+        setTimeout(() => {
+            this.props.jackpotColorNormal();
+        }, 200)
 
     };
 
     handleReceivedHype = (response) => {
-       
-        // const { hype } = response;
-       
-        // const horse = this.state.horses.find(h => h.id === hype.horse_id);
-
-        // const index = this.state.horses.indexOf(horse)
-        // horse.speed = horse.speed - 5;
-        // const array = [...this.state.horses]
-        // array[index] = horse;
-        // this.setState(prevState => {
-        //     return {
-        //         speedTest: prevState.speedTest - 5,
-        //         horses: array
-        //     }
-
-        // })
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
+        this.props.jackpotColorYellow();
+        setTimeout(() => {
+            this.props.jackpotColorNormal();
+        }, 200)
     }
 
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
-        // console.log(response[0].active);
 
         if (response.user_horse.active === true) {
 
@@ -206,6 +172,18 @@ class AllThreeGame extends Component {
                 })
             }
         }
+    }
+
+    handleReceivedGameUser = (response) => {
+        console.log('joined', response.game_user.game_id);
+        if(this.state.activeGame.length === 0) {
+            this.handleActiveGame(response.game_user.game_id)
+        } else {
+            if (response.game_user.game_id === this.state.activeGame[0].id) {
+                this.handleActiveGame(response.game_user.game_id)
+            }
+        }
+
     }
 
     // animation = () => {
@@ -225,12 +203,18 @@ class AllThreeGame extends Component {
                     channel={{ channel: 'GamesChannel' }}
                     onReceived={this.handleReceivedGame}
                 />
+                <ActionCable
+                    // key={activeGameId}  
+                    channel={{ channel: 'GameUsersChannel' }}
+                    onReceived={this.handleReceivedGameUser}
+                />
                 {this.state.joinableGames.length ? (
                     <Cable
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
                         handleReceivedHype={this.handleReceivedHype}
                         handleReceivedUserHorse={this.handleReceivedUserHorse}
+                        handleReceivedGameUser={this.handleReceivedGameUser}
                     />
                 ) : null}
 
@@ -238,7 +222,7 @@ class AllThreeGame extends Component {
                     user={this.props.currentUser}
                     userId={this.props.currentUser}
                     activeGameLame={this.state.activeGame}
-                 />
+                />
                 <CenterComponentGame
                     userId={this.props.currentUser.id}
                     user={this.props.currentUser}
@@ -277,14 +261,16 @@ const mapDispatchToProps = dispatch => ({
     setGameHorses: (game) => dispatch(setGameHorses(game)),
     increment: (boo) => dispatch(increment(boo)),
     decrement: (hype) => dispatch(decrement(hype)),
-    updateActiveGame: (id) => dispatch(updateActiveGame(id))
+    updateActiveGame: (id) => dispatch(updateActiveGame(id)),
+    jackpotColorYellow: () => dispatch(jackpotColorYellow()),
+    jackpotColorNormal: () => dispatch(jackpotColorNormal())
 })
 
 const mapStateToProps = state => {
     return {
-      currentUser: state.currentUser
+        currentUser: state.currentUser
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllThreeGame);
 

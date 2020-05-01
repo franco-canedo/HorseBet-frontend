@@ -10,7 +10,7 @@ class AllThreeProfile extends Component {
             <div className="AllThree">
                 <LeftComponentProfile />
                 <CenterComponentProfile user={this.props.user}/>
-                <RightComponentProfile />
+                {/* <RightComponentProfile /> */}
                 <Footer />
             </div>
         );

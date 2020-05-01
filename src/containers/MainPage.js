@@ -2,23 +2,37 @@ import React, { Component } from 'react';
 import Header from '../components/Header.js';
 import AllThreeMain from './AllThreeMain.js';
 import { Redirect } from "react-router-dom";
+import { API_ROOT } from '../constants';
+import { connect } from 'react-redux';
+import {setGamesNewsFeed} from '../actions'
 
 class MainPage extends Component {
     constructor() {
         super()
         this.state = {
             form: "demo",
-            loggedIn: false
+            loggedIn: false,
+            games: []
         }
     }
 
-    handleSignUpClick = () => {
-        this.setState({
-            form: "signup"
-        })
+    componentDidMount = () => {
+        this.props.setGamesNewsFeed()
     }
 
-    handleLogInClick = () => {
+    handleSignUpClick = (e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();   
+        this.props.setGamesNewsFeed()
+        this.setState({
+            form: "signup"
+        })    
+    }
+
+    handleLogInClick = (e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        this.props.setGamesNewsFeed()
         this.setState({
             form: "login"
         })
@@ -29,6 +43,7 @@ class MainPage extends Component {
     }
 
     render() {
+        console.log('rerender?')
         return this.state.loggedIn ? (
             <Redirect to="/profile" things={this.state} />
         ) : (
@@ -36,12 +51,24 @@ class MainPage extends Component {
                     <Header signup={this.handleSignUpClick} login={this.handleLogInClick} />
                     <AllThreeMain
                         form={this.state.form}
-                        signup={this.handleSignUpClick} />
+                        signup={this.handleSignUpClick} 
+                        games={this.props.games}
+                        />
 
 
                 </div>
             );
     }
 }
+const mapDispatchToProps = dispatch => ({
+    setGamesNewsFeed: () => dispatch(setGamesNewsFeed()),
+   
+})
 
-export default MainPage;
+const mapStateToProps = state => {
+    return {
+        games: state.games
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

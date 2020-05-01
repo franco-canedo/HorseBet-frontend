@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 
-const Cable = ({ activeGameId, handleReceivedBoo, handleReceivedHype, handleReceivedUserHorse }) => {
+const Cable = ({ activeGameId, handleReceivedBoo, handleReceivedHype, handleReceivedUserHorse, handleReceivedGameUser }) => {
   return (
     <Fragment>
 
@@ -21,6 +21,10 @@ const Cable = ({ activeGameId, handleReceivedBoo, handleReceivedHype, handleRece
         channel={{ channel: 'UserHorsesChannel', game: activeGameId }}
         onReceived={handleReceivedUserHorse}
       />
+
+      
+
+
     </Fragment>
 
 
