@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 class LeftComponentGame extends Component {
     totalBet = () => {
         if (this.props.activeGameLame.length > 0) {
-            console.log('hello??')
             const gameUsers = this.props.activeGame.activeGame.game_users;
             const gameUser = gameUsers.find(user => user.user_id === this.props.user.currentUser.id)
             //const gameUser = gameUsers[gameUsers.length - 1]

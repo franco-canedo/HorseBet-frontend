@@ -33,7 +33,7 @@ class RightComponentGame extends Component {
                 total_bet: this.props.joinableGames[0]['minimum_bet'],
                 extra_bet: this.props.joinableGames[0]['minimum_bet']
             }
-
+            console.log(body);
             const configObj = {
                 method: 'POST',
                 headers: HEADERS,
@@ -53,13 +53,21 @@ class RightComponentGame extends Component {
 
             const configObj = {
                 method: 'POST',
-                headers: HEADERS,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": true,
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    "content-length": 28403,
+                    status: 200
+
+                },
                 body: JSON.stringify(body)
             }
             alert('Joining a game... Please wait')
             fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
-            // .then(resp => resp.json())
-            // .then(game => console.log(game))
+        
+
             setTimeout(() => {
                 if (this.props.joinableGames.length > 0) {
                     const body2 = {
@@ -68,7 +76,7 @@ class RightComponentGame extends Component {
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
                     }
-
+                    console.log(body);
                     const configObj2 = {
                         method: 'POST',
                         headers: HEADERS,
@@ -243,16 +251,16 @@ export default RightComponentGame;
 
 function renderTooltip(props) {
     return (
-      <Tooltip id="button-tooltip" {...props}>
-        Hype your horse! -$0.05
-      </Tooltip>
+        <Tooltip id="button-tooltip" {...props}>
+            Hype your horse! -$0.05
+        </Tooltip>
     );
-  }
+}
 
-  function renderTooltipBoo(props) {
+function renderTooltipBoo(props) {
     return (
-      <Tooltip id="button-tooltip" {...props}>
-        Boo another horse! -$0.05
-      </Tooltip>
+        <Tooltip id="button-tooltip" {...props}>
+            Boo another horse! -$0.05
+        </Tooltip>
     );
-  }
+}

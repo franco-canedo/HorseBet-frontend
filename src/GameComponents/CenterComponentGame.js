@@ -88,10 +88,15 @@ class CenterComponentGame extends Component {
                                 <Spinner animation="border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
-                            </Fragment> :
-                            <div className="game">
-                                {this.renderHorses()}
-                            </div>
+                            </Fragment> : this.props.activeGame[0].game_users.length >= 2 ?
+                                <div className="game">
+                                    {this.renderHorses()}
+                                </div> :  <Fragment>
+                                <h2>Waiting for other players to join...</h2>
+                                <Spinner animation="border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </Spinner>
+                            </Fragment>
                 }
 
             </div>
