@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { API_ROOT } from '../constants';
 import Card from 'react-bootstrap/Card';
-import horseFace from '../Images/horseface.png'
+import horseFace from '../Images/horseface.png';
+import { connect } from 'react-redux';
+import {setGamesNewsFeed} from '../actions'
 
 class LeftComponentProfile extends Component {
     constructor() {
@@ -11,16 +13,21 @@ class LeftComponentProfile extends Component {
         }
     }
 
-    componentDidMount = () => {
-        fetch(`${API_ROOT}/games`)
-            .then(r => r.json())
-            .then(games => {
-                this.setState({ games })
-            })
+    componentDidMount() {
+        this.props.setGamesNewsFeed()
     }
-    
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log(prevProps, prevState)
+    //     fetch(`${API_ROOT}/games`)
+    //         .then(r => r.json())
+    //         .then(games => {
+    //             this.setState({ games })
+    //         })
+    // }
+
     render() {
-        let limitedGames = this.state.games
+        let limitedGames = this.props.games;
         limitedGames = limitedGames.splice(0, 2);
         return (
             <div className="LeftComponent">
@@ -31,21 +38,22 @@ class LeftComponentProfile extends Component {
 
 
                     {
-                        limitedGames.map(game => {
-                            return <div className="newsFeed">
+                        limitedGames.length ?
+                            limitedGames.map(game => {
+                                return <div className="newsFeed">
 
-                                <Card style={{ width: '95%' }}>
-                                    <Card.Img variant="top" src={horseFace} height="" width="" />
-                                    <Card.Body>
-                                        <Card.Title>{game.winner} just won</Card.Title>
-                                        <Card.Text>
-                                            ${game.jackpot.toFixed(2)}!
-                          </Card.Text>
+                                    <Card style={{ width: '95%' }}>
+                                        <Card.Img variant="top" src={horseFace} height="" width="" />
+                                        <Card.Body>
+                                            <Card.Title>{game.winner} just won</Card.Title>
+                                            <Card.Text>
+                                                ${game.jackpot.toFixed(2)}!
+                                    </Card.Text>
 
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                        })
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            }) : null
                     }
                 </div>
 
@@ -55,4 +63,15 @@ class LeftComponentProfile extends Component {
     }
 }
 
-export default LeftComponentProfile;
+const mapDispatchToProps = dispatch => ({
+    setGamesNewsFeed: () => dispatch(setGamesNewsFeed()),
+   
+})
+
+const mapStateToProps = state => {
+    return {
+        games: state.games
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftComponentProfile);

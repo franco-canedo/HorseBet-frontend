@@ -3,6 +3,8 @@ import Header from '../components/Header.js';
 import AllThreeMain from './AllThreeMain.js';
 import { Redirect } from "react-router-dom";
 import { API_ROOT } from '../constants';
+import { connect } from 'react-redux';
+import {setGamesNewsFeed} from '../actions'
 
 class MainPage extends Component {
     constructor() {
@@ -15,23 +17,22 @@ class MainPage extends Component {
     }
 
     componentDidMount = () => {
-        fetch(`${API_ROOT}/games`)
-            .then(r => r.json())
-            .then(games => {
-                this.setState({ games })
-            })
+        this.props.setGamesNewsFeed()
     }
 
     handleSignUpClick = (e) => {
-        
-        e.preventDefault();
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();   
+        this.props.setGamesNewsFeed()
         this.setState({
             form: "signup"
-        })
+        })    
     }
 
     handleLogInClick = (e) => {
-        e.preventDefault();
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        this.props.setGamesNewsFeed()
         this.setState({
             form: "login"
         })
@@ -42,6 +43,7 @@ class MainPage extends Component {
     }
 
     render() {
+        console.log('rerender?')
         return this.state.loggedIn ? (
             <Redirect to="/profile" things={this.state} />
         ) : (
@@ -50,7 +52,7 @@ class MainPage extends Component {
                     <AllThreeMain
                         form={this.state.form}
                         signup={this.handleSignUpClick} 
-                        games={this.state.games}
+                        games={this.props.games}
                         />
 
 
@@ -58,5 +60,15 @@ class MainPage extends Component {
             );
     }
 }
+const mapDispatchToProps = dispatch => ({
+    setGamesNewsFeed: () => dispatch(setGamesNewsFeed()),
+   
+})
 
-export default MainPage;
+const mapStateToProps = state => {
+    return {
+        games: state.games
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

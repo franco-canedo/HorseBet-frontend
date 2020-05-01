@@ -3,6 +3,7 @@ import { API_ROOT, HEADERS } from '../constants';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
+import {setGamesNewsFeed} from '../actions'
 import CenterComponentGame from "../GameComponents/CenterComponentGame";
 
 class CenterComponentProfile extends Component {
@@ -68,7 +69,7 @@ class CenterComponentProfile extends Component {
             .then(r => r.json())
             .then(json => {
                 console.log(json)
-                
+                this.props.setGamesNewsFeed();
                 this.props.getProfileFetch();
             })
     }
@@ -96,7 +97,7 @@ class CenterComponentProfile extends Component {
             .then(r => r.json())
             .then(json => {
                 console.log(json)
-    
+                this.props.setGamesNewsFeed();
                 this.props.getProfileFetch();
             })
     }
@@ -208,12 +209,13 @@ class CenterComponentProfile extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getProfileFetch: () => dispatch(getProfileFetch())
+    getProfileFetch: () => dispatch(getProfileFetch()),
+    setGamesNewsFeed: () => dispatch(setGamesNewsFeed()),
 })
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
     }
 }
 

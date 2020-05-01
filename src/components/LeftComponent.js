@@ -25,7 +25,7 @@ class LeftComponent extends Component {
                                         <Card.Title>{game.winner} just won</Card.Title>
                                         <Card.Text>
                                             ${game.jackpot.toFixed(2)}!
-                          </Card.Text>
+                                    </Card.Text>
 
                                     </Card.Body>
                                 </Card>

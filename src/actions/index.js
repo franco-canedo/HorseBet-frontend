@@ -2,7 +2,20 @@ import { API_ROOT, HEADERS } from '../constants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReduxThunk from 'redux-thunk'
 
-
+export const setGamesNewsFeed = games => {
+    return dispatch => {
+        fetch(`${API_ROOT}/games`)
+            .then(r => r.json())
+            .then(games => {
+                dispatch(newsFeed(games))
+            })
+    }
+}
+    
+const newsFeed = games => ({
+    type: 'SET_NEWS_FEED',
+    payload: games
+})
 
 export const increment = boo => ({
     type: 'INCREMENT',
