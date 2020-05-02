@@ -388,6 +388,21 @@
   margin-top: 9px;
 
   
+  background: rgb(204, 204, 43);
+  /* -moz-border-radius: 50px;
+    -webkit-border-radius: 50px; */
+    border-radius: 50px;
+
+}
+
+.spanLightsRed {
+  width: 12%;
+  height: 50%;
+  border: solid;
+  margin-left: 15px;
+  margin-top: 9px;
+
+  
   background: red;
   /* -moz-border-radius: 50px;
     -webkit-border-radius: 50px; */
