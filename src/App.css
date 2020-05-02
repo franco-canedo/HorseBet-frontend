@@ -133,7 +133,7 @@
 }
 
 .ScrollingList {
-  padding-top: 50px;
+  padding-top: 25px;
   animation: marquee infinite 10s linear;
   max-height: 400px;
 }
@@ -271,6 +271,10 @@
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
+}
+
+.jumbotron1{
+  column-count: 2;
 }
 
 .LeftComponentGame {

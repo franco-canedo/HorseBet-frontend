@@ -33,40 +33,61 @@ class JumbotronComponent extends Component {
 
     renderFirstStep = () => {
         return <Fragment>
-            <h2>Ready to Play?</h2>
-            <img src={betSizePic} alt="Bet Size" width="200"></img>
-            <p></p>
-            <p>
-                First, choose the amount you want to bet on bottom right corner!
+            <div className="jumbotron1">
+                <div>
+                    <h2>Ready to Play?</h2>
+                    <p></p>
+                    <p>
+                        First, choose the amount you want to bet on bottom right corner!
             </p>
-            
+                </div>
+                <div>
+                    <img src={betSizePic} alt="Bet Size" width="200"></img>
+                </div>
+            </div>
+            <p></p>
+
             <Button onClick={this.handleStep2Click} variant="dark">Step 2</Button>
         </Fragment>
     }
 
     renderSecondStep = () => {
         return <Fragment>
-            <h2>Step 2</h2>
-            <img src={chooseHorse} alt="choose horse" width="400"></img>
-            <p></p>
-            <p>
-                Once you've joined a game,
-                choose a horse you want to bet on!
+            <div className="jumbotron1">
+                <div>
+                    <h2>Step 2</h2>
+                    <p></p>
+                    <p>
+                        Once you've joined a game,
+                        choose a horse you want to bet on!
             </p>
-            
+                </div>
+                <div>
+                    <img src={chooseHorse} alt="choose horse" width="300"></img>
+                </div>
+            </div>
+            <p></p>
+
             <Button onClick={this.handleStep3Click} variant="dark">Step 3</Button>
         </Fragment>
     }
 
     renderThirdStep = () => {
         return <Fragment>
-            <h2>Step 3</h2>
-            <img src={horseButtons} alt="horse buttons" width="135"></img>
-            <p></p>
-            <p>
-                Hype the horse you bet on, or Boo others! Each click will increase your bet.
-                Jackpot will be split among players who bet on the winning horse.
+            <div className="jumbotron1">
+                <div>
+                    <h2>Step 3</h2>
+                    <p></p>
+                    <p>
+                        Hype the horse you bet on, or Boo others! Each click will increase your bet.
+                        Jackpot will be split among players who bet on the winning horse.
             </p>
+                </div>
+                <div>
+                    <img src={horseButtons} alt="horse buttons" width="135"></img>
+                </div>
+            </div>
+            <p></p>
 
 
             <Button onClick={this.handleInstructionsClick} variant="dark">Show intructions again.</Button>

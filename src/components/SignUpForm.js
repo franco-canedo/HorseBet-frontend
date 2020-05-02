@@ -64,7 +64,7 @@ class SignUpForm extends Component {
                 </Form.Group>
 
                 <Button onClick={this.handleSubmit} variant="dark" type="submit">
-                  Submit
+                  Sign Up
                                 </Button>
               </Form>
 
