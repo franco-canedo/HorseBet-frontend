@@ -222,10 +222,10 @@ class RightComponentGame extends Component {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu onSelect={this.handleGameFetch}>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(1)} eventKey='1' value="1" href="#/action-1">$1</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(5)} value="5" href="#/action-2">$5</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(10)} value="10" href="#/action-3">$10</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(20)} value="20" href="#/action-3">$20</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(1)} eventKey='1' value="1" href="#/action-1">$2</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(5)} value="5" href="#/action-2">$10</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(10)} value="10" href="#/action-3">$20</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(20)} value="20" href="#/action-3">$40</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                     }

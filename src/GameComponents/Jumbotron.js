@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import betSizePic from '../Images/chooseBetSize.png';
 import chooseHorse from '../Images/chooseHorse.png';
 import horseButtons from '../Images/Buttons.png';
+import Carousel from 'react-bootstrap/Carousel';
+import betSize from '../Images/buttons2.png';
 
 class JumbotronComponent extends Component {
     constructor() {
@@ -42,7 +44,7 @@ class JumbotronComponent extends Component {
             </p>
                 </div>
                 <div>
-                    <img src={betSizePic} alt="Bet Size" width="200"></img>
+                    <img src={betSize} alt="Bet Size" width="200"></img>
                 </div>
             </div>
             <p></p>
@@ -97,14 +99,90 @@ class JumbotronComponent extends Component {
 
     render() {
         return (
+            <Carousel>
+                <Carousel.Item>
+                    <Fragment>
+                        <div className="jumbotron1">
+                            <div>
+                                <h2>Ready to Play?</h2>
+                                <p></p>
+                                <p>
+                                    First, choose the amount you want to bet on bottom right corner! </p>
+                                    <div className="left-text">
+                                    <ul>
+                                        <li><b>'Minimum bet':</b> minimum required to join a game</li>
+                                        <li>Half of that requirement will have to be bet
+                                    before the game starts.</li>
+                                    
+                                    </ul>
+                                    </div>
+                                    
 
-            <Jumbotron>
-                {
-                    this.state.step === 1 ? this.renderFirstStep() :
-                        this.state.step === 2 ? this.renderSecondStep() :
-                            this.renderThirdStep()
-                }
-            </Jumbotron>
+                            </div>
+                            <div>
+                                <img src={betSize} alt="Bet Size" width="200"></img>
+                            </div>
+                        </div>
+                        <p></p>
+
+
+                    </Fragment>
+
+                </Carousel.Item>
+                <Carousel.Item>
+                    <Fragment>
+                        <div className="jumbotron1">
+                            <div>
+                                <h2>Step 2</h2>
+                                <p></p>
+                                <p>
+                                    Once you've joined a game,
+                                    choose a horse you want to bet on!
+            </p>
+                            </div>
+                            <div>
+                                <img src={chooseHorse} alt="choose horse" width="340"></img>
+                            </div>
+                        </div>
+                        <p></p>
+
+
+                    </Fragment>
+
+                </Carousel.Item>
+                <Carousel.Item>
+                    <Fragment>
+                        <div className="jumbotron1">
+                            <div>
+                                <h2>Step 3</h2>
+                                <p></p>
+                                <p>
+                                    Hype the horse you bet on, or Boo others! Each click will increase your bet.
+                                    Jackpot will be split among players who bet on the winning horse.
+            </p>
+                            </div>
+                            <div>
+                                <img src={horseButtons} alt="horse buttons" width="200"></img>
+                            </div>
+                        </div>
+                        <p></p>
+
+
+
+
+                    </Fragment>
+
+
+                </Carousel.Item>
+            </Carousel>
+
+            // <Jumbotron>
+            //     {
+            //         this.state.step === 1 ? this.renderFirstStep() :
+            //             this.state.step === 2 ? this.renderSecondStep() :
+            //                 this.renderThirdStep()
+            //     }
+            // </Jumbotron>
 
 
         )

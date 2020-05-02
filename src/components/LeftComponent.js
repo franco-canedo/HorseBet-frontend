@@ -17,7 +17,7 @@ class LeftComponent extends Component {
                         limitedGames.map(game => {
                             return <div className="ScrollingList">
 
-                                <Card border="dark" style={{ width: '14rem' }}>
+                                <Card border="info" style={{ width: '14rem' }}>
                                     <Card.Header>{game.winner} just won!</Card.Header>
                                     <Card.Body>
                                     <Card.Title>${game.jackpot.toFixed(2)}</Card.Title>
