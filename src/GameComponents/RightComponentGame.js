@@ -132,8 +132,7 @@ class RightComponentGame extends Component {
                     // console.log("if?", horse);
                     return <div className="lights">
 
-                        <div className={this.props.activeGame.active ? 
-                        "spanLightsGreen" : "spanLightsRed"}>
+                        <div className="spanLightsGreen">
                             <div className="speed">
                                 {/* <Button ref={'hype'} variant="outline-success" onClick={() => this.handleHypeClick(horse.id)}>Hype!</Button>{' '} */}
                                 <OverlayTrigger
@@ -149,8 +148,7 @@ class RightComponentGame extends Component {
                 } else {
                     return <div className="lights">
 
-                        <div className={this.props.activeGame.active ? 
-                        "spanLightsGreen" : "spanLightsRed"}>
+                        <div className="spanLightsRed">
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}
                                 <OverlayTrigger
@@ -251,7 +249,8 @@ class RightComponentGame extends Component {
 
 const mapStateToProps = state => {
     return {
-        jackpotColor: state.jackpotColor
+        jackpotColor: state.jackpotColor,
+        
     }
 }
 

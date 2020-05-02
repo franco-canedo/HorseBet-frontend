@@ -266,6 +266,14 @@
   color: whitesmoke
 }
 
+.BetInfoDivs {
+  height: 124px;
+  border: ridge;
+  margin-bottom: 10px;
+  background-color: rgb(199, 68, 44);
+  color: whitesmoke
+}
+
 .CenterComponentGame {
   background-color: rgb(3, 55, 90);
   border: double;

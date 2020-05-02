@@ -15,6 +15,8 @@ import { decrement } from '../actions'
 import { updateActiveGame } from '../actions'
 import { jackpotColorYellow } from '../actions'
 import { jackpotColorNormal } from '../actions'
+import { betColorRed } from '../actions'
+import { betColorNormal } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -146,6 +148,12 @@ class AllThreeGame extends Component {
         this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.jackpotColorYellow();
+        if(response.user_id === this.props.currentUser.id) {
+            this.props.betColorRed();
+            setTimeout(() => {
+                this.props.betColorNormal();
+            }, 200)
+        }
         setTimeout(() => {
             this.props.jackpotColorNormal();
         }, 200)
@@ -157,6 +165,12 @@ class AllThreeGame extends Component {
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
         this.props.jackpotColorYellow();
+        if(response.user_id === this.props.currentUser.id) {
+            this.props.betColorRed();
+            setTimeout(() => {
+                this.props.betColorNormal();
+            }, 200)
+        }
         setTimeout(() => {
             this.props.jackpotColorNormal();
         }, 200)
@@ -279,7 +293,9 @@ const mapDispatchToProps = dispatch => ({
     decrement: (hype) => dispatch(decrement(hype)),
     updateActiveGame: (id) => dispatch(updateActiveGame(id)),
     jackpotColorYellow: () => dispatch(jackpotColorYellow()),
-    jackpotColorNormal: () => dispatch(jackpotColorNormal())
+    jackpotColorNormal: () => dispatch(jackpotColorNormal()),
+    betColorRed: () => dispatch(betColorRed()),
+    betColorNormal: () => dispatch(betColorNormal()),
 })
 
 const mapStateToProps = state => {
