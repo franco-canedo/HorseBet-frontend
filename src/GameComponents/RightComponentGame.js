@@ -34,7 +34,7 @@ class RightComponentGame extends Component {
                 total_bet: this.props.joinableGames[0]['minimum_bet'],
                 extra_bet: this.props.joinableGames[0]['minimum_bet']
             }
-            console.log(body);
+            // console.log(body);
             const configObj = {
                 method: 'POST',
                 headers: HEADERS,

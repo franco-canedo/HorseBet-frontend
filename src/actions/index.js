@@ -54,7 +54,7 @@ const updateActive = game => ({
 
 
 export const setGameHorses = game => {
-    console.log(game)
+    console.log('redux', game)
     const h1 = game.horses[0];
     const h2 = game.horses[1];
     const h3 = game.horses[2];

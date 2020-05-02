@@ -47,7 +47,7 @@ class CenterComponentGame extends Component {
                 <h4>Choose a horse to bet on!</h4>
                 {this.props.activeGame[0].horses && this.props.activeGame[0].horses.map(horse => {
                     return <button onClick={() => this.handleHorseClick(horse.id)} key={horse.id} className="chooseHorse">
-                        <p>horse {horse.id}</p>
+                        <p>{horse.name}, {horse.id}</p>
                         <img alt="Horse face" src={horseImage} height="35" width=""></img>
                     </button>
                 })}
