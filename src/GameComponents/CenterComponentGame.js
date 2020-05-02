@@ -3,6 +3,8 @@ import Animation from './Animation.js';
 import horseImage from '../Images/horseface.png';
 import { API_ROOT, HEADERS } from '../constants';
 import Spinner from 'react-bootstrap/Spinner';
+import JumbotronComponent from './Jumbotron.js'
+
 
 class CenterComponentGame extends Component {
     constructor() {
@@ -69,7 +71,7 @@ class CenterComponentGame extends Component {
         return (
             <div className="CenterComponentGame">
                 {
-                    this.props.activeGame.length === 0 ? null : this.props.activeGame[0].active ?
+                    this.props.activeGame.length === 0 ? <JumbotronComponent /> : this.props.activeGame[0].active ?
                         <Fragment>
                             <Animation
                                 user={this.props.user}

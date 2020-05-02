@@ -68,6 +68,7 @@
   margin-right: 10px;
 }
 
+
 .Logo {
   left:0;
   float: left;
@@ -129,6 +130,25 @@
 
 .newsFeed {
   margin-top: 25px;
+}
+
+.ScrollingList {
+  padding-top: 50px;
+  animation: marquee infinite 10s linear;
+  max-height: 400px;
+}
+
+
+
+@keyframes marquee {
+  0%   { 
+    -moz-transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0); }
+    100% { 
+    -moz-transform: translate(0, -100%);
+    -webkit-transform: translate(0, -100%);
+    transform: translate(0, -100%); }
 }
 
 

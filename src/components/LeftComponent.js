@@ -6,18 +6,16 @@ import horseFace from '../Images/horseface.png'
 class LeftComponent extends Component {
     render() {
         let limitedGames = this.props.games
-        limitedGames = limitedGames.splice(0, 2);
+        limitedGames = limitedGames.splice(0, 3);
         return (
             <div className="LeftComponent">
                 <div className="newsFeed">
                     <div className="newsFeed">
-                        <h2>News Feed</h2>
+
                     </div>
-
-
                     {
                         limitedGames.map(game => {
-                            return <div className="newsFeed">
+                            return <div className="ScrollingList">
 
                                 <Card style={{ width: '95%' }}>
                                     <Card.Img variant="top" src={horseFace} height="" width="" />
