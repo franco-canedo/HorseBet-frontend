@@ -109,11 +109,18 @@
 }
 
 /* ///////////////////////////// MainPage  */
+.AllThreeMain {
+  width: 100%;
+  float: center;
+  height: 950px;
+  background-color: rgb(56, 53, 53);
+  /* padding: 30px; */
+}
 
 .AllThree {
   width: 100%;
   float: center;
-  height: 800px;
+  height: 900px;
   background-color: rgb(56, 53, 53);
   /* padding: 30px; */
 }
