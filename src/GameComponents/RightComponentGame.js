@@ -148,7 +148,7 @@ class RightComponentGame extends Component {
                 } else {
                     return <div className="lights">
                         <div className="spanLightsRed">
-
+                        
 
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}
@@ -170,7 +170,7 @@ class RightComponentGame extends Component {
 
     render() {
         return (
-            <div className="RightComponentGame">
+            <div className={this.props.betColor ? "RightComponentGameClick" : "RightComponentGame"}>
                 <div className="lightsContainer">
                     {
                         this.props.horseChosen ?
@@ -251,6 +251,7 @@ class RightComponentGame extends Component {
 const mapStateToProps = state => {
     return {
         jackpotColor: state.jackpotColor,
+        betColor: state.betColor
 
     }
 }

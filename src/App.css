@@ -254,8 +254,8 @@
   border: ridge;
   margin-bottom: 10px;
   background-color: rgb(3, 55, 90);
-  color: whitesmoke
-
+  color: whitesmoke;
+  box-shadow: 5px 5px;
 }
 
 .GameInfoDivsJackpot {
@@ -263,7 +263,8 @@
   border: ridge;
   margin-bottom: 10px;
   background-color: rgb(170, 170, 39);
-  color: whitesmoke
+  color: whitesmoke;
+  box-shadow: 10px 10px;
 }
 
 .BetInfoDivs {
@@ -271,7 +272,8 @@
   border: ridge;
   margin-bottom: 10px;
   background-color: rgb(199, 68, 44);
-  color: whitesmoke
+  color: whitesmoke;
+  box-shadow: 10px 10px;
 }
 
 .CenterComponentGame {
@@ -287,6 +289,7 @@
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
+  box-shadow: 10px 10px;
 }
 
 .jumbotron1{
@@ -314,6 +317,7 @@
   float: left;
   padding: 10px;
   height: 800px;
+  
 }
 
 .innerLeft {
@@ -361,6 +365,20 @@
   height: 460px;
   float: left;
   padding: 10px;
+  box-shadow: 10px 10px;
+}
+
+.RightComponentGameClick {
+  background-color: rgb(3, 55, 90);
+  border: double;
+  border-radius: 3%;
+  margin-top: 150px;
+  width: 18%;
+  height: 460px;
+  float: left;
+  padding: 10px;
+  box-shadow: 3px 3px;
+  color: white;
 }
 
 .lightsContainer {
@@ -382,6 +400,7 @@
   /* padding: 1px; */
   margin-bottom: 10px;
   text-align: center;
+  /* column-count: 2; */
 }
 
 .spanLightsYellow {
