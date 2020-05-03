@@ -148,7 +148,7 @@ class AllThreeGame extends Component {
         this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.jackpotColorYellow();
-        if(response.user_id === this.props.currentUser.id) {
+        if (response.user_id === this.props.currentUser.id) {
             this.props.betColorRed();
             setTimeout(() => {
                 this.props.betColorNormal();
@@ -165,7 +165,7 @@ class AllThreeGame extends Component {
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
         this.props.jackpotColorYellow();
-        if(response.user_id === this.props.currentUser.id) {
+        if (response.user_id === this.props.currentUser.id) {
             this.props.betColorRed();
             setTimeout(() => {
                 this.props.betColorNormal();
@@ -228,14 +228,20 @@ class AllThreeGame extends Component {
         return (
             <div className="AllThree">
                 <ActionCableConsumer
+                    channel={{ channel: 'GameUsersChannel' }}
+                    onReceived={this.handleReceivedGameUser}
+                />
+                <ActionCableConsumer
                     channel={{ channel: 'GamesChannel' }}
                     onReceived={this.handleReceivedGame}
                 />
                 <ActionCableConsumer
-                    channel={{ channel: 'GameUsersChannel' }}
-                    onReceived={this.handleReceivedGameUser}
+                    // key={activeGameId}  
+                    channel={{ channel: 'UserHorsesChannel', game: this.props.activeGame.id }}
+                    onReceived={(resp) => console.log(resp)}
                 />
-                
+
+
 
                 {this.state.joinableGames.length ? (
                     <Cable
@@ -299,7 +305,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        activeGame: state.activeGame
     }
 }
 

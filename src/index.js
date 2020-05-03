@@ -29,11 +29,11 @@ ReactDOM.render(
   <div>
     <Provider store={store}>
       <Router>
-        <React.StrictMode>
+        
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/" component={MainPage} />
           <Route exact path="/game" component={App} />
-        </React.StrictMode>
+        
       </Router>
     </Provider>
   </div>
