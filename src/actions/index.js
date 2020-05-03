@@ -7,6 +7,11 @@ export const jackpotColorYellow = () => ({
 
 })
 
+export const gameOverAction = () => ({
+    type: 'GAME_OVER'
+
+})
+
 export const jackpotColorNormal = () => ({
     type: 'NORMAL'
 })
@@ -57,6 +62,11 @@ export const updateActiveGame = id => {
 const updateActive = game => ({
     type: 'UPDATE_ACTIVE_GAME',
     payload: game
+})
+
+export const updateActiveId = id => ({
+    type: 'SET_ACTIVE_ID',
+    payload: id
 })
 
 

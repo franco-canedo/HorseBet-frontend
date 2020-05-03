@@ -16,11 +16,11 @@ const Cable = ({ activeGameId, handleReceivedBoo, handleReceivedHype, handleRece
         onReceived={handleReceivedHype}
       />
 
-      <ActionCableConsumer
+      {/* <ActionCableConsumer
         // key={activeGameId}  
         channel={{ channel: 'UserHorsesChannel', game: activeGameId }}
         onReceived={handleReceivedUserHorse}
-      />
+      /> */}
 
       
 

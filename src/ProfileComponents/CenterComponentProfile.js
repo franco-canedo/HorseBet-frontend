@@ -119,7 +119,7 @@ class CenterComponentProfile extends Component {
                 <ul>
                     <li>id: {threeGames[game].id}</li>
                     {winners(threeGames[game].game_winners)}
-                    <li>Jackpot: ${threeGames[game].jackpot}</li>
+                    <li>Jackpot: ${threeGames[game].jackpot.toFixed(2)}</li>
                     <li>Minimum bet: ${threeGames[game].minimum_bet}</li>
                 </ul>
             </div>
