@@ -41,12 +41,12 @@ class RightComponentGame extends Component {
                 body: JSON.stringify(body)
             }
             fetch(`${API_ROOT}/joinGame`, configObj)
-                // .then(r => r.json())
-                // .then(json => {
-                //     console.log(json);
+            // .then(r => r.json())
+            // .then(json => {
+            //     console.log(json);
 
-                //     this.props.handleActiveGame(json)
-                // });
+            //     this.props.handleActiveGame(json)
+            // });
         } else {
             const body = {
                 minimum_bet: bet,
@@ -68,7 +68,7 @@ class RightComponentGame extends Component {
             }
             alert('Joining a game... Please wait')
             fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
-        
+
 
             setTimeout(() => {
                 if (this.props.joinableGames.length > 0) {
@@ -78,18 +78,18 @@ class RightComponentGame extends Component {
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
                     }
-                   
+
                     const configObj2 = {
                         method: 'POST',
                         headers: HEADERS,
                         body: JSON.stringify(body2)
                     }
                     fetch(`${API_ROOT}/joinGame`, configObj2)
-                        // .then(r => r.json())
-                        // .then(json => {
-                        //     console.log(json);
-                        //     this.props.handleActiveGame(json)
-                        // });
+                    // .then(r => r.json())
+                    // .then(json => {
+                    //     console.log(json);
+                    //     this.props.handleActiveGame(json)
+                    // });
                 }
             }, 3000);
         }
@@ -147,8 +147,9 @@ class RightComponentGame extends Component {
                     </div>
                 } else {
                     return <div className="lights">
-
                         <div className="spanLightsRed">
+
+
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}
                                 <OverlayTrigger
@@ -250,7 +251,7 @@ class RightComponentGame extends Component {
 const mapStateToProps = state => {
     return {
         jackpotColor: state.jackpotColor,
-        
+
     }
 }
 

@@ -3,6 +3,12 @@ import Canvas from './Canvas';
 import { ActionCable } from 'react-actioncable-provider';
 import { API_ROOT, HEADERS } from '../constants';
 import { connect } from 'react-redux';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Button from 'react-bootstrap/Button';
+
+//import Popover from 'react-bootstrap/Popover';
+// import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 class Animation extends Component {
     constructor(props) {
@@ -12,6 +18,8 @@ class Animation extends Component {
             horseSpeed2: 10,
             horseSpeed3: 10,
             horseSpeed4: 10,
+            popoverOpen: false,
+            targedId: 0
         }
         this.updateAnimationState = this.updateAnimationState.bind(this);
     }
@@ -50,12 +58,14 @@ class Animation extends Component {
             headers: HEADERS,
             body: JSON.stringify(body)
         });
+    }
 
-        // this.setState(prevState => {
-        //     return {
-        //         horseSpeed1: prevState.horseSpeed1 - 5
-        //     }
-        // })
+    toggle = () => {
+        this.setState(prevState => {
+            return {
+                popoverOpen: !prevState.popoverOpen
+            }
+        })
     }
 
 
@@ -73,11 +83,14 @@ class Animation extends Component {
                     horseSpeed4={minus4}
                     boo={this.boo} />
                 <div className="gameButtonsDiv">
-                    <h3>{this.props.user.currentUser.username}</h3>
-                    {/* <button className="gameButtons" onClick={this.boo}>Boo!</button>
-                    <button className="gameButtons" onClick={this.boo}>Boo!</button>
-                    <button className="gameButtons" onClick={this.boo}>Hype!</button>
-                    <button className="gameButtons" onClick={this.boo}>Boo!</button> */}
+                    {this.props.activeGame.activeGame.users.map(user => {
+
+                        return <div className="gameButtons">
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover(user)}>
+                            <Button variant="light">{user.username}</Button>
+                        </OverlayTrigger>
+                        </div>
+                    })}
                 </div>
             </div>
         );
@@ -85,8 +98,23 @@ class Animation extends Component {
 }
 const mapStateToProps = state => {
     return {
-      horses: state.horses
+        horses: state.horses,
+        activeGame: state.activeGame,
     }
-  }
+}
 
 export default connect(mapStateToProps, null)(Animation);
+
+const popover = (user) => {
+    return <Popover id="popover-basic">
+        <Popover.Title as="h3">Stats:</Popover.Title>
+        <Popover.Content>
+            <li>Games Won: {user.number_wins}</li>
+            <li>Winnings: ${user.winnings}</li>
+            <li>Joined in {user.created_at}</li>
+        </Popover.Content>
+    </Popover>
+}
+
+
+

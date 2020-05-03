@@ -334,17 +334,21 @@
   
 }
 
+.popoverBottom {
+  background-color: cadetblue;
+}
+
 .gameButtons {
-  background-color: #E8FFF5;
-  border: outset;
-  /* color: white; */
-  padding: 18px 50px;
+  background-color: rgb(3, 55, 90);
+ 
+  color: black;
+  padding: 10px 35px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 20px;
-  margin-top: 18px;
-  margin-right: 20px;
+  margin-top: 10px;
+  margin-right: 10px;
   margin-left: 5px;
 }
 
@@ -380,7 +384,7 @@
   text-align: center;
 }
 
-.spanLightsRed {
+.spanLightsYellow {
   width: 12%;
   height: 50%;
   border: solid;
