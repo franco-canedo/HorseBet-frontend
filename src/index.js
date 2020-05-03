@@ -10,6 +10,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import allReducers from './reducers';
 import { Provider } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import { ActionCableProvider } from 'react-actioncable-provider';
 import { API_WS_ROOT } from './constants';
@@ -28,11 +29,11 @@ ReactDOM.render(
   <div>
     <Provider store={store}>
       <Router>
-        <React.StrictMode>
+        
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/" component={MainPage} />
           <Route exact path="/game" component={App} />
-        </React.StrictMode>
+        
       </Router>
     </Provider>
   </div>

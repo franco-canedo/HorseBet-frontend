@@ -55,7 +55,7 @@ class LogInForm extends Component {
                                 </Form.Group>
 
                                 <Button onClick={this.handleSubmit} variant="dark" type="submit">
-                                    Submit
+                                    Log In
                                 </Button>
                             </Form>
                         </div>

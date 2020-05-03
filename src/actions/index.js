@@ -11,6 +11,14 @@ export const jackpotColorNormal = () => ({
     type: 'NORMAL'
 })
 
+export const betColorRed = () => ({
+    type: 'RED'
+})
+
+export const betColorNormal = () => ({
+    type: 'NORMAL_BET_COLOR'
+})
+
 export const setGamesNewsFeed = games => {
     return dispatch => {
         fetch(`${API_ROOT}/games`)
@@ -54,7 +62,7 @@ const updateActive = game => ({
 
 
 export const setGameHorses = game => {
-    console.log(game)
+    console.log('redux', game)
     const h1 = game.horses[0];
     const h2 = game.horses[1];
     const h3 = game.horses[2];

@@ -4,7 +4,7 @@ import RightComponentGame from "../GameComponents/RightComponentGame";
 import CenterComponentGame from "../GameComponents/CenterComponentGame";
 import Footer from '../components/Footer';
 import { API_ROOT } from '../constants';
-import { ActionCable } from 'react-actioncable-provider';
+import { ActionCable, ActionCableConsumer } from 'react-actioncable-provider';
 import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
@@ -15,6 +15,8 @@ import { decrement } from '../actions'
 import { updateActiveGame } from '../actions'
 import { jackpotColorYellow } from '../actions'
 import { jackpotColorNormal } from '../actions'
+import { betColorRed } from '../actions'
+import { betColorNormal } from '../actions'
 
 
 class AllThreeGame extends Component {
@@ -47,7 +49,7 @@ class AllThreeGame extends Component {
 
         this.props.getProfileFetch()
     };
-
+    // causes rerender
     handleHorseChosen = (id) => {
         const horse = this.state.horses.find(h => h.id === id);
 
@@ -61,12 +63,13 @@ class AllThreeGame extends Component {
             horses: array
         })
     }
-
+    //causes rerender
     handleActiveGame = (id) => {
+        console.log('handle active?', id)
         fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
             .then(game => {
-                console.log(game);
+                console.log('fetched', game);
                 this.props.updateActiveGame(game.id);
                 setTimeout(() => {
                     this.setState(prevState => {
@@ -114,6 +117,7 @@ class AllThreeGame extends Component {
 
     }
 
+    //causes rerender
     updateActiveGameLame = (id) => {
         fetch(`${API_ROOT}/games/${id}`)
             .then(resp => resp.json())
@@ -128,8 +132,9 @@ class AllThreeGame extends Component {
                 })
             })
     }
-
+    //causes rerender
     handleReceivedGame = response => {
+        console.log('joinableGame', response)
         const { game } = response;
         this.setState(prevState => {
             return {
@@ -143,6 +148,12 @@ class AllThreeGame extends Component {
         this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.jackpotColorYellow();
+        if (response.user_id === this.props.currentUser.id) {
+            this.props.betColorRed();
+            setTimeout(() => {
+                this.props.betColorNormal();
+            }, 200)
+        }
         setTimeout(() => {
             this.props.jackpotColorNormal();
         }, 200)
@@ -150,19 +161,27 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedHype = (response) => {
+        console.log('HYPE', response)
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
         this.props.jackpotColorYellow();
+        if (response.user_id === this.props.currentUser.id) {
+            this.props.betColorRed();
+            setTimeout(() => {
+                this.props.betColorNormal();
+            }, 200)
+        }
         setTimeout(() => {
             this.props.jackpotColorNormal();
         }, 200)
     }
-
+    // causes rerender
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
-
+        console.log('userhorse', response)
+        console.log(response.user_horse.active)
         if (response.user_horse.active === true) {
-
+            console.log('true?')
             if (response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;
@@ -173,14 +192,23 @@ class AllThreeGame extends Component {
             }
         }
     }
-
+    // causes rerender
     handleReceivedGameUser = (response) => {
-        console.log('joined', response.game_user.game_id);
-        if(this.state.activeGame.length === 0) {
-            this.handleActiveGame(response.game_user.game_id)
+        console.log('GameUser', response);
+        let id = response.game_user.game_id;
+        if (this.state.activeGame.length === 0) {
+            console.log('update active game', id, this.props.currentUser.currentUser.id)
+
+            if (this.props.currentUser.currentUser.id === response.game_user.user_id) {
+                console.log('update active game2')
+                this.handleActiveGame(id);
+                // this.props.updateActiveGame(id);
+            }
+
         } else {
-            if (response.game_user.game_id === this.state.activeGame[0].id) {
-                this.handleActiveGame(response.game_user.game_id)
+            if (id === this.state.activeGame[0].id) {
+                this.handleActiveGame(id);
+                // this.props.updateActiveGame(id);
             }
         }
 
@@ -199,16 +227,23 @@ class AllThreeGame extends Component {
         const { joinableGames, activeGameId } = this.state;
         return (
             <div className="AllThree">
-                <ActionCable
-                    channel={{ channel: 'GamesChannel' }}
-                    onReceived={this.handleReceivedGame}
-                />
-                <ActionCable
-                    // key={activeGameId}  
+                <ActionCableConsumer
                     channel={{ channel: 'GameUsersChannel' }}
                     onReceived={this.handleReceivedGameUser}
                 />
-                {this.state.joinableGames.length ? (
+                <ActionCableConsumer
+                    channel={{ channel: 'GamesChannel' }}
+                    onReceived={this.handleReceivedGame}
+                />
+                <ActionCableConsumer
+                    // key={activeGameId}  
+                    channel={{ channel: 'UserHorsesChannel', game: this.state.activeGame.length ? this.state.activeGame[0].id : null }}
+                    onReceived={(resp) => console.log(resp)}
+                />
+
+
+
+                {this.state.activeGame.length ? (
                     <Cable
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
@@ -224,7 +259,7 @@ class AllThreeGame extends Component {
                     activeGameLame={this.state.activeGame}
                 />
                 <CenterComponentGame
-                    userId={this.props.currentUser.id}
+                    userId={this.props.currentUser.currentUser.id}
                     user={this.props.currentUser}
                     speedTest={this.state.speedTest}
                     booId={this.state.horseBooId}
@@ -263,12 +298,15 @@ const mapDispatchToProps = dispatch => ({
     decrement: (hype) => dispatch(decrement(hype)),
     updateActiveGame: (id) => dispatch(updateActiveGame(id)),
     jackpotColorYellow: () => dispatch(jackpotColorYellow()),
-    jackpotColorNormal: () => dispatch(jackpotColorNormal())
+    jackpotColorNormal: () => dispatch(jackpotColorNormal()),
+    betColorRed: () => dispatch(betColorRed()),
+    betColorNormal: () => dispatch(betColorNormal()),
 })
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        // activeGame: state.activeGame
     }
 }
 

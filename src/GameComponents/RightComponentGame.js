@@ -34,19 +34,20 @@ class RightComponentGame extends Component {
                 total_bet: this.props.joinableGames[0]['minimum_bet'],
                 extra_bet: this.props.joinableGames[0]['minimum_bet']
             }
-            console.log(body);
+            // console.log(body);
             const configObj = {
                 method: 'POST',
                 headers: HEADERS,
                 body: JSON.stringify(body)
             }
             fetch(`${API_ROOT}/joinGame`, configObj)
-                // .then(r => r.json())
-                // .then(json => {
-                //     console.log(json);
+            console.log('joinGame?')
+            // .then(r => r.json())
+            // .then(json => {
+            //     console.log(json);
 
-                //     this.props.handleActiveGame(json)
-                // });
+            //     this.props.handleActiveGame(json)
+            // });
         } else {
             const body = {
                 minimum_bet: bet,
@@ -68,7 +69,7 @@ class RightComponentGame extends Component {
             }
             alert('Joining a game... Please wait')
             fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
-        
+
 
             setTimeout(() => {
                 if (this.props.joinableGames.length > 0) {
@@ -78,18 +79,19 @@ class RightComponentGame extends Component {
                         total_bet: this.props.joinableGames[0]['minimum_bet'],
                         extra_bet: this.props.joinableGames[0]['minimum_bet']
                     }
-                   
+
                     const configObj2 = {
                         method: 'POST',
                         headers: HEADERS,
                         body: JSON.stringify(body2)
                     }
                     fetch(`${API_ROOT}/joinGame`, configObj2)
-                        // .then(r => r.json())
-                        // .then(json => {
-                        //     console.log(json);
-                        //     this.props.handleActiveGame(json)
-                        // });
+                    console.log('joinGame timeout?')
+                    // .then(r => r.json())
+                    // .then(json => {
+                    //     console.log(json);
+                    //     this.props.handleActiveGame(json)
+                    // });
                 }
             }, 3000);
         }
@@ -132,7 +134,7 @@ class RightComponentGame extends Component {
                     // console.log("if?", horse);
                     return <div className="lights">
 
-                        <div className="spanLightsRed">
+                        <div className="spanLightsGreen">
                             <div className="speed">
                                 {/* <Button ref={'hype'} variant="outline-success" onClick={() => this.handleHypeClick(horse.id)}>Hype!</Button>{' '} */}
                                 <OverlayTrigger
@@ -147,8 +149,9 @@ class RightComponentGame extends Component {
                     </div>
                 } else {
                     return <div className="lights">
-
                         <div className="spanLightsRed">
+                        
+
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}
                                 <OverlayTrigger
@@ -169,7 +172,7 @@ class RightComponentGame extends Component {
 
     render() {
         return (
-            <div className="RightComponentGame">
+            <div className={this.props.betColor ? "RightComponentGameClick" : "RightComponentGame"}>
                 <div className="lightsContainer">
                     {
                         this.props.horseChosen ?
@@ -220,10 +223,10 @@ class RightComponentGame extends Component {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu onSelect={this.handleGameFetch}>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(1)} eventKey='1' value="1" href="#/action-1">$1</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(5)} value="5" href="#/action-2">$5</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(10)} value="10" href="#/action-3">$10</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleGameFetch(20)} value="20" href="#/action-3">$20</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(1)} eventKey='1' value="1" href="#/action-1">$2</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(5)} value="5" href="#/action-2">$10</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(10)} value="10" href="#/action-3">$20</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleGameFetch(20)} value="20" href="#/action-3">$40</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                     }
@@ -249,7 +252,9 @@ class RightComponentGame extends Component {
 
 const mapStateToProps = state => {
     return {
-        jackpotColor: state.jackpotColor
+        jackpotColor: state.jackpotColor,
+        betColor: state.betColor
+
     }
 }
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
 import {setGamesNewsFeed} from '../actions'
 import CenterComponentGame from "../GameComponents/CenterComponentGame";
+import Button from 'react-bootstrap/Button';
 
 class CenterComponentProfile extends Component {
     constructor() {
@@ -115,10 +116,12 @@ class CenterComponentProfile extends Component {
         for (const game in threeGames) {
 
             return <div>
-                <p>id: {threeGames[game].id}</p>
-                {winners(threeGames[game].game_winners)}
-                <p>Jackpot: ${threeGames[game].jackpot}</p>
-                <p>Minimum bet: ${threeGames[game].minimum_bet}</p>
+                <ul>
+                    <li>id: {threeGames[game].id}</li>
+                    {winners(threeGames[game].game_winners)}
+                    <li>Jackpot: ${threeGames[game].jackpot}</li>
+                    <li>Minimum bet: ${threeGames[game].minimum_bet}</li>
+                </ul>
             </div>
         }
     }
@@ -140,11 +143,12 @@ class CenterComponentProfile extends Component {
             <div className="CenterComponentProfile">
                  <div className="UserInfoDivs">
                     <h3>Profile Info:</h3>
-                    <p>{this.props.user.currentUser.username}</p>
+                    <p>Username: {this.props.user.currentUser.username}</p>
                     <p>{this.props.user.bio}</p>
 
-                    <button>Edit</button>
-                    <h4>Recent Games:</h4>
+                   <Button variant="light" size="sm">Edit</Button>
+                   <p></p>
+                    <h4>Most Recent Game:</h4>
                     {this.renderRecentGames()}
 
                 </div>
@@ -182,8 +186,8 @@ class CenterComponentProfile extends Component {
                                 </Fragment>
                                 :
                                 <Fragment>
-                                    <button onClick={this.handleDepositClick}>Deposit</button>
-                                    <button onClick={this.handleWithdrawClick}>Withdraw</button>
+                                    <Button variant="primary" size="sm" onClick={this.handleDepositClick}>Deposit</Button>
+                                    <Button variant="light" size="sm" onClick={this.handleWithdrawClick}>Withdraw</Button>
                                 </Fragment>
                     }
 
@@ -191,10 +195,16 @@ class CenterComponentProfile extends Component {
 
                 <div className="UserInfoDivs">
                     <h3>Stats:</h3>
-                    <p>Games Played:{gamesPlayed}</p>
+                    <ul>
+                        <li>Games Played:{gamesPlayed}</li>
+                        <li>Number of wins:{wins}</li>
+                        <li>Total Winnings: ${this.props.user.currentUser.winnings}</li>
+                        <li>Average jackpot: $</li>
+                    </ul>
+                    {/* <p>Games Played:{gamesPlayed}</p>
                     <p>Number of wins:{wins}</p>
                     <p>Total Winnings: ${this.props.user.currentUser.winnings}</p>
-                    <p>Average jackpot: $</p>
+                    <p>Average jackpot: $</p> */}
                     {/* {this.props.user.games && this.props.user.games} */}
 
 

@@ -7,7 +7,7 @@ class Canvas extends Component {
     constructor() {
         super()
         this.canvasRef = React.createRef();
-        
+
     }
 
     componentDidMount() {
@@ -22,6 +22,18 @@ class Canvas extends Component {
             ctx.drawImage(img, 10, 238, 50, 50)
 
         }
+
+        ctx.font = "20px Courier New";
+        ctx.fillText("Alfie", 470, 30);
+
+        ctx.font = "20px Arial";
+        ctx.fillText("Seabiscuit", 470, 95);
+
+        ctx.font = "20px Arial";
+        ctx.fillText("Flash", 470, 170);
+
+        ctx.font = "20px Arial";
+        ctx.fillText("Lucky", 470, 250);
 
         ctx.beginPath();
         ctx.moveTo(0, 75);
@@ -51,6 +63,39 @@ class Canvas extends Component {
         const ctx = canvas.getContext('2d');
         const img = this.refs.image;
 
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "20px Courier New";
+        ctx.fillText("Alfie", 470, 30);
+
+        ctx.font = "20px Courier New";
+        ctx.fillText("Seabiscuit", 470, 95);
+
+        ctx.font = "20px Courier New";
+        ctx.fillText("Flash", 470, 170);
+
+        ctx.font = "20px Courier New";
+        ctx.fillText("Lucky", 470, 250);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 75);
+        ctx.lineTo(600, 75);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, 150);
+        ctx.lineTo(600, 150);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, 225);
+        ctx.lineTo(600, 225);
+        ctx.stroke();
+        ctx.fillRect(620, 15, 50, 270);
+
+
+
         ctx.save();
         ctx.beginPath();
         ctx.drawImage(img, speed < 600 ? speed : 600, 13, 50, 50)
@@ -58,7 +103,7 @@ class Canvas extends Component {
         ctx.drawImage(img, speed3 < 600 ? speed3 : 600, 163, 50, 50)
         ctx.drawImage(img, speed4 < 600 ? speed4 : 600, 238, 50, 50)
         ctx.restore();
-      }
+    }
 
 
     render() {

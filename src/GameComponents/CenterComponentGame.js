@@ -3,6 +3,9 @@ import Animation from './Animation.js';
 import horseImage from '../Images/horseface.png';
 import { API_ROOT, HEADERS } from '../constants';
 import Spinner from 'react-bootstrap/Spinner';
+import JumbotronComponent from './Jumbotron.js';
+import { connect } from 'react-redux';
+
 
 class CenterComponentGame extends Component {
     constructor() {
@@ -13,13 +16,13 @@ class CenterComponentGame extends Component {
         }
     }
     handleHorseClick = (id) => {
-        // console.log(id);
+        console.log(this.props.userId);
         const body = {
             user_id: this.props.userId,
             horse_id: id,
             game_id: this.props.activeGame[0].id
         }
-
+        console.log(body)
         const configObj = {
             method: 'POST',
             headers: HEADERS,
@@ -28,7 +31,7 @@ class CenterComponentGame extends Component {
         fetch(`${API_ROOT}/userHorse`, configObj)
             .then(r => r.json())
             .then(json => {
-                // console.log(json);
+                console.log(json);
                 const currentGameId = this.props.activeGame[0].id
                 this.props.updateActiveGame(currentGameId);
                 this.setState({
@@ -45,7 +48,7 @@ class CenterComponentGame extends Component {
                 <h4>Choose a horse to bet on!</h4>
                 {this.props.activeGame[0].horses && this.props.activeGame[0].horses.map(horse => {
                     return <button onClick={() => this.handleHorseClick(horse.id)} key={horse.id} className="chooseHorse">
-                        <p>horse {horse.id}</p>
+                        <p>{horse.name}, {horse.id}</p>
                         <img alt="Horse face" src={horseImage} height="35" width=""></img>
                     </button>
                 })}
@@ -69,7 +72,7 @@ class CenterComponentGame extends Component {
         return (
             <div className="CenterComponentGame">
                 {
-                    this.props.activeGame.length === 0 ? null : this.props.activeGame[0].active ?
+                    this.props.activeGame.length === 0 ? <JumbotronComponent /> : this.props.activeGame[0].active ?
                         <Fragment>
                             <Animation
                                 user={this.props.user}
@@ -104,4 +107,12 @@ class CenterComponentGame extends Component {
     }
 }
 
-export default CenterComponentGame;
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser,
+        // activeGame: state.activeGame
+    }
+}
+
+export default connect(mapStateToProps, null)(CenterComponentGame);
+

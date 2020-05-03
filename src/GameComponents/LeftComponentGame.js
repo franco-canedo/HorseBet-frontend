@@ -26,16 +26,16 @@ class LeftComponentGame extends Component {
                 <div className="innerLeft">
                     <div className={this.props.jackpotColor ? "GameInfoDivsJackpot" : "GameInfoDivs"}>
                         <h2>Jackpot:</h2>
-                        <p>${this.props.activeGameLame.length ?
+                        <p style={{fontSize: "40px"}}>${this.props.activeGameLame.length ?
                             this.props.activeGame.activeGame.jackpot.toFixed(2) : null}</p>
                     </div>
                     <div className="GameInfoDivs">
                         <h2>{this.props.user.currentUser.username}, Your Bet:</h2>
-                        <p>${this.totalBet()}</p>
+                        <p style={{fontSize: "40px"}}>${this.totalBet()}</p>
                     </div>
-                    <div className="GameInfoDivs">
+                    <div className={this.props.betColor ? "BetInfoDivs" : "GameInfoDivs"}>
                         <h2>Money Left:</h2>
-                        <p>${this.extraBet()}</p>
+                        <p style={{fontSize: "40px"}}>${this.extraBet()}</p>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,8 @@ class LeftComponentGame extends Component {
 const mapStateToProps = state => {
     return {
         activeGame: state.activeGame,
-        jackpotColor: state.jackpotColor
+        jackpotColor: state.jackpotColor,
+        betColor: state.betColor
     }
 }
 
