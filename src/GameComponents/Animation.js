@@ -75,6 +75,7 @@ class Animation extends Component {
         const minus3 = this.state.horseSpeed3 - this.props.horses[2].speed;
         const minus4 = this.state.horseSpeed4 - this.props.horses[3].speed;
         // console.log(minus1);
+        const triggers = ['hover', 'focus'];
         return (
             <div>
                 <Canvas horseSpeed1={minus1}
@@ -86,7 +87,7 @@ class Animation extends Component {
                     {this.props.activeGame.activeGame.users.map(user => {
 
                         return <div className="gameButtons">
-                        <OverlayTrigger trigger="click" placement="bottom" overlay={popover(user)}>
+                        <OverlayTrigger trigger={triggers} placement="bottom" overlay={popover(user)}>
                             <Button variant="light">{user.username}</Button>
                         </OverlayTrigger>
                         </div>

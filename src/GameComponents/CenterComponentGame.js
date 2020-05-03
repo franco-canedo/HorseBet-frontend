@@ -3,7 +3,8 @@ import Animation from './Animation.js';
 import horseImage from '../Images/horseface.png';
 import { API_ROOT, HEADERS } from '../constants';
 import Spinner from 'react-bootstrap/Spinner';
-import JumbotronComponent from './Jumbotron.js'
+import JumbotronComponent from './Jumbotron.js';
+import { connect } from 'react-redux';
 
 
 class CenterComponentGame extends Component {
@@ -106,4 +107,12 @@ class CenterComponentGame extends Component {
     }
 }
 
-export default CenterComponentGame;
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser,
+        // activeGame: state.activeGame
+    }
+}
+
+export default connect(mapStateToProps, null)(CenterComponentGame);
+

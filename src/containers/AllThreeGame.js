@@ -237,13 +237,13 @@ class AllThreeGame extends Component {
                 />
                 <ActionCableConsumer
                     // key={activeGameId}  
-                    channel={{ channel: 'UserHorsesChannel', game: this.props.activeGame.id }}
+                    channel={{ channel: 'UserHorsesChannel', game: this.state.activeGame.length ? this.state.activeGame[0].id : null }}
                     onReceived={(resp) => console.log(resp)}
                 />
 
 
 
-                {this.state.joinableGames.length ? (
+                {this.state.activeGame.length ? (
                     <Cable
                         activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
                         handleReceivedBoo={this.handleReceivedBoo}
@@ -306,7 +306,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     return {
         currentUser: state.currentUser,
-        activeGame: state.activeGame
+        // activeGame: state.activeGame
     }
 }
 
