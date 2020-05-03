@@ -41,6 +41,7 @@ class RightComponentGame extends Component {
                 body: JSON.stringify(body)
             }
             fetch(`${API_ROOT}/joinGame`, configObj)
+            console.log('joinGame?')
             // .then(r => r.json())
             // .then(json => {
             //     console.log(json);
@@ -85,6 +86,7 @@ class RightComponentGame extends Component {
                         body: JSON.stringify(body2)
                     }
                     fetch(`${API_ROOT}/joinGame`, configObj2)
+                    console.log('joinGame timeout?')
                     // .then(r => r.json())
                     // .then(json => {
                     //     console.log(json);

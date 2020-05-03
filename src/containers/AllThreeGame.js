@@ -4,7 +4,7 @@ import RightComponentGame from "../GameComponents/RightComponentGame";
 import CenterComponentGame from "../GameComponents/CenterComponentGame";
 import Footer from '../components/Footer';
 import { API_ROOT } from '../constants';
-import { ActionCable } from 'react-actioncable-provider';
+import { ActionCable, ActionCableConsumer } from 'react-actioncable-provider';
 import Cable from '../GameComponents/Cable';
 
 import { connect } from 'react-redux';
@@ -227,12 +227,11 @@ class AllThreeGame extends Component {
         const { joinableGames, activeGameId } = this.state;
         return (
             <div className="AllThree">
-                <ActionCable
+                <ActionCableConsumer
                     channel={{ channel: 'GamesChannel' }}
                     onReceived={this.handleReceivedGame}
                 />
-                <ActionCable
-                    // key={activeGameId}  
+                <ActionCableConsumer
                     channel={{ channel: 'GameUsersChannel' }}
                     onReceived={this.handleReceivedGameUser}
                 />
