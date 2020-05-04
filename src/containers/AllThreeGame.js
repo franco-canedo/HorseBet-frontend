@@ -226,8 +226,11 @@ class AllThreeGame extends Component {
         if (!this.props.gameOver) {
             this.props.gameOverAction();
         }
-        
-        alert(`${response.game_winner.user_id} won the game!`);
+        console.log(this.props.activeGame)
+        const winner = this.props.activeGame.activeGame.users.find(user => {
+            return user.id === response.game_winner.user_id
+        })
+        alert(`${winner.username} won the game!`);
     }
 
     // animation = () => {
@@ -331,8 +334,8 @@ const mapStateToProps = state => {
     return {
         currentUser: state.currentUser,
         activeId: state.activeId,
-        gameOver: state.gameOver
-        // activeGame: state.activeGame
+        gameOver: state.gameOver,
+        activeGame: state.activeGame
     }
 }
 

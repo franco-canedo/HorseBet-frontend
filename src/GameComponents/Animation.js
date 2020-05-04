@@ -32,10 +32,10 @@ class Animation extends Component {
     updateAnimationState() {
         if (!this.props.gameOver) {
             this.setState(prevState => ({
-                horseSpeed1: prevState.horseSpeed1 + 1.5,
-                horseSpeed2: prevState.horseSpeed2 + .2,
-                horseSpeed3: prevState.horseSpeed3 + .2,
-                horseSpeed4: prevState.horseSpeed4 + .2,
+                horseSpeed1: prevState.horseSpeed1 + .3,
+                horseSpeed2: prevState.horseSpeed2 + .3,
+                horseSpeed3: prevState.horseSpeed3 + .3,
+                horseSpeed4: prevState.horseSpeed4 + .3,
             }));
         } else {
             cancelAnimationFrame(this.rAF);
