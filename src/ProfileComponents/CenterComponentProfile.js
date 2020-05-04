@@ -3,9 +3,10 @@ import { API_ROOT, HEADERS } from '../constants';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
-import {setGamesNewsFeed} from '../actions'
-import CenterComponentGame from "../GameComponents/CenterComponentGame";
+import { setGamesNewsFeed } from '../actions'
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 
 class CenterComponentProfile extends Component {
     constructor() {
@@ -13,7 +14,10 @@ class CenterComponentProfile extends Component {
         this.state = {
             depositBoolean: false,
             withdrawBoolean: false,
-            amount: 0
+            amount: 0,
+            editUsername: false,
+            usernameField: "",
+
 
         }
     }
@@ -86,7 +90,7 @@ class CenterComponentProfile extends Component {
             id: this.props.currentUser.currentUser.id,
             amount: parseInt(this.state.amount, 10)
         }
-        
+
 
         const configObj = {
             method: 'POST',
@@ -95,6 +99,50 @@ class CenterComponentProfile extends Component {
 
         }
         fetch(`${API_ROOT}/api/v1/users/withdraw`, configObj)
+            .then(r => r.json())
+            .then(json => {
+                console.log(json)
+                this.props.setGamesNewsFeed();
+                this.props.getProfileFetch();
+            })
+    }
+
+    handleEditClick = () => {
+        this.setState(prevState => {
+            return {
+                editUsername: !prevState.editUsername
+            }
+
+        })
+    }
+
+    handleEditChange = (event) => {
+        this.setState({
+            usernameField: event.target.value
+        })
+    }
+
+    handleEditName = (event) => {
+        this.setState({
+            usernameField: "",
+            editUsername: false
+        })
+        event.preventDefault()
+        alert('edit submitted');
+
+        const body = {
+            id: this.props.currentUser.currentUser.id,
+            username: this.state.usernameField
+        }
+
+
+        const configObj = {
+            method: 'PATCH',
+            headers: HEADERS,
+            body: JSON.stringify(body)
+
+        }
+        fetch(`${API_ROOT}/api/v1/users/edit`, configObj)
             .then(r => r.json())
             .then(json => {
                 console.log(json)
@@ -114,12 +162,11 @@ class CenterComponentProfile extends Component {
         }
         let threeGames = this.props.user.currentUser.games
         for (const game in threeGames) {
-
             return <div>
                 <ul>
-                    <li>id: {threeGames[game].id}</li>
+                    <li>winner: {threeGames[game].winner}</li>
                     {winners(threeGames[game].game_winners)}
-                    <li>Jackpot: ${threeGames[game].jackpot}</li>
+                    <li>Jackpot: ${threeGames[game].jackpot.toFixed(2)}</li>
                     <li>Minimum bet: ${threeGames[game].minimum_bet}</li>
                 </ul>
             </div>
@@ -140,21 +187,38 @@ class CenterComponentProfile extends Component {
         }
 
         return (
-            <div className="CenterComponentProfile">
-                 <div className="UserInfoDivs">
+            <div>
+                <div className="UserInfoDivs">
                     <h3>Profile Info:</h3>
                     <p>Username: {this.props.user.currentUser.username}</p>
                     <p>{this.props.user.bio}</p>
+                    {
+                        this.state.editUsername ?
+                            <Fragment>
+                                <form onSubmit={this.handleEditName}>
+                                    <label>Enter new username</label>
+                                    <input className="MeetupForm"
+                                        type="text"
+                                        name="username"
+                                        value={this.state.usernameField}
+                                        onChange={this.handleEditChange}
+                                    ></input>
+                                    <input type="submit"></input>
+                                </form>
 
-                   <Button variant="light" size="sm">Edit</Button>
-                   <p></p>
+                            </Fragment> :
+                            <Button variant="light" size="sm" onClick={this.handleEditClick}>Edit</Button>
+                    }
+
+
+                    <p></p>
                     <h4>Most Recent Game:</h4>
                     {this.renderRecentGames()}
 
                 </div>
                 <div className="UserInfoDivs">
                     <h3>Manage Funds:</h3>
-                    <h5>You have: ${this.props.user.currentUser.deposit}</h5>
+                    <h5>You have: ${this.props.user.currentUser.deposit.toFixed(2)}</h5>
                     {
                         this.state.depositBoolean ?
                             <Fragment>
@@ -195,24 +259,25 @@ class CenterComponentProfile extends Component {
 
                 <div className="UserInfoDivs">
                     <h3>Stats:</h3>
-                    <ul>
-                        <li>Games Played:{gamesPlayed}</li>
-                        <li>Number of wins:{wins}</li>
-                        <li>Total Winnings: ${this.props.user.currentUser.winnings}</li>
-                        <li>Average jackpot: $</li>
-                    </ul>
-                    {/* <p>Games Played:{gamesPlayed}</p>
-                    <p>Number of wins:{wins}</p>
-                    <p>Total Winnings: ${this.props.user.currentUser.winnings}</p>
-                    <p>Average jackpot: $</p> */}
-                    {/* {this.props.user.games && this.props.user.games} */}
+                    <Table striped bordered hover variant="secondary">
+                        <thead>
+                            <tr>
+                                <th>Games Played</th>
+                                <th>Number of Wins</th>
+                                <th>Total Winnings</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
+                                <td>{gamesPlayed}</td>
+                                <td>{wins}</td>
+                                <td>${this.props.user.currentUser.winnings.toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                 </div>
-
-               
-
-
             </div>
         );
     }

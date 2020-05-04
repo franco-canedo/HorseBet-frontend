@@ -15,8 +15,11 @@ import { decrement } from '../actions'
 import { updateActiveGame } from '../actions'
 import { jackpotColorYellow } from '../actions'
 import { jackpotColorNormal } from '../actions'
-import { betColorRed } from '../actions'
-import { betColorNormal } from '../actions'
+import { betColorRed } from '../actions';
+import { betColorNormal } from '../actions';
+import { updateActiveId } from '../actions';
+import { gameOverAction } from '../actions';
+
 
 
 class AllThreeGame extends Component {
@@ -51,6 +54,7 @@ class AllThreeGame extends Component {
     };
     // causes rerender
     handleHorseChosen = (id) => {
+
         const horse = this.state.horses.find(h => h.id === id);
 
         const index = this.state.horses.indexOf(horse)
@@ -71,6 +75,7 @@ class AllThreeGame extends Component {
             .then(game => {
                 console.log('fetched', game);
                 this.props.updateActiveGame(game.id);
+                this.props.updateActiveId(id)
                 setTimeout(() => {
                     this.setState(prevState => {
                         return {
@@ -134,7 +139,7 @@ class AllThreeGame extends Component {
     }
     //causes rerender
     handleReceivedGame = response => {
-        console.log('joinableGame', response)
+        // console.log('joinableGame', response)
         const { game } = response;
         this.setState(prevState => {
             return {
@@ -145,8 +150,9 @@ class AllThreeGame extends Component {
 
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
-        this.props.increment(response);
         this.props.updateActiveGame(this.state.activeGame[0].id);
+        this.props.increment(response);
+        
         this.props.jackpotColorYellow();
         if (response.user_id === this.props.currentUser.id) {
             this.props.betColorRed();
@@ -179,28 +185,39 @@ class AllThreeGame extends Component {
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
         console.log('userhorse', response)
-        console.log(response.user_horse.active)
+        // console.log(response.user_horse.active)
         if (response.user_horse.active === true) {
-            console.log('true?')
+            
             if (response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;
-                console.log(game)
-                this.setState({
-                    activeGame: [game]
-                })
+                if(response.user_horse.user_id === this.props.currentUser.currentUser.id) {
+                    console.log('handleHorseChosen?')
+                    this.handleHorseChosen(response.user_horse.horse_id)
+                }
+                
+                this.updateActiveGameLame(response.user_horse.game_id)
+                // console.log(game)
+                // this.setState({
+                //     activeGame: [game]
+                // })
+            }
+        } else {
+            if(response.user_horse.user_id === this.props.currentUser.currentUser.id) {
+                console.log('handleHorseChosenElse')
+                this.handleHorseChosen(response.user_horse.horse_id)
             }
         }
     }
     // causes rerender
     handleReceivedGameUser = (response) => {
-        console.log('GameUser', response);
+        // console.log('GameUser', response);
         let id = response.game_user.game_id;
         if (this.state.activeGame.length === 0) {
-            console.log('update active game', id, this.props.currentUser.currentUser.id)
+            // console.log('update active game', id, this.props.currentUser.currentUser.id)
 
             if (this.props.currentUser.currentUser.id === response.game_user.user_id) {
-                console.log('update active game2')
+                // console.log('update active game2')
                 this.handleActiveGame(id);
                 // this.props.updateActiveGame(id);
             }
@@ -212,6 +229,19 @@ class AllThreeGame extends Component {
             }
         }
 
+    }
+
+    handleReceiverGameWinners = (response) => {
+        console.log(response);
+        this.props.updateActiveGame(this.state.activeGame[0].id);
+        if (!this.props.gameOver) {
+            this.props.gameOverAction();
+        }
+        // console.log(this.props.activeGame)
+        const winner = this.state.activeGame[0].users.find(user => {
+            return user.id === response.game_winner.user_id
+        })
+        alert(`${winner.username} won the game!`);
     }
 
     // animation = () => {
@@ -238,14 +268,20 @@ class AllThreeGame extends Component {
                 <ActionCableConsumer
                     // key={activeGameId}  
                     channel={{ channel: 'UserHorsesChannel', game: this.state.activeGame.length ? this.state.activeGame[0].id : null }}
-                    onReceived={(resp) => console.log(resp)}
+                    onReceived={this.handleReceivedUserHorse}
+                />
+
+                <ActionCableConsumer
+                    // key={activeGameId}  
+                    channel={{ channel: 'GameWinnersChannel', game: this.state.activeGame.length ? this.state.activeGame[0].id : null }}
+                    onReceived={this.handleReceiverGameWinners}
                 />
 
 
 
                 {this.state.activeGame.length ? (
                     <Cable
-                        activeGameId={this.state.activeGame.length ? this.state.activeGame[0].id : null}
+                        activeGameId={this.props.activeId}
                         handleReceivedBoo={this.handleReceivedBoo}
                         handleReceivedHype={this.handleReceivedHype}
                         handleReceivedUserHorse={this.handleReceivedUserHorse}
@@ -301,11 +337,15 @@ const mapDispatchToProps = dispatch => ({
     jackpotColorNormal: () => dispatch(jackpotColorNormal()),
     betColorRed: () => dispatch(betColorRed()),
     betColorNormal: () => dispatch(betColorNormal()),
+    updateActiveId: (id) => dispatch(updateActiveId(id)),
+    gameOverAction: () => dispatch(gameOverAction()),
 })
 
 const mapStateToProps = state => {
     return {
         currentUser: state.currentUser,
+        activeId: state.activeId,
+        gameOver: state.gameOver,
         // activeGame: state.activeGame
     }
 }

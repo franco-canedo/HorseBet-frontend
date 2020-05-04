@@ -24,76 +24,80 @@ class RightComponentGame extends Component {
     }
 
     handleGameFetch = (bet) => {
-        this.setState({
-            chooseGame: true
-        })
-        if (this.props.joinableGames.length > 0) {
-            const body = {
-                user_id: this.props.userId.currentUser.id,
-                game_id: this.props.joinableGames[0]['id'],
-                total_bet: this.props.joinableGames[0]['minimum_bet'],
-                extra_bet: this.props.joinableGames[0]['minimum_bet']
-            }
-            // console.log(body);
-            const configObj = {
-                method: 'POST',
-                headers: HEADERS,
-                body: JSON.stringify(body)
-            }
-            fetch(`${API_ROOT}/joinGame`, configObj)
-            console.log('joinGame?')
-            // .then(r => r.json())
-            // .then(json => {
-            //     console.log(json);
-
-            //     this.props.handleActiveGame(json)
-            // });
-        } else {
-            const body = {
-                minimum_bet: bet,
-                jackpot: bet * 4
-            }
-
-            const configObj = {
-                method: 'POST',
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Credentials": true,
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    "content-length": 28403,
-                    status: 200
-
-                },
-                body: JSON.stringify(body)
-            }
-            alert('Joining a game... Please wait')
-            fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
-
-
-            setTimeout(() => {
-                if (this.props.joinableGames.length > 0) {
-                    const body2 = {
-                        user_id: this.props.userId.currentUser.id,
-                        game_id: this.props.joinableGames[0]['id'],
-                        total_bet: this.props.joinableGames[0]['minimum_bet'],
-                        extra_bet: this.props.joinableGames[0]['minimum_bet']
-                    }
-
-                    const configObj2 = {
-                        method: 'POST',
-                        headers: HEADERS,
-                        body: JSON.stringify(body2)
-                    }
-                    fetch(`${API_ROOT}/joinGame`, configObj2)
-                    console.log('joinGame timeout?')
-                    // .then(r => r.json())
-                    // .then(json => {
-                    //     console.log(json);
-                    //     this.props.handleActiveGame(json)
-                    // });
+        if (this.props.userId.currentUser.deposit > bet * 2) {
+            this.setState({
+                chooseGame: true
+            })
+            if (this.props.joinableGames.length > 0) {
+                const body = {
+                    user_id: this.props.userId.currentUser.id,
+                    game_id: this.props.joinableGames[0]['id'],
+                    total_bet: this.props.joinableGames[0]['minimum_bet'],
+                    extra_bet: this.props.joinableGames[0]['minimum_bet']
                 }
-            }, 3000);
+                // console.log(body);
+                const configObj = {
+                    method: 'POST',
+                    headers: HEADERS,
+                    body: JSON.stringify(body)
+                }
+                fetch(`${API_ROOT}/joinGame`, configObj)
+                console.log('joinGame?')
+                // .then(r => r.json())
+                // .then(json => {
+                //     console.log(json);
+
+                //     this.props.handleActiveGame(json)
+                // });
+            } else {
+                const body = {
+                    minimum_bet: bet,
+                    jackpot: bet
+                }
+
+                const configObj = {
+                    method: 'POST',
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials": true,
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        "content-length": 28403,
+                        status: 200
+
+                    },
+                    body: JSON.stringify(body)
+                }
+                alert('Joining a game... Please wait')
+                fetch(`${API_ROOT}/newGame`, configObj) // join game after if (resp.data.status === "created")
+
+
+                setTimeout(() => {
+                    if (this.props.joinableGames.length > 0) {
+                        const body2 = {
+                            user_id: this.props.userId.currentUser.id,
+                            game_id: this.props.joinableGames[0]['id'],
+                            total_bet: this.props.joinableGames[0]['minimum_bet'],
+                            extra_bet: this.props.joinableGames[0]['minimum_bet']
+                        }
+
+                        const configObj2 = {
+                            method: 'POST',
+                            headers: HEADERS,
+                            body: JSON.stringify(body2)
+                        }
+                        fetch(`${API_ROOT}/joinGame`, configObj2)
+                        console.log('joinGame timeout?')
+                        // .then(r => r.json())
+                        // .then(json => {
+                        //     console.log(json);
+                        //     this.props.handleActiveGame(json)
+                        // });
+                    }
+                }, 3000);
+            }
+        } else {
+            alert('Not enough funds! please deposit more money.');
         }
     }
 
@@ -150,7 +154,7 @@ class RightComponentGame extends Component {
                 } else {
                     return <div className="lights">
                         <div className="spanLightsRed">
-                        
+
 
                             <div className="speed">
                                 {/* <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>{' '} */}

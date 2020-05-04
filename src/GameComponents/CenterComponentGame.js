@@ -29,17 +29,18 @@ class CenterComponentGame extends Component {
             body: JSON.stringify(body)
         }
         fetch(`${API_ROOT}/userHorse`, configObj)
-            .then(r => r.json())
-            .then(json => {
-                console.log(json);
-                const currentGameId = this.props.activeGame[0].id
-                this.props.updateActiveGame(currentGameId);
-                this.setState({
-                    horseChosen: true
-                })
-                this.props.handleHorseChosen(id);
-                this.activateGame();
-            });
+            // .then(r => r.json())
+            // .then(json => {
+            //     console.log(json);
+            //     const currentGameId = this.props.activeGame[0].id
+            //     this.props.updateActiveGame(currentGameId);
+                
+            //     this.props.handleHorseChosen(id);
+            //     this.activateGame();
+            // });
+            this.setState({
+                horseChosen: true
+            })
     }
 
     renderHorses = () => {

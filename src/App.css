@@ -140,7 +140,7 @@
 }
 
 .ScrollingList {
-  padding-top: 25px;
+  padding-top: 60px;
   animation: marquee infinite 10s linear;
   max-height: 400px;
 }
@@ -241,6 +241,7 @@
 }
 
 .UserInfoDivs {
+  padding: 10px;
   height: auto;
   border-top: ridge;
   /* border-left: ridge; */

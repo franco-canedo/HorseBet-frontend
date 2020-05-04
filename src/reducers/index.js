@@ -7,6 +7,8 @@ import activeGame from './activeGame';
 import gamesNewsFeed from './gamesNewsFeed';
 import jackpotColor from './jackpotColor';
 import betColor from './betColor';
+import activeId from './activeId';
+import gameOverReducer from './gameOver';
 
 const allReducers = combineReducers({
     isLogged: loggedReducer,
@@ -16,6 +18,8 @@ const allReducers = combineReducers({
     games: gamesNewsFeed,
     jackpotColor: jackpotColor,
     betColor: betColor,
+    activeId: activeId,
+    gameOver: gameOverReducer,
 })
 
 export default allReducers;

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import Button from 'react-bootstrap/Button';
+import { gameOverAction } from '../actions';
 
 //import Popover from 'react-bootstrap/Popover';
 // import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
@@ -29,13 +30,16 @@ class Animation extends Component {
     }
 
     updateAnimationState() {
-
-        this.setState(prevState => ({
-            horseSpeed1: prevState.horseSpeed1 + .5,
-            horseSpeed2: prevState.horseSpeed2 + .5,
-            horseSpeed3: prevState.horseSpeed3 + .5,
-            horseSpeed4: prevState.horseSpeed4 + .5,
-        }));
+        if (!this.props.gameOver) {
+            this.setState(prevState => ({
+                horseSpeed1: prevState.horseSpeed1 + .3,
+                horseSpeed2: prevState.horseSpeed2 + .3,
+                horseSpeed3: prevState.horseSpeed3 + .3,
+                horseSpeed4: prevState.horseSpeed4 + .3,
+            }));
+        } else {
+            cancelAnimationFrame(this.rAF);
+        }
         // if(this.props.animation !== null) {
         //     this.props.animation();
         // }
@@ -68,8 +72,43 @@ class Animation extends Component {
         })
     }
 
+    fetchWinner = (horse_id) => {
+        console.log('fetch winner?', horse_id)
+        const body = {
+            game_id: this.props.activeId,
+            horse_id: horse_id,
+            user_id: this.props.currentUser.currentUser.id
+            
+        }
+
+        const configObj = {
+            method: "POST",
+            headers: HEADERS,
+            body: JSON.stringify(body)
+        }
+        fetch(`${API_ROOT}/winner`, configObj)
+        this.props.gameOverAction()
+    }
+
 
     render() {
+        if (!this.props.gameOver) {
+            if (this.state.horseSpeed1 > 600) {
+                const horse_id = this.props.horses[0].id
+                this.fetchWinner(horse_id)
+            } else if (this.state.horseSpeed2 > 600) {
+                const horse_id2 = this.props.horses[1].id
+                this.fetchWinner(horse_id2)
+            } else if (this.state.horseSpeed3 > 600) {
+                const horse_id3 = this.props.horses[2].id
+                this.fetchWinner(horse_id3)
+            } else if (this.state.horseSpeed4 > 600) {
+                const horse_id4 = this.props.horses[3].id
+                this.fetchWinner(horse_id4)
+            }
+        }
+
+
         const minus1 = this.state.horseSpeed1 - this.props.horses[0].speed;
         const minus2 = this.state.horseSpeed2 - this.props.horses[1].speed;
         const minus3 = this.state.horseSpeed3 - this.props.horses[2].speed;
@@ -87,9 +126,9 @@ class Animation extends Component {
                     {this.props.activeGame.activeGame.users.map(user => {
 
                         return <div className="gameButtons">
-                        <OverlayTrigger trigger={triggers} placement="bottom" overlay={popover(user)}>
-                            <Button variant="light">{user.username}</Button>
-                        </OverlayTrigger>
+                            <OverlayTrigger trigger={triggers} placement="bottom" overlay={popover(user)}>
+                                <Button variant="light">{user.username}</Button>
+                            </OverlayTrigger>
                         </div>
                     })}
                 </div>
@@ -100,18 +139,26 @@ class Animation extends Component {
 const mapStateToProps = state => {
     return {
         horses: state.horses,
+        activeId: state.activeId,
+        currentUser: state.currentUser,
         activeGame: state.activeGame,
+        gameOver: state.gameOver
+
     }
 }
 
-export default connect(mapStateToProps, null)(Animation);
+const mapDispatchToProps = dispatch => ({
+    gameOverAction: () => dispatch(gameOverAction()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Animation);
 
 const popover = (user) => {
     return <Popover id="popover-basic">
         <Popover.Title as="h3">Stats:</Popover.Title>
         <Popover.Content>
             <li>Games Won: {user.number_wins}</li>
-            <li>Winnings: ${user.winnings}</li>
+            <li>Winnings: ${user.winnings.toFixed(2)}</li>
             <li>Joined in {user.created_at}</li>
         </Popover.Content>
     </Popover>
