@@ -54,6 +54,7 @@ class AllThreeGame extends Component {
     };
     // causes rerender
     handleHorseChosen = (id) => {
+
         const horse = this.state.horses.find(h => h.id === id);
 
         const index = this.state.horses.indexOf(horse)
@@ -148,9 +149,10 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedBoo = response => {
-        // console.log('BOOOOO', response)
-        this.props.increment(response);
+        console.log('BOOOOO', response)
         this.props.updateActiveGame(this.state.activeGame[0].id);
+        this.props.increment(response);
+        
         this.props.jackpotColorYellow();
         if (response.user_id === this.props.currentUser.id) {
             this.props.betColorRed();
@@ -165,7 +167,7 @@ class AllThreeGame extends Component {
     };
 
     handleReceivedHype = (response) => {
-        // console.log('HYPE', response)
+        console.log('HYPE', response)
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
         this.props.jackpotColorYellow();
@@ -182,19 +184,28 @@ class AllThreeGame extends Component {
     // causes rerender
     handleReceivedUserHorse = (response) => {
         const { userHorse } = response;
-        // console.log('userhorse', response)
+        console.log('userhorse', response)
         // console.log(response.user_horse.active)
         if (response.user_horse.active === true) {
-            // console.log('true?')
+            
             if (response.user_horse.game_id === this.state.activeGame[0].id) {
                 let game = this.state.activeGame[0];
                 game.active = true;
-                this.handleHorseChosen(response.user_horse.horse_id)
+                if(response.user_horse.user_id === this.props.currentUser.currentUser.id) {
+                    console.log('handleHorseChosen?')
+                    this.handleHorseChosen(response.user_horse.horse_id)
+                }
+                
                 this.updateActiveGameLame(response.user_horse.game_id)
                 // console.log(game)
-                this.setState({
-                    activeGame: [game]
-                })
+                // this.setState({
+                //     activeGame: [game]
+                // })
+            }
+        } else {
+            if(response.user_horse.user_id === this.props.currentUser.currentUser.id) {
+                console.log('handleHorseChosenElse')
+                this.handleHorseChosen(response.user_horse.horse_id)
             }
         }
     }
@@ -226,8 +237,8 @@ class AllThreeGame extends Component {
         if (!this.props.gameOver) {
             this.props.gameOverAction();
         }
-        console.log(this.props.activeGame)
-        const winner = this.props.activeGame.activeGame.users.find(user => {
+        // console.log(this.props.activeGame)
+        const winner = this.state.activeGame[0].users.find(user => {
             return user.id === response.game_winner.user_id
         })
         alert(`${winner.username} won the game!`);
@@ -335,7 +346,7 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         activeId: state.activeId,
         gameOver: state.gameOver,
-        activeGame: state.activeGame
+        // activeGame: state.activeGame
     }
 }
 

@@ -158,7 +158,7 @@ const popover = (user) => {
         <Popover.Title as="h3">Stats:</Popover.Title>
         <Popover.Content>
             <li>Games Won: {user.number_wins}</li>
-            <li>Winnings: ${user.winnings}</li>
+            <li>Winnings: ${user.winnings.toFixed(2)}</li>
             <li>Joined in {user.created_at}</li>
         </Popover.Content>
     </Popover>
