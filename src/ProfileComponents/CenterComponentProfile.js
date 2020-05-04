@@ -3,10 +3,10 @@ import { API_ROOT, HEADERS } from '../constants';
 
 import { connect } from 'react-redux';
 import { getProfileFetch } from '../actions';
-import {setGamesNewsFeed} from '../actions'
-import CenterComponentGame from "../GameComponents/CenterComponentGame";
+import { setGamesNewsFeed } from '../actions'
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+
 
 class CenterComponentProfile extends Component {
     constructor() {
@@ -17,6 +17,7 @@ class CenterComponentProfile extends Component {
             amount: 0,
             editUsername: false,
             usernameField: "",
+
 
         }
     }
@@ -89,7 +90,7 @@ class CenterComponentProfile extends Component {
             id: this.props.currentUser.currentUser.id,
             amount: parseInt(this.state.amount, 10)
         }
-        
+
 
         const configObj = {
             method: 'POST',
@@ -111,7 +112,7 @@ class CenterComponentProfile extends Component {
             return {
                 editUsername: !prevState.editUsername
             }
-            
+
         })
     }
 
@@ -133,7 +134,7 @@ class CenterComponentProfile extends Component {
             id: this.props.currentUser.currentUser.id,
             username: this.state.usernameField
         }
-        
+
 
         const configObj = {
             method: 'PATCH',
@@ -161,7 +162,6 @@ class CenterComponentProfile extends Component {
         }
         let threeGames = this.props.user.currentUser.games
         for (const game in threeGames) {
-
             return <div>
                 <ul>
                     <li>winner: {threeGames[game].winner}</li>
@@ -187,14 +187,14 @@ class CenterComponentProfile extends Component {
         }
 
         return (
-            <div className="CenterComponentProfile">
-                 <div className="UserInfoDivs">
+            <div>
+                <div className="UserInfoDivs">
                     <h3>Profile Info:</h3>
                     <p>Username: {this.props.user.currentUser.username}</p>
                     <p>{this.props.user.bio}</p>
                     {
-                        this.state.editUsername ? 
-                        <Fragment>
+                        this.state.editUsername ?
+                            <Fragment>
                                 <form onSubmit={this.handleEditName}>
                                     <label>Enter new username</label>
                                     <input className="MeetupForm"
@@ -205,13 +205,13 @@ class CenterComponentProfile extends Component {
                                     ></input>
                                     <input type="submit"></input>
                                 </form>
-                                
+
                             </Fragment> :
-                             <Button variant="light" size="sm" onClick={this.handleEditClick}>Edit</Button>
+                            <Button variant="light" size="sm" onClick={this.handleEditClick}>Edit</Button>
                     }
 
-                   
-                   <p></p>
+
+                    <p></p>
                     <h4>Most Recent Game:</h4>
                     {this.renderRecentGames()}
 
@@ -259,23 +259,25 @@ class CenterComponentProfile extends Component {
 
                 <div className="UserInfoDivs">
                     <h3>Stats:</h3>
-                    <ul>
-                        <li>Games Played: {gamesPlayed}</li>
-                        <li>Number of wins: {wins}</li>
-                        <li>Total Winnings: ${this.props.user.currentUser.winnings.toFixed(2)}</li>
-                    </ul>
-                    {/* <p>Games Played:{gamesPlayed}</p>
-                    <p>Number of wins:{wins}</p>
-                    <p>Total Winnings: ${this.props.user.currentUser.winnings}</p>
-                    <p>Average jackpot: $</p> */}
-                    {/* {this.props.user.games && this.props.user.games} */}
+                    <Table striped bordered hover variant="secondary">
+                        <thead>
+                            <tr>
+                                <th>Games Played</th>
+                                <th>Number of Wins</th>
+                                <th>Total Winnings</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
+                                <td>{gamesPlayed}</td>
+                                <td>{wins}</td>
+                                <td>${this.props.user.currentUser.winnings.toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                 </div>
-
-               
-
-
             </div>
         );
     }

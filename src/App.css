@@ -241,6 +241,7 @@
 }
 
 .UserInfoDivs {
+  padding: 10px;
   height: auto;
   border-top: ridge;
   /* border-left: ridge; */
