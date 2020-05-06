@@ -101,7 +101,8 @@ class RightComponentGame extends Component {
         }
     }
 
-    handleBooClick = (horseId) => {
+    handleBooClick = (e, horseId) => {
+        e.preventDefault();
         console.log("boo?");
         const body = {
             game_id: this.props.activeGame[0].id,
@@ -115,7 +116,8 @@ class RightComponentGame extends Component {
         });
     }
 
-    handleHypeClick = (horseId) => {
+    handleHypeClick = (e, horseId) => {
+        e.preventDefault();
         console.log('hype?');
         const body = {
             game_id: this.props.activeGame[0].id,
@@ -146,7 +148,7 @@ class RightComponentGame extends Component {
                                     delay={{ show: 250, hide: 400 }}
                                     overlay={renderTooltip}
                                 >
-                                    <Button variant="outline-success" onClick={() => this.handleHypeClick(horse.id)}>Hype!</Button>
+                                    <Button variant="outline-success" onClick={(e) => this.handleHypeClick(e, horse.id)}>Hype!</Button>
                                 </OverlayTrigger>
                             </div>
                         </div>
@@ -163,7 +165,7 @@ class RightComponentGame extends Component {
                                     delay={{ show: 250, hide: 400 }}
                                     overlay={renderTooltipBoo}
                                 >
-                                    <Button variant="outline-danger" onClick={() => this.handleBooClick(horse.id)}>Boo!</Button>
+                                    <Button variant="outline-danger" onClick={(e) => this.handleBooClick(e, horse.id)}>Boo!</Button>
                                 </OverlayTrigger>
                             </div>
                         </div>

@@ -22,7 +22,8 @@ class CenterComponentProfile extends Component {
         }
     }
 
-    handleDepositClick = () => {
+    handleDepositClick = (e) => {
+        e.preventDefault()
         this.setState(prevState => {
             return {
                 depositBoolean: !prevState.depositBoolean
@@ -30,7 +31,8 @@ class CenterComponentProfile extends Component {
         })
     }
 
-    handleWithdrawClick = () => {
+    handleWithdrawClick = (e) => {
+        e.preventDefault()
         this.setState(prevState => {
             return {
                 withdrawBoolean: !prevState.withdrawBoolean
@@ -38,7 +40,8 @@ class CenterComponentProfile extends Component {
         })
     }
 
-    handleBackClick = () => {
+    handleBackClick = (e) => {
+        e.preventDefault()
         this.setState(prevState => {
             return {
                 depositBoolean: false,
@@ -107,7 +110,8 @@ class CenterComponentProfile extends Component {
             })
     }
 
-    handleEditClick = () => {
+    handleEditClick = (event) => {
+        event.preventDefault()
         this.setState(prevState => {
             return {
                 editUsername: !prevState.editUsername
@@ -117,6 +121,7 @@ class CenterComponentProfile extends Component {
     }
 
     handleEditChange = (event) => {
+        event.preventDefault()
         this.setState({
             usernameField: event.target.value
         })

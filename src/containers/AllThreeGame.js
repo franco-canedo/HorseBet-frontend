@@ -151,10 +151,10 @@ class AllThreeGame extends Component {
     handleReceivedBoo = response => {
         console.log('BOOOOO', response)
         this.props.updateActiveGame(this.state.activeGame[0].id);
-        this.props.increment(response);
-        
+        this.props.increment(response);       
         this.props.jackpotColorYellow();
-        if (response.user_id === this.props.currentUser.id) {
+        console.log(response.boo.user_id, this.props.currentUser.currentUser.id)
+        if (response.boo.user_id === this.props.currentUser.currentUser.id) {
             this.props.betColorRed();
             setTimeout(() => {
                 this.props.betColorNormal();
@@ -171,7 +171,8 @@ class AllThreeGame extends Component {
         this.props.updateActiveGame(this.state.activeGame[0].id);
         this.props.decrement(response);
         this.props.jackpotColorYellow();
-        if (response.user_id === this.props.currentUser.id) {
+        console.log(response.hype.user_id, this.props.currentUser.currentUser.id)
+        if (response.hype.user_id === this.props.currentUser.currentUser.id) {
             this.props.betColorRed();
             setTimeout(() => {
                 this.props.betColorNormal();
@@ -255,9 +256,9 @@ class AllThreeGame extends Component {
 
     render() {
         const { joinableGames, activeGameId } = this.state;
-        return (
+        return (    
             <div className="AllThree">
-                <ActionCableConsumer
+                 <ActionCableConsumer
                     channel={{ channel: 'GameUsersChannel' }}
                     onReceived={this.handleReceivedGameUser}
                 />
