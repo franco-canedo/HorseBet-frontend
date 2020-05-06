@@ -256,9 +256,9 @@ class AllThreeGame extends Component {
 
     render() {
         const { joinableGames, activeGameId } = this.state;
-        return (
+        return (    
             <div className="AllThree">
-                <ActionCableConsumer
+                 <ActionCableConsumer
                     channel={{ channel: 'GameUsersChannel' }}
                     onReceived={this.handleReceivedGameUser}
                 />
